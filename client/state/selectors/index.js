@@ -75,6 +75,7 @@ export getReaderRecommendedSitesPagingOffset from './get-reader-recommended-site
 export getReaderTags from './get-reader-tags';
 export getReaderTeams from './get-reader-teams';
 export getSelectedOrAllSites from './get-selected-or-all-sites';
+export getSelectedOrPrimarySiteId from './get-selected-or-primary-site-id';
 export getScheduledPublicizeShareActionTime from './get-scheduled-publicize-share-action-time';
 export isSchedulingPublicizeShareActionError from './is-scheduling-publicize-share-action-error';
 export getSharingButtons from './get-sharing-buttons';
@@ -202,4 +203,3 @@ export prependThemeFilterKeys from './prepend-theme-filter-keys';
 export shouldCloseVideoEditorModal from './should-close-video-editor-modal';
 export shouldShowVideoEditorError from './should-show-video-editor-error';
 export shouldSyncReaderFollows from './should-sync-reader-follows';
-
