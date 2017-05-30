@@ -30,7 +30,6 @@ import FollowingManageSubscriptions from './subscriptions';
 import FollowingManageSearchFeedsResults from './feed-search-results';
 import FollowingManageEmptyContent from './empty';
 import MobileBackToSidebar from 'components/mobile-back-to-sidebar';
-import { requestFeedSearch } from 'state/reader/feed-searches/actions';
 import { addQueryArgs } from 'lib/url';
 import FollowButton from 'reader/follow-button';
 import {
@@ -139,13 +138,11 @@ class FollowingManage extends Component {
 		return reject( recommendedSites, site => includes( blockedSites, site.blogId ) ).length <= 4;
 	};
 
-	fetchNextPage = offset => this.props.requestFeedSearch( this.props.sitesQuery, offset );
-
 	handleShowMoreClicked = () => {
 		recordTrack( 'calypso_reader_following_manage_search_more_click' );
 		recordAction( 'manage_feed_search_more' );
 		page.replace(
-			addQueryArgs( { showMoreResults: true }, window.location.pathname + window.location.search )
+			addQueryArgs( { showMoreResults: true }, window.location.pathname + window.location.search ),
 		);
 	};
 
@@ -191,7 +188,7 @@ class FollowingManage extends Component {
 		const isFollowByUrlWithNoSearchResults = showFollowByUrl && searchResultsCount === 0;
 		const filteredRecommendedSites = reject(
 			recommendedSites,
-			site => includes( blockedSites, site.blogId )
+			site => includes( blockedSites, site.blogId ),
 		);
 
 		return (
@@ -245,10 +242,8 @@ class FollowingManage extends Component {
 					<FollowingManageSearchFeedsResults
 						searchResults={ searchResults }
 						showMoreResults={ showMoreResults }
-						showMoreResultsClicked={ this.handleShowMoreClicked }
+						onShowMoreResultsClicked={ this.handleShowMoreClicked }
 						width={ this.state.width }
-						fetchNextPage={ this.fetchNextPage }
-						forceRefresh={ this.props.sitesQuery }
 						searchResultsCount={ searchResultsCount }
 						query={ sitesQuery }
 					/> }
@@ -265,18 +260,12 @@ class FollowingManage extends Component {
 	}
 }
 
-export default connect(
-	( state, { sitesQuery } ) => ( {
-		searchResults: getReaderFeedsForQuery( state, sitesQuery ),
-		searchResultsCount: getReaderFeedsCountForQuery( state, sitesQuery ),
-		recommendedSites: getReaderRecommendedSites( state, recommendationsSeed ),
-		recommendedSitesPagingOffset: getReaderRecommendedSitesPagingOffset(
-			state,
-			recommendationsSeed
-		),
-		blockedSites: getBlockedSites( state ),
-		readerAliasedFollowFeedUrl: sitesQuery && getReaderAliasedFollowFeedUrl( state, sitesQuery ),
-		followsCount: getReaderFollowsCount( state ),
-	} ),
-	{ requestFeedSearch }
-)( localize( FollowingManage ) );
+export default connect( ( state, { sitesQuery } ) => ( {
+	searchResults: getReaderFeedsForQuery( state, sitesQuery ),
+	searchResultsCount: getReaderFeedsCountForQuery( state, sitesQuery ),
+	recommendedSites: getReaderRecommendedSites( state, recommendationsSeed ),
+	recommendedSitesPagingOffset: getReaderRecommendedSitesPagingOffset( state, recommendationsSeed ),
+	blockedSites: getBlockedSites( state ),
+	readerAliasedFollowFeedUrl: sitesQuery && getReaderAliasedFollowFeedUrl( state, sitesQuery ),
+	followsCount: getReaderFollowsCount( state ),
+} ) )( localize( FollowingManage ) );
