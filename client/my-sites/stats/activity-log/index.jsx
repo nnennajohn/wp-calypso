@@ -16,6 +16,7 @@ import StatsFirstView from '../stats-first-view';
 import SidebarNavigation from 'my-sites/sidebar-navigation';
 import StatsNavigation from '../stats-navigation';
 import ActivityLogDay from '../activity-log-day';
+import ActivityLogRewindToggle from './activity-log-rewind-toggle';
 
 class ActivityLog extends Component {
 	componentDidMount() {
@@ -293,6 +294,10 @@ class ActivityLog extends Component {
 					slug={ slug }
 					section="activity"
 				/>
+				<ActivityLogRewindToggle isActive />
+				<ActivityLogRewindToggle isActive isToggling />
+				<ActivityLogRewindToggle />
+				<ActivityLogRewindToggle isToggling />
 				<section className="activity-log__wrapper">
 					{ logsGroupedByDate }
 				</section>
