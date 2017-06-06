@@ -19,9 +19,9 @@ module.exports = React.createClass( {
 
 	render: function() {
 		return (
-			<button onClick={ this.handleSubmit } className='button is-primary'>
+			<button onClick={ this.handleSubmit } className="button is-primary">
 				{ this.props.buttonText }
 			</button>
 		);
-	}
+	},
 } );

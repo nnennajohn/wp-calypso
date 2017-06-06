@@ -18,7 +18,7 @@ import {
  * @returns {Object|Function} Object or thunk to be dispatched
  */
 export function createProduct( siteId, product, successAction = null, failureAction = null ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		const createAction = {
 			type: WOOCOMMERCE_API_CREATE_PRODUCT,
 			payload: { siteId, product },
@@ -44,7 +44,8 @@ export function createProduct( siteId, product, successAction = null, failureAct
 		};
 
 		// TODO: Modify this to use the extensions data layer.
-		return wp.req.post( jetpackProps, httpProps )
+		return wp.req
+			.post( jetpackProps, httpProps )
 			.then( ( { data } ) => {
 				dispatch( createProductSuccess( siteId, data ) );
 				if ( successAction ) {
@@ -69,7 +70,7 @@ export function createProductSuccess( siteId, product ) {
 
 		return setError( siteId, originalAction, {
 			message: 'Invalid Product Object',
-			product
+			product,
 		} );
 	}
 
@@ -78,15 +79,16 @@ export function createProductSuccess( siteId, product ) {
 		payload: {
 			siteId,
 			product,
-		}
+		},
 	};
 }
 
 function isValidProduct( product ) {
 	return (
 		product &&
-		product.id && ( 'number' === typeof product.id ) &&
-		product.type && ( 'string' === typeof product.type )
+		product.id &&
+		'number' === typeof product.id &&
+		product.type &&
+		'string' === typeof product.type
 	);
 }
-

@@ -37,8 +37,8 @@ describe( 'reducer', () => {
 							feed_URL: 'http://example.com',
 							is_following: true,
 						},
-					}
-				)[ 1 ]
+					},
+				)[ 1 ],
 			).to.deep.equal( {
 				feed_ID: 1,
 				blog_ID: 2,
@@ -64,8 +64,8 @@ describe( 'reducer', () => {
 							name: 'ben &amp; jerries',
 							description: 'peaches &amp; cream',
 						},
-					}
-				)[ 1 ]
+					},
+				)[ 1 ],
 			).to.deep.equal( {
 				feed_ID: 1,
 				blog_ID: 2,
@@ -103,7 +103,7 @@ describe( 'reducer', () => {
 				const unvalidatedObject = deepFreeze( { hi: 'there' } );
 				this.stub( console, 'warn' ); // stub warn to suppress the warning that validation failure emits
 				expect( items( unvalidatedObject, { type: DESERIALIZE } ) ).to.deep.equal( {} );
-			} )
+			} ),
 		);
 
 		it( 'should deserialize good things', () => {
@@ -130,8 +130,8 @@ describe( 'reducer', () => {
 						type: READER_FEED_REQUEST_FAILURE,
 						error: new Error( 'request failed' ),
 						payload: { feed_ID: 666 },
-					}
-				)
+					},
+				),
 			).to.deep.equal( { 666: { feed_ID: 666, is_error: true } } );
 		} );
 
@@ -146,7 +146,7 @@ describe( 'reducer', () => {
 						name: 'new',
 						subscribers_count: 10,
 					},
-				} )
+				} ),
 			).to.deep.equal( {
 				666: {
 					feed_ID: 666,
@@ -169,7 +169,7 @@ describe( 'reducer', () => {
 					type: READER_FEED_REQUEST_FAILURE,
 					error: new Error( 'request failed' ),
 					payload: { feed_ID: 666 },
-				} )
+				} ),
 			).to.deep.equal( startingState );
 		} );
 
@@ -183,7 +183,7 @@ describe( 'reducer', () => {
 						{ feed_ID: 1, blog_ID: 777, name: 'first &amp; one', is_following: true },
 						{ feed_ID: 2, blog_ID: 999, name: 'second', is_following: true },
 					],
-				} )
+				} ),
 			).to.deep.equal( {
 				666: {
 					feed_ID: 666,
@@ -230,8 +230,8 @@ describe( 'reducer', () => {
 					{
 						type: READER_FEED_REQUEST,
 						payload: { feed_ID: 1 },
-					}
-				)
+					},
+				),
 			).to.deep.equal( { 1: true } );
 		} );
 
@@ -240,7 +240,7 @@ describe( 'reducer', () => {
 				queuedRequests( deepFreeze( { 1: true } ), {
 					type: READER_FEED_REQUEST_SUCCESS,
 					payload: { feed_ID: 1 },
-				} )
+				} ),
 			).to.deep.equal( {} );
 		} );
 	} );

@@ -29,7 +29,7 @@ const GoogleAppsUsers = React.createClass( {
 			email: { value: '', error: null },
 			firstName: { value: '', error: null },
 			lastName: { value: '', error: null },
-			domain: { value: this.props.domain, error: null }
+			domain: { value: this.props.domain, error: null },
 		};
 	},
 
@@ -43,8 +43,7 @@ const GoogleAppsUsers = React.createClass( {
 
 				{ allUserInputs }
 
-				<button className="google-apps-dialog__add-another-user-button"
-						onClick={ this.addUser }>
+				<button className="google-apps-dialog__add-another-user-button" onClick={ this.addUser }>
 					{ this.translate( 'Add Another User' ) }
 				</button>
 			</div>
@@ -56,7 +55,13 @@ const GoogleAppsUsers = React.createClass( {
 	},
 
 	inputsForUser( user, index ) {
-		const contactText = this.translate( 'contact', { context: 'part of e-mail address', comment: 'As it would be part of an e-mail address contact@example.com' } );
+		const contactText = this.translate(
+			'contact',
+			{
+				context: 'part of e-mail address',
+				comment: 'As it would be part of an e-mail address contact@example.com',
+			},
+		);
 
 		return (
 			<div className="google-apps-dialog__user-fields" key={ `google-apps-dialog-user-${ index }` }>
@@ -70,8 +75,11 @@ const GoogleAppsUsers = React.createClass( {
 						isError={ !! user.email.error }
 						onChange={ this.updateField.bind( this, index ) }
 						onBlur={ this.props.onBlur }
-						onClick={ this.recordInputFocus.bind( this, index, 'Email' ) } />
-					{ user.email.error ? <FormInputValidation text={ user.email.error } isError={ true } /> : null }
+						onClick={ this.recordInputFocus.bind( this, index, 'Email' ) }
+					/>
+					{ user.email.error
+						? <FormInputValidation text={ user.email.error } isError={ true } />
+						: null }
 				</FormFieldset>
 
 				<FormFieldset className={ this.fieldClasses( 'first-name' ) }>
@@ -83,8 +91,11 @@ const GoogleAppsUsers = React.createClass( {
 						isError={ !! user.firstName.error }
 						onChange={ this.updateField.bind( this, index ) }
 						onBlur={ this.props.onBlur }
-						onClick={ this.recordInputFocus.bind( this, index, 'First Name' ) } />
-					{ user.firstName.error ? <FormInputValidation text={ user.firstName.error } isError={ true } /> : null }
+						onClick={ this.recordInputFocus.bind( this, index, 'First Name' ) }
+					/>
+					{ user.firstName.error
+						? <FormInputValidation text={ user.firstName.error } isError={ true } />
+						: null }
 				</FormFieldset>
 
 				<FormFieldset className={ this.fieldClasses( 'last-name' ) }>
@@ -96,16 +107,18 @@ const GoogleAppsUsers = React.createClass( {
 						isError={ !! user.lastName.error }
 						onChange={ this.updateField.bind( this, index ) }
 						onBlur={ this.props.onBlur }
-						onClick={ this.recordInputFocus.bind( this, index, 'Last Name' ) } />
-					{ user.lastName.error ? <FormInputValidation text={ user.lastName.error } isError={ true } /> : null }
+						onClick={ this.recordInputFocus.bind( this, index, 'Last Name' ) }
+					/>
+					{ user.lastName.error
+						? <FormInputValidation text={ user.lastName.error } isError={ true } />
+						: null }
 				</FormFieldset>
 			</div>
 		);
 	},
 
 	recordInputFocus( index, fieldName ) {
-		const field = this.props.fields[ index ],
-			inputValue = field ? field.value : '';
+		const field = this.props.fields[ index ], inputValue = field ? field.value : '';
 
 		this.recordEvent( 'inputFocus', index, fieldName, inputValue );
 	},
@@ -130,7 +143,7 @@ const GoogleAppsUsers = React.createClass( {
 		updatedFields[ index ][ fieldName ].value = newValue;
 
 		this.props.onChange( updatedFields );
-	}
+	},
 } );
 
 export default GoogleAppsUsers;

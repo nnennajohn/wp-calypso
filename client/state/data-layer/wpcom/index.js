@@ -27,7 +27,7 @@ export const handlers = mergeHandlers(
 	timezones,
 	themeFilters,
 	videos,
-	login2fa
+	login2fa,
 );
 
 export default handlers;

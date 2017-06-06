@@ -22,7 +22,8 @@ const i18nUtils = {
 	getLanguage: function( langSlug ) {
 		let language;
 		if ( localeRegex.test( langSlug ) || localeWithRegionRegex.test( langSlug ) ) {
-			language = find( config( 'languages' ), { langSlug: langSlug } ) ||
+			language =
+				find( config( 'languages' ), { langSlug: langSlug } ) ||
 				find( config( 'languages' ), { langSlug: langSlug.substring( 0, 2 ) } );
 		}
 		return language;
@@ -37,7 +38,7 @@ const i18nUtils = {
 		const parts = getPathParts( path );
 		const locale = parts.pop();
 
-		return ( 'undefined' === typeof i18nUtils.getLanguage( locale ) ) ? undefined : locale;
+		return 'undefined' === typeof i18nUtils.getLanguage( locale ) ? undefined : locale;
 	},
 
 	/**
@@ -72,6 +73,6 @@ const i18nUtils = {
 		}
 
 		return parts.join( '/' ) + queryString;
-	}
+	},
 };
 export default i18nUtils;

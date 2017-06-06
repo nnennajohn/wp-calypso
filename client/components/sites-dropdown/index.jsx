@@ -14,9 +14,7 @@ import Site from 'blocks/site';
 import SitePlaceholder from 'blocks/site/placeholder';
 import SiteSelector from 'components/site-selector';
 import { getSite } from 'state/sites/selectors';
-import {
-	getPrimarySiteId,
-} from 'state/selectors';
+import { getPrimarySiteId } from 'state/selectors';
 
 export class SitesDropdown extends PureComponent {
 	static propTypes = {
@@ -31,7 +29,7 @@ export class SitesDropdown extends PureComponent {
 		initialSiteId: PropTypes.number.isRequired,
 		selectedSite: PropTypes.object,
 		setLocallySelectedSiteId: PropTypes.func,
-	}
+	};
 
 	static defaultProps = {
 		showAllSites: false,
@@ -39,7 +37,7 @@ export class SitesDropdown extends PureComponent {
 		onSiteSelect: noop,
 		isPlaceholder: false,
 		setLocallySelectedSiteId: identity,
-	}
+	};
 
 	constructor( props ) {
 		super( props );
@@ -50,7 +48,7 @@ export class SitesDropdown extends PureComponent {
 		this.onClose = this.onClose.bind( this );
 	}
 
-	state = { open: false }
+	state = { open: false };
 
 	componentDidMount() {
 		const { initialSiteId, setLocallySelectedSiteId } = this.props;
@@ -61,7 +59,7 @@ export class SitesDropdown extends PureComponent {
 		this.props.onSiteSelect( siteSlug );
 		this.props.setLocallySelectedSiteId( siteSlug );
 		this.setState( {
-			open: false
+			open: false,
 		} );
 	}
 
@@ -80,14 +78,10 @@ export class SitesDropdown extends PureComponent {
 		return (
 			<div className={ classNames( 'sites-dropdown', { 'is-open': this.state.open } ) }>
 				<div className="sites-dropdown__wrapper">
-					<div
-						className="sites-dropdown__selected"
-						onClick={ this.toggleOpen } >
-						{
-							this.props.isPlaceholder
+					<div className="sites-dropdown__selected" onClick={ this.toggleOpen }>
+						{ this.props.isPlaceholder
 							? <SitePlaceholder />
-							: <Site site={ this.props.selectedSite } indicator={ false } />
-						}
+							: <Site site={ this.props.selectedSite } indicator={ false } /> }
 						<Gridicon icon="chevron-down" />
 					</div>
 					{ this.state.open &&
@@ -98,8 +92,7 @@ export class SitesDropdown extends PureComponent {
 							selected={ selectedSiteSlug }
 							hideSelected={ true }
 							filter={ this.props.filter }
-						/>
-					}
+						/> }
 				</div>
 			</div>
 		);
@@ -107,12 +100,9 @@ export class SitesDropdown extends PureComponent {
 }
 
 const mapState = ( state, { selectedSiteId, locallySelectedSiteId } ) => {
-	const initialSiteId = selectedSiteId ||
-		getPrimarySiteId( state );
+	const initialSiteId = selectedSiteId || getPrimarySiteId( state );
 
-	const selectedSite = locallySelectedSiteId
-		? getSite( state, locallySelectedSiteId )
-		: undefined;
+	const selectedSite = locallySelectedSiteId ? getSite( state, locallySelectedSiteId ) : undefined;
 
 	return {
 		initialSiteId,
@@ -124,25 +114,24 @@ const mapState = ( state, { selectedSiteId, locallySelectedSiteId } ) => {
  * A container for component state that can then be passed to SitesDropdown's
  * Redux-connected counterpart.
  */
-const withSelectedSiteId = ( Wrapped ) => class extends PureComponent {
-	static displayName = `WithSelectedSiteId(${
-		Wrapped.displayName || Wrapped.name } )`
+const withSelectedSiteId = Wrapped => class extends PureComponent {
+	static displayName = `WithSelectedSiteId(${ Wrapped.displayName || Wrapped.name } )`;
 
-	state = { locallySelectedSiteId: null }
+	state = { locallySelectedSiteId: null };
 
-	setLocallySelectedSiteId = ( slug ) => {
+	setLocallySelectedSiteId = slug => {
 		this.setState( { locallySelectedSiteId: slug } );
-	}
+	};
 
 	render() {
-		return <Wrapped
-			locallySelectedSiteId={ this.state.locallySelectedSiteId }
-			setLocallySelectedSiteId={ this.setLocallySelectedSiteId }
-			{ ...this.props } />;
+		return (
+			<Wrapped
+				locallySelectedSiteId={ this.state.locallySelectedSiteId }
+				setLocallySelectedSiteId={ this.setLocallySelectedSiteId }
+				{ ...this.props }
+			/>
+		);
 	}
 };
 
-export default flow(
-	connect( mapState ),
-	withSelectedSiteId
-)( SitesDropdown );
+export default flow( connect( mapState ), withSelectedSiteId )( SitesDropdown );

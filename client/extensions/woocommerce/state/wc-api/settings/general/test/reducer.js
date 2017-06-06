@@ -8,9 +8,7 @@ import { expect } from 'chai';
  */
 import reducer from '../../../reducer';
 import { LOADING } from '../reducer';
-import {
-	WOOCOMMERCE_API_FETCH_SETTINGS_GENERAL,
-} from '../../../../action-types';
+import { WOOCOMMERCE_API_FETCH_SETTINGS_GENERAL } from '../../../../action-types';
 import { fetchSettingsGeneralSuccess } from '../actions';
 
 describe( 'fetch settings general', () => {
@@ -18,7 +16,10 @@ describe( 'fetch settings general', () => {
 		const siteId = 123;
 		const state = {};
 
-		const newSiteData = reducer( state, { type: WOOCOMMERCE_API_FETCH_SETTINGS_GENERAL, payload: { siteId } } );
+		const newSiteData = reducer(
+			state,
+			{ type: WOOCOMMERCE_API_FETCH_SETTINGS_GENERAL, payload: { siteId } },
+		);
 		expect( newSiteData[ siteId ].settingsGeneral ).to.eql( LOADING );
 	} );
 } );
@@ -28,10 +29,7 @@ describe( 'fetch settings general - success', () => {
 		const siteId = 123;
 		const state = {};
 
-		const settings = [
-			{},
-			{},
-		];
+		const settings = [ {}, {} ];
 		const newState = reducer( state, fetchSettingsGeneralSuccess( siteId, settings ) );
 		expect( newState[ siteId ] ).to.exist;
 		expect( newState[ siteId ].settingsGeneral ).to.deep.equal( settings );

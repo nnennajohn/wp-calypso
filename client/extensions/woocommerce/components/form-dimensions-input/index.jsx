@@ -11,14 +11,7 @@ import { localize } from 'i18n-calypso';
 import FormTextInput from 'components/forms/form-text-input';
 import FormTextInputWithAffixes from 'components/forms/form-text-input-with-affixes';
 
-function FormDimensionsInput( {
-	className,
-	dimensions,
-	unit,
-	onChange,
-	translate,
-	noWrap,
-} ) {
+function FormDimensionsInput( { className, dimensions, unit, onChange, translate, noWrap } ) {
 	const classes = classNames( 'form-dimensions-input', className, { 'no-wrap': noWrap } );
 
 	return (
@@ -27,7 +20,7 @@ function FormDimensionsInput( {
 				name="length"
 				placeholder={ translate( 'L' ) }
 				type="number"
-				value={ dimensions && dimensions.length || '' }
+				value={ ( dimensions && dimensions.length ) || '' }
 				onChange={ onChange }
 				className="form-dimensions-input__length"
 			/>
@@ -35,7 +28,7 @@ function FormDimensionsInput( {
 				name="width"
 				placeholder={ translate( 'W' ) }
 				type="number"
-				value={ dimensions && dimensions.width || '' }
+				value={ ( dimensions && dimensions.width ) || '' }
 				onChange={ onChange }
 				className="form-dimensions-input__width"
 			/>
@@ -45,7 +38,7 @@ function FormDimensionsInput( {
 				suffix={ unit }
 				type="number"
 				noWrap={ noWrap }
-				value={ dimensions && dimensions.height || '' }
+				value={ ( dimensions && dimensions.height ) || '' }
 				onChange={ onChange }
 				className="form-dimensions-input__height"
 			/>

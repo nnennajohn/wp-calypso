@@ -20,17 +20,17 @@ import FormTextInput from 'components/forms/form-text-input';
 import FormTextInputWithAffixes from 'components/forms/form-text-input-with-affixes';
 
 const ProductFormSimpleCard = ( { product, editProduct, translate } ) => {
-	const setDimension = ( e ) => {
+	const setDimension = e => {
 		const dimensions = { ...product.dimensions, [ e.target.name ]: e.target.value };
 		editProduct( product, { dimensions } );
 	};
 
-	const setWeight = ( e ) => {
+	const setWeight = e => {
 		const weight = e.target.value;
 		Number( weight ) >= 0 && editProduct( product, { weight } );
 	};
 
-	const setPrice = ( e ) => {
+	const setPrice = e => {
 		editProduct( product, { regular_price: e.target.value } );
 	};
 
@@ -38,11 +38,11 @@ const ProductFormSimpleCard = ( { product, editProduct, translate } ) => {
 		editProduct( product, { manage_stock: ! product.manage_stock } );
 	};
 
-	const setStockQuantity = ( e ) => {
+	const setStockQuantity = e => {
 		editProduct( product, { stock_quantity: e.target.value } );
 	};
 
-	const setBackorders = ( e ) => {
+	const setBackorders = e => {
 		editProduct( product, { backorders: e.target.value } );
 	};
 
@@ -85,9 +85,9 @@ const ProductFormSimpleCard = ( { product, editProduct, translate } ) => {
 					/>
 				</FormFieldSet>
 			</div>
-			<FormSettingExplanation>{ translate(
-				'Shipping services will use this data to provide accurate rates.'
-			) }</FormSettingExplanation>
+			<FormSettingExplanation>
+				{ translate( 'Shipping services will use this data to provide accurate rates.' ) }
+			</FormSettingExplanation>
 		</Card>
 	);
 
@@ -101,11 +101,12 @@ const ProductFormSimpleCard = ( { product, editProduct, translate } ) => {
 				<CompactFormToggle
 					checked={ Boolean( product.manage_stock ) }
 					name="manage_stock"
-					onChange={ toggleStock } />
+					onChange={ toggleStock }
+				/>
 				<FormLabel onClick={ toggleStock }>{ translate( 'Manage stock' ) }</FormLabel>
 			</div>
 			<div className="products__product-stock-options-wrapper">
-				{ product.manage_stock && (
+				{ product.manage_stock &&
 					<div className="products__product-manage-stock">
 						<FormLabel>{ translate( 'Quantity' ) }</FormLabel>
 						<FormTextInput
@@ -114,23 +115,28 @@ const ProductFormSimpleCard = ( { product, editProduct, translate } ) => {
 							type="number"
 							min="0"
 							onChange={ setStockQuantity }
-							placeholder={ translate( 'Quantity' ) } />
-					</div>
-				) }
-				{ product.manage_stock && (
+							placeholder={ translate( 'Quantity' ) }
+						/>
+					</div> }
+				{ product.manage_stock &&
 					<div className="products__product-backorders-wrapper">
 						<FormLabel>{ translate( 'Backorders' ) }</FormLabel>
-						<FormSelect name="backorders" onChange={ setBackorders } value={ product.backorders || 'no' } >
+						<FormSelect
+							name="backorders"
+							onChange={ setBackorders }
+							value={ product.backorders || 'no' }
+						>
 							<option value="no">{ translate( 'Do not allow' ) }</option>
 							<option value="notify">{ translate( 'Allow, but notify customer' ) }</option>
 							<option value="yes">{ translate( 'Allow' ) }</option>
 						</FormSelect>
 
-						<FormSettingExplanation>{ translate(
-							'Backorders allow customers to purchase products that are out of stock.'
-						) }</FormSettingExplanation>
-					</div>
-				) }
+						<FormSettingExplanation>
+							{ translate(
+								'Backorders allow customers to purchase products that are out of stock.',
+							) }
+						</FormSettingExplanation>
+					</div> }
 			</div>
 		</Card>
 	);

@@ -23,7 +23,7 @@ describe( 'selectors', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: undefined,
-				}
+				},
 			};
 			const isGenerating = isGeneratingStats( state, primarySiteId );
 
@@ -36,11 +36,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						stats: {
 							generateStatus: {
-								[ primarySiteId ]: { generating: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { generating: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const isGenerating = isGeneratingStats( state, secondarySiteId );
 
@@ -53,11 +53,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						stats: {
 							generateStatus: {
-								[ primarySiteId ]: { generating: false, status: 'success' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { generating: false, status: 'success' },
+							},
+						},
+					},
+				},
 			};
 			const isGenerating = isGeneratingStats( state, primarySiteId );
 
@@ -70,11 +70,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						stats: {
 							generateStatus: {
-								[ primarySiteId ]: { generating: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { generating: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const isGenerating = isGeneratingStats( state, primarySiteId );
 
@@ -89,11 +89,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						stats: {
 							generateStatus: {
-								[ primarySiteId ]: { generating: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { generating: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const isSuccessful = isStatsGenerationSuccessful( state, secondarySiteId );
 
@@ -106,11 +106,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						stats: {
 							generateStatus: {
-								[ primarySiteId ]: { generating: false, status: 'success' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { generating: false, status: 'success' },
+							},
+						},
+					},
+				},
 			};
 			const isSuccessful = isStatsGenerationSuccessful( state, primarySiteId );
 
@@ -123,11 +123,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						stats: {
 							generateStatus: {
-								[ primarySiteId ]: { generating: false, status: 'error' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { generating: false, status: 'error' },
+							},
+						},
+					},
+				},
 			};
 			const isSuccessful = isStatsGenerationSuccessful( state, primarySiteId );
 
@@ -142,11 +142,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						stats: {
 							generateStatus: {
-								[ primarySiteId ]: { generating: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { generating: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const status = getStatsGenerationStatus( state, secondarySiteId );
 
@@ -159,11 +159,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						stats: {
 							generateStatus: {
-								[ primarySiteId ]: { generating: false, status: 'success' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { generating: false, status: 'success' },
+							},
+						},
+					},
+				},
 			};
 			const status = getStatsGenerationStatus( state, primarySiteId );
 
@@ -176,11 +176,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						stats: {
 							generateStatus: {
-								[ primarySiteId ]: { generating: false, status: 'error' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { generating: false, status: 'error' },
+							},
+						},
+					},
+				},
 			};
 			const status = getStatsGenerationStatus( state, primarySiteId );
 
@@ -193,11 +193,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						stats: {
 							generateStatus: {
-								[ primarySiteId ]: { generating: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { generating: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const status = getStatsGenerationStatus( state, primarySiteId );
 
@@ -212,7 +212,7 @@ describe( 'selectors', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: undefined,
-				}
+				},
 			};
 			const stats = getStats( state, primarySiteId );
 
@@ -226,10 +226,10 @@ describe( 'selectors', () => {
 						stats: {
 							items: {
 								[ primarySiteId ]: primaryStats,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const stats = getStats( state, secondarySiteId );
 
@@ -243,10 +243,10 @@ describe( 'selectors', () => {
 						stats: {
 							items: {
 								[ primarySiteId ]: primaryStats,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const stats = getStats( state, primarySiteId );
 
@@ -259,7 +259,7 @@ describe( 'selectors', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: undefined,
-				}
+				},
 			};
 			const isDeleting = isDeletingFile( state, primarySiteId );
 
@@ -273,10 +273,10 @@ describe( 'selectors', () => {
 						stats: {
 							deleting: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isDeleting = isDeletingFile( state, secondarySiteId );
 
@@ -290,10 +290,10 @@ describe( 'selectors', () => {
 						stats: {
 							deleting: {
 								[ primarySiteId ]: false,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isDeleting = isDeletingFile( state, primarySiteId );
 
@@ -307,10 +307,10 @@ describe( 'selectors', () => {
 						stats: {
 							deleting: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isDeleting = isDeletingFile( state, primarySiteId );
 

@@ -14,7 +14,6 @@ import { POSTS } from './search-stream-header';
 const WIDE_DISPLAY_CUTOFF = 660;
 
 class SearchStream extends React.Component {
-
 	state = {
 		selected: POSTS,
 	};
@@ -34,4 +33,4 @@ class SearchStream extends React.Component {
 	}
 }
 
-export default localize( withWidth( SearchStream ) ) ;
+export default localize( withWidth( SearchStream ) );

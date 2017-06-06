@@ -17,15 +17,11 @@ import {
 	STATUS_READY,
 	STATUS_ERROR,
 } from '../constants';
-import reducer, {
-	status,
-} from '../reducer';
+import reducer, { status } from '../reducer';
 
 describe( 'reducer', () => {
 	it( 'should include expected keys in return value', () => {
-		expect( reducer( undefined, {} ) ).to.have.keys( [
-			'status',
-		] );
+		expect( reducer( undefined, {} ) ).to.have.keys( [ 'status' ] );
 	} );
 
 	describe( '#status()', () => {

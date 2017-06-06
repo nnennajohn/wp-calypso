@@ -145,7 +145,7 @@ class FollowingManage extends Component {
 		recordTrack( 'calypso_reader_following_manage_search_more_click' );
 		recordAction( 'manage_feed_search_more' );
 		page.replace(
-			addQueryArgs( { showMoreResults: true }, window.location.pathname + window.location.search )
+			addQueryArgs( { showMoreResults: true }, window.location.pathname + window.location.search ),
 		);
 	};
 
@@ -191,7 +191,7 @@ class FollowingManage extends Component {
 		const isFollowByUrlWithNoSearchResults = showFollowByUrl && searchResultsCount === 0;
 		const filteredRecommendedSites = reject(
 			recommendedSites,
-			site => includes( blockedSites, site.blogId )
+			site => includes( blockedSites, site.blogId ),
 		);
 
 		return (
@@ -272,11 +272,11 @@ export default connect(
 		recommendedSites: getReaderRecommendedSites( state, recommendationsSeed ),
 		recommendedSitesPagingOffset: getReaderRecommendedSitesPagingOffset(
 			state,
-			recommendationsSeed
+			recommendationsSeed,
 		),
 		blockedSites: getBlockedSites( state ),
 		readerAliasedFollowFeedUrl: sitesQuery && getReaderAliasedFollowFeedUrl( state, sitesQuery ),
 		followsCount: getReaderFollowsCount( state ),
 	} ),
-	{ requestFeedSearch }
+	{ requestFeedSearch },
 )( localize( FollowingManage ) );

@@ -46,11 +46,12 @@ export class CommentNavigation extends Component {
 				label: translate( 'All' ),
 			},
 		};
-	}
+	};
 
-	getStatusPath = status => 'unapproved' !== status
-		? `/comments/${ status }/${ this.props.siteSlug }`
-		: `/comments/pending/${ this.props.siteSlug }`;
+	getStatusPath = status =>
+		( 'unapproved' !== status
+			? `/comments/${ status }/${ this.props.siteSlug }`
+			: `/comments/pending/${ this.props.siteSlug }` );
 
 	render() {
 		const {
@@ -67,42 +68,42 @@ export class CommentNavigation extends Component {
 
 		if ( isBulkEdit ) {
 			return (
-			<SectionNav className="comment-navigation is-bulk-edit">
-				<CommentNavigationTab>
-					<FormCheckbox />
-					<Count count={ selectedCount } />
-				</CommentNavigationTab>
-				<CommentNavigationTab className="comment-navigation__actions">
-					<ButtonGroup>
-						<Button compact>
-							{ translate( 'Approve' ) }
-						</Button>
-						<Button compact>
-							{ translate( 'Unapprove' ) }
-						</Button>
-					</ButtonGroup>
-					<ButtonGroup>
-						<Button compact>
-							{ translate( 'Spam' ) }
-						</Button>
-						<Button compact>
-							{ translate( 'Trash' ) }
-						</Button>
-					</ButtonGroup>
-				</CommentNavigationTab>
-				<CommentNavigationTab className="comment-navigation__close-bulk">
-					<a onClick={ toggleBulkEdit }>
-						<Gridicon icon="cross" />
-					</a>
-				</CommentNavigationTab>
-			</SectionNav>
+				<SectionNav className="comment-navigation is-bulk-edit">
+					<CommentNavigationTab>
+						<FormCheckbox />
+						<Count count={ selectedCount } />
+					</CommentNavigationTab>
+					<CommentNavigationTab className="comment-navigation__actions">
+						<ButtonGroup>
+							<Button compact>
+								{ translate( 'Approve' ) }
+							</Button>
+							<Button compact>
+								{ translate( 'Unapprove' ) }
+							</Button>
+						</ButtonGroup>
+						<ButtonGroup>
+							<Button compact>
+								{ translate( 'Spam' ) }
+							</Button>
+							<Button compact>
+								{ translate( 'Trash' ) }
+							</Button>
+						</ButtonGroup>
+					</CommentNavigationTab>
+					<CommentNavigationTab className="comment-navigation__close-bulk">
+						<a onClick={ toggleBulkEdit }>
+							<Gridicon icon="cross" />
+						</a>
+					</CommentNavigationTab>
+				</SectionNav>
 			);
 		}
 
 		return (
 			<SectionNav className="comment-navigation" selectedText={ navItems[ queryStatus ].label }>
 				<NavTabs selectedText={ navItems[ queryStatus ].label }>
-					{ map( navItems, ( { label }, status ) =>
+					{ map( navItems, ( { label }, status ) => (
 						<NavItem
 							key={ status }
 							path={ this.getStatusPath( status ) }
@@ -110,7 +111,7 @@ export class CommentNavigation extends Component {
 						>
 							{ label }
 						</NavItem>
-					) }
+					) ) }
 				</NavTabs>
 
 				<CommentNavigationTab className="comment-navigation__actions">
@@ -119,13 +120,7 @@ export class CommentNavigation extends Component {
 					</Button>
 				</CommentNavigationTab>
 
-				<Search
-					delaySearch
-					fitsContainer
-					initialValue={ query }
-					onSearch={ doSearch }
-					pinned
-				/>
+				<Search delaySearch fitsContainer initialValue={ query } onSearch={ doSearch } pinned />
 			</SectionNav>
 		);
 	}

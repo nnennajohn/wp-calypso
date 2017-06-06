@@ -11,7 +11,11 @@ import { localize } from 'i18n-calypso';
 import DomainSuggestion from 'components/domains/domain-suggestion';
 import Gridicon from 'gridicons';
 import DomainSuggestionFlag from 'components/domains/domain-suggestion-flag';
-import { shouldBundleDomainWithPlan, getDomainPriceRule, hasDomainInCart } from 'lib/cart-values/cart-items';
+import {
+	shouldBundleDomainWithPlan,
+	getDomainPriceRule,
+	hasDomainInCart,
+} from 'lib/cart-values/cart-items';
 import { abtest } from 'lib/abtest';
 
 const DomainRegistrationSuggestion = React.createClass( {
@@ -21,15 +25,22 @@ const DomainRegistrationSuggestion = React.createClass( {
 		suggestion: React.PropTypes.shape( {
 			domain_name: React.PropTypes.string.isRequired,
 			product_slug: React.PropTypes.string,
-			cost: React.PropTypes.string
+			cost: React.PropTypes.string,
 		} ).isRequired,
 		onButtonClick: React.PropTypes.func.isRequired,
 		domainsWithPlansOnly: React.PropTypes.bool.isRequired,
-		selectedSite: React.PropTypes.object
+		selectedSite: React.PropTypes.object,
 	},
 
 	render() {
-		const { cart, domainsWithPlansOnly, isSignupStep, selectedSite, suggestion, translate } = this.props,
+		const {
+			cart,
+			domainsWithPlansOnly,
+			isSignupStep,
+			selectedSite,
+			suggestion,
+			translate,
+		} = this.props,
 			domain = suggestion.domain_name,
 			isAdded = hasDomainInCart( cart, domain ),
 			domainFlags = [];
@@ -50,7 +61,7 @@ const DomainRegistrationSuggestion = React.createClass( {
 						key={ `${ domain }-new` }
 						content={ translate( 'New' ) }
 						status="success"
-					/>
+					/>,
 				);
 			}
 
@@ -60,7 +71,7 @@ const DomainRegistrationSuggestion = React.createClass( {
 						key={ `${ domain }-testing` }
 						content={ 'Testing only' }
 						status="warning"
-					/>
+					/>,
 				);
 			}
 		}
@@ -71,7 +82,7 @@ const DomainRegistrationSuggestion = React.createClass( {
 					key={ `${ domain }-recommended` }
 					content={ translate( 'Recommended' ) }
 					status="success"
-				/>
+				/>,
 			);
 		}
 
@@ -80,7 +91,7 @@ const DomainRegistrationSuggestion = React.createClass( {
 				<DomainSuggestionFlag
 					key={ `${ domain }-best-alternative` }
 					content={ translate( 'Best Alternative' ) }
-				/>
+				/>,
 			);
 		}
 
@@ -90,28 +101,30 @@ const DomainRegistrationSuggestion = React.createClass( {
 		} else {
 			buttonClasses = 'add is-primary';
 			const allowUpgradeCta = ! isSignupStep || abtest( 'selectCtaInDomainsSignup' ) === 'original';
-			buttonContent = allowUpgradeCta && shouldBundleDomainWithPlan( domainsWithPlansOnly, selectedSite, cart, suggestion )
+			buttonContent = allowUpgradeCta &&
+				shouldBundleDomainWithPlan( domainsWithPlansOnly, selectedSite, cart, suggestion )
 				? translate( 'Upgrade', { context: 'Domain mapping suggestion button with plan upgrade' } )
 				: translate( 'Select', { context: 'Domain mapping suggestion button' } );
 		}
 
 		return (
 			<DomainSuggestion
-					priceRule={ getDomainPriceRule( domainsWithPlansOnly, selectedSite, cart, suggestion ) }
-					price={ suggestion.product_slug && suggestion.cost }
-					domain={ domain }
-					buttonClasses={ buttonClasses }
-					buttonContent={ buttonContent }
-					cart={ cart }
-					domainsWithPlansOnly={ domainsWithPlansOnly }
-					onButtonClick={ this.props.onButtonClick }>
+				priceRule={ getDomainPriceRule( domainsWithPlansOnly, selectedSite, cart, suggestion ) }
+				price={ suggestion.product_slug && suggestion.cost }
+				domain={ domain }
+				buttonClasses={ buttonClasses }
+				buttonContent={ buttonContent }
+				cart={ cart }
+				domainsWithPlansOnly={ domainsWithPlansOnly }
+				onButtonClick={ this.props.onButtonClick }
+			>
 				<h3>
 					{ domain }
 					{ domainFlags }
 				</h3>
 			</DomainSuggestion>
 		);
-	}
+	},
 } );
 
 export default localize( DomainRegistrationSuggestion );

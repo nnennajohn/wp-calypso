@@ -1,13 +1,12 @@
-
 const sites = {
 	1: {
 		ID: 1,
-		slug: 'primary.wordpress.com'
+		slug: 'primary.wordpress.com',
 	},
 	42: {
 		ID: 42,
-		slug: 'foo.wordpress.com'
-	}
+		slug: 'foo.wordpress.com',
+	},
 };
 
 class SiteList {
@@ -32,7 +31,7 @@ class SiteList {
 	}
 }
 
-const siteList = new SiteList;
+const siteList = new SiteList();
 
 export default function factory() {
 	return siteList;

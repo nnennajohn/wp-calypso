@@ -54,12 +54,10 @@ class EditorConfirmationSidebar extends React.Component {
 			password,
 			status,
 			savedStatus,
-			savedPassword
+			savedPassword,
 		};
 
-		return (
-			<EditorVisibility { ...props } />
-		);
+		return <EditorVisibility { ...props } />;
 	}
 
 	render() {
@@ -68,24 +66,33 @@ class EditorConfirmationSidebar extends React.Component {
 
 		return (
 			<RootChild>
-				<div className={ classnames( {
-					'editor-confirmation-sidebar': true,
-					'is-active': isOverlayActive,
-				} ) } >
-					<div className={ classnames( {
-						'editor-confirmation-sidebar__overlay': true,
+				<div
+					className={ classnames( {
+						'editor-confirmation-sidebar': true,
 						'is-active': isOverlayActive,
-					} ) } onClick={ this.closeOverlay } />
-					<div className={ classnames( {
-						'editor-confirmation-sidebar__sidebar': true,
-						'is-active': isSidebarActive,
-					} ) }>
+					} ) }
+				>
+					<div
+						className={ classnames( {
+							'editor-confirmation-sidebar__overlay': true,
+							'is-active': isOverlayActive,
+						} ) }
+						onClick={ this.closeOverlay }
+					/>
+					<div
+						className={ classnames( {
+							'editor-confirmation-sidebar__sidebar': true,
+							'is-active': isSidebarActive,
+						} ) }
+					>
 						<div className="editor-confirmation-sidebar__ground-control">
 							<div className="editor-confirmation-sidebar__cancel" onClick={ this.closeOverlay }>
 								{ this.props.translate( 'Cancel' ) }
 							</div>
 							<div className="editor-confirmation-sidebar__action">
-								<Button onClick={ this.closeAndPublish } compact>{ this.props.translate( 'Publish' ) }</Button>
+								<Button onClick={ this.closeAndPublish } compact>
+									{ this.props.translate( 'Publish' ) }
+								</Button>
 							</div>
 						</div>
 						<div className="editor-confirmation-sidebar__content-wrap">
@@ -101,7 +108,7 @@ class EditorConfirmationSidebar extends React.Component {
 }
 
 export default connect(
-	( state ) => {
+	state => {
 		const siteId = getSelectedSiteId( state );
 		const postId = getEditorPostId( state );
 		const post = getEditedPost( state, siteId, postId );
@@ -109,8 +116,8 @@ export default connect(
 		return {
 			siteId,
 			postId,
-			post
+			post,
 		};
 	},
-	{ editPost }
+	{ editPost },
 )( localize( EditorConfirmationSidebar ) );

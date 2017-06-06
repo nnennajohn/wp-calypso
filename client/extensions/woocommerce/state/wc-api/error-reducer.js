@@ -6,10 +6,7 @@ import debugFactory from 'debug';
 /**
  * Internal dependencies
  */
-import {
-	WOOCOMMERCE_API_SET_ERROR,
-	WOOCOMMERCE_API_CLEAR_ERROR,
-} from '../action-types';
+import { WOOCOMMERCE_API_SET_ERROR, WOOCOMMERCE_API_CLEAR_ERROR } from '../action-types';
 
 const debug = debugFactory( 'woocommerce:wc-api:error' );
 

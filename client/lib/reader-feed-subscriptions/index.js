@@ -23,7 +23,7 @@ import { prepareComparableUrl, prepareSiteUrl } from './helper';
 
 const subscriptionsTemplate = {
 	list: Immutable.List(), // eslint-disable-line new-cap
-	count: 0
+	count: 0,
 };
 
 let subscriptions = clone( subscriptionsTemplate ),
@@ -33,12 +33,12 @@ let subscriptions = clone( subscriptionsTemplate ),
 	isLastPage = false,
 	isFetching = false,
 	totalSubscriptions = 0,
-	subscriptionTemplate = Immutable.Map( { // eslint-disable-line new-cap
-		state: States.SUBSCRIBED
+	subscriptionTemplate = Immutable.Map( {
+		// eslint-disable-line new-cap
+		state: States.SUBSCRIBED,
 	} );
 
 const FeedSubscriptionStore = {
-
 	// Tentatively add the new subscription
 	// We haven't received confirmation from the API yet, but we want to update the UI
 	receiveFollow: function( action ) {
@@ -91,7 +91,7 @@ const FeedSubscriptionStore = {
 			URL: siteUrl,
 			errorType: ErrorTypes.UNABLE_TO_FOLLOW,
 			info: errorInfo,
-			timestamp: Date.now()
+			timestamp: Date.now(),
 		} );
 
 		// If the user is already subscribed, we don't want to remove the subscription again
@@ -115,7 +115,7 @@ const FeedSubscriptionStore = {
 			URL: action.url,
 			errorType: ErrorTypes.UNABLE_TO_UNFOLLOW,
 			info: get( action, 'data.info' ),
-			timestamp: Date.now()
+			timestamp: Date.now(),
 		} );
 
 		// There was a problem - add the subscription again
@@ -146,8 +146,7 @@ const FeedSubscriptionStore = {
 			_acceptSubscription( subscription, false );
 		} );
 		subscriptions.list = subscriptions.list.sort( function( a, b ) {
-			const aDate = a.get( 'date_subscribed' ),
-				bDate = b.get( 'date_subscribed' );
+			const aDate = a.get( 'date_subscribed' ), bDate = b.get( 'date_subscribed' );
 
 			if ( aDate > bDate ) {
 				return -1;
@@ -174,7 +173,7 @@ const FeedSubscriptionStore = {
 	},
 
 	getIsFollowingBySiteUrl: function( siteUrl ) {
-		return !! ( this.getSubscription( siteUrl ) );
+		return !! this.getSubscription( siteUrl );
 	},
 
 	getSubscriptions: function() {
@@ -184,7 +183,10 @@ const FeedSubscriptionStore = {
 	getSubscription: function( siteUrl ) {
 		const comparableUrl = prepareComparableUrl( siteUrl );
 		return subscriptions.list.find( function( subscription ) {
-			return ( subscription.get( 'comparableUrl' ) === comparableUrl && subscription.get( 'state' ) === States.SUBSCRIBED );
+			return (
+				subscription.get( 'comparableUrl' ) === comparableUrl &&
+				subscription.get( 'state' ) === States.SUBSCRIBED
+			);
 		} );
 	},
 
@@ -249,12 +251,14 @@ const FeedSubscriptionStore = {
 
 	setPerPage: function( newPerPage ) {
 		perPage = newPerPage;
-	}
+	},
 };
 
 function _acceptSubscription( subscription, addToTop = true ) {
 	let subs = subscriptions.list;
-	const existingIndex = subs.findIndex( value => value.get( 'comparableUrl' ) === subscription.get( 'comparableUrl' ) );
+	const existingIndex = subs.findIndex(
+		value => value.get( 'comparableUrl' ) === subscription.get( 'comparableUrl' ),
+	);
 	if ( existingIndex !== -1 ) {
 		// update the existing subscription by merging together
 		subs = subs.mergeIn( [ existingIndex ], subscription );
@@ -318,7 +322,10 @@ function updateSubscription( url, newSubscriptionInfo ) {
 	newSubscriptionInfo = Immutable.fromJS( newSubscriptionInfo );
 
 	// If it's a refollow (i.e. the store has handled an unsubscribe for this feed already), add is_refollow flag to the updated subscription object
-	if ( existingSubscription.get( 'state' ) === States.UNSUBSCRIBED && newSubscriptionInfo.get( 'state' ) === States.SUBSCRIBED ) {
+	if (
+		existingSubscription.get( 'state' ) === States.UNSUBSCRIBED &&
+		newSubscriptionInfo.get( 'state' ) === States.SUBSCRIBED
+	) {
 		newSubscriptionInfo = newSubscriptionInfo.merge( { is_refollow: true } );
 	}
 
@@ -340,7 +347,10 @@ function updateSubscription( url, newSubscriptionInfo ) {
 
 	subscriptions.list = updatedSubscriptionsList;
 
-	if ( existingSubscription.get( 'state' ) === States.UNSUBSCRIBED && updatedSubscription.get( 'state' ) === States.SUBSCRIBED ) {
+	if (
+		existingSubscription.get( 'state' ) === States.UNSUBSCRIBED &&
+		updatedSubscription.get( 'state' ) === States.SUBSCRIBED
+	) {
 		totalSubscriptions++;
 	}
 

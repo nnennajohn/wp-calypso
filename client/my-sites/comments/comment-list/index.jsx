@@ -10,10 +10,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 /**
  * Internal dependencies
  */
-import {
-	createNotice,
-	removeNotice,
-} from 'state/notices/actions';
+import { createNotice, removeNotice } from 'state/notices/actions';
 import { getNotices } from 'state/notices/selectors';
 import getSiteComments from 'state/selectors/get-site-comments';
 import CommentDetail from 'blocks/comment-detail';
@@ -44,21 +41,25 @@ export class CommentList extends Component {
 		this.showNotice( commentId, 'delete', 'trash' );
 
 		this.props.deleteCommentPermanently( commentId );
-	}
+	};
 
 	getEmptyMessage = () => {
 		const { status, translate } = this.props;
 
 		const defaultLine = translate( 'Your queue is clear.' );
 
-		return get( {
-			unapproved: [ translate( 'No new comments yet.' ), defaultLine ],
-			approved: [ translate( 'No approved comments.' ), defaultLine ],
-			spam: [ translate( 'No spam comments.' ), defaultLine ],
-			trash: [ translate( 'No deleted comments.' ), defaultLine ],
-			all: [ translate( 'No comments yet.' ), defaultLine ],
-		}, status, [ '', '' ] );
-	}
+		return get(
+			{
+				unapproved: [ translate( 'No new comments yet.' ), defaultLine ],
+				approved: [ translate( 'No approved comments.' ), defaultLine ],
+				spam: [ translate( 'No spam comments.' ), defaultLine ],
+				trash: [ translate( 'No deleted comments.' ), defaultLine ],
+				all: [ translate( 'No comments yet.' ), defaultLine ],
+			},
+			status,
+			[ '', '' ],
+		);
+	};
 
 	setCommentStatus = ( commentId, status, options = { showNotice: true } ) => {
 		const comment = find( this.props.comments, [ 'ID', commentId ] );
@@ -74,18 +75,22 @@ export class CommentList extends Component {
 		}
 
 		this.props.setCommentStatus( commentId, status );
-	}
+	};
 
 	showNotice = ( commentId, newStatus, previousStatus ) => {
 		const { translate } = this.props;
 
-		const [ type, message ] = get( {
-			approved: [ 'is-success', translate( 'Comment approved.' ) ],
-			unapproved: [ 'is-info', translate( 'Comment unapproved.' ) ],
-			spam: [ 'is-warning', translate( 'Comment marked as spam.' ) ],
-			trash: [ 'is-error', translate( 'Comment moved to trash.' ) ],
-			'delete': [ 'is-error', translate( 'Comment deleted permanently.' ) ],
-		}, newStatus, [ null, null ] );
+		const [ type, message ] = get(
+			{
+				approved: [ 'is-success', translate( 'Comment approved.' ) ],
+				unapproved: [ 'is-info', translate( 'Comment unapproved.' ) ],
+				spam: [ 'is-warning', translate( 'Comment marked as spam.' ) ],
+				trash: [ 'is-error', translate( 'Comment moved to trash.' ) ],
+				delete: [ 'is-error', translate( 'Comment deleted permanently.' ) ],
+			},
+			newStatus,
+			[ null, null ],
+		);
 
 		if ( ! type ) {
 			return;
@@ -100,11 +105,11 @@ export class CommentList extends Component {
 			'delete' !== newStatus && {
 				button: translate( 'Undo' ),
 				onClick: () => this.setCommentStatus( commentId, previousStatus, { showNotice: false } ),
-			}
+			},
 		);
 
 		this.props.createNotice( type, message, options );
-	}
+	};
 
 	toggleBulkEdit = () => this.setState( { isBulkEdit: ! this.state.isBulkEdit } );
 
@@ -117,21 +122,17 @@ export class CommentList extends Component {
 		}
 
 		this.props.toggleCommentLike( commentId );
-	}
+	};
 
 	render() {
-		const {
-			comments,
-			siteId,
-			siteSlug,
-			status,
-		} = this.props;
-		const {
-			isBulkEdit,
-		} = this.state;
+		const { comments, siteId, siteSlug, status } = this.props;
+		const { isBulkEdit } = this.state;
 
 		const filteredComments = 'all' === status
-			? filter( comments, comment => 'approved' === comment.status || 'unapproved' === comment.status )
+			? filter(
+					comments,
+					comment => 'approved' === comment.status || 'unapproved' === comment.status,
+				)
 			: filter( comments, comment => status === comment.status );
 
 		const [ emptyMessageTitle, emptyMessageLine ] = this.getEmptyMessage();
@@ -139,28 +140,33 @@ export class CommentList extends Component {
 		return (
 			<div className="comment-list">
 				<QuerySiteComments siteId={ siteId } status="all" />
-				<CommentNavigation { ...{
-					isBulkEdit,
-					siteSlug,
-					status,
-					toggleBulkEdit: this.toggleBulkEdit,
-				} } />
+				<CommentNavigation
+					{ ...{
+						isBulkEdit,
+						siteSlug,
+						status,
+						toggleBulkEdit: this.toggleBulkEdit,
+					} }
+				/>
 
 				<ReactCSSTransitionGroup
 					transitionEnterTimeout={ 300 }
 					transitionLeaveTimeout={ 150 }
 					transitionName="comment-detail__transition"
 				>
-					{ map( filteredComments, comment =>
-						<CommentDetail
-							comment={ comment }
-							deleteCommentPermanently={ this.deleteCommentPermanently }
-							isBulkEdit={ isBulkEdit }
-							key={ `comment-${ siteId }-${ comment.ID }` }
-							setCommentStatus={ this.setCommentStatus }
-							siteId={ siteId }
-							toggleCommentLike={ this.toggleCommentLike }
-						/>
+					{ map(
+						filteredComments,
+						comment => (
+							<CommentDetail
+								comment={ comment }
+								deleteCommentPermanently={ this.deleteCommentPermanently }
+								isBulkEdit={ isBulkEdit }
+								key={ `comment-${ siteId }-${ comment.ID }` }
+								setCommentStatus={ this.setCommentStatus }
+								siteId={ siteId }
+								toggleCommentLike={ this.toggleCommentLike }
+							/>
+						),
 					) }
 				</ReactCSSTransitionGroup>
 
@@ -170,10 +176,7 @@ export class CommentList extends Component {
 					transitionName="comment-list__transition"
 				>
 					{ null === filteredComments &&
-						<CommentDetailPlaceholder
-							key="comment-detail-placeholder"
-						/>
-					}
+						<CommentDetailPlaceholder key="comment-detail-placeholder" /> }
 
 					{ 0 === size( filteredComments ) &&
 						<EmptyContent
@@ -182,8 +185,7 @@ export class CommentList extends Component {
 							key="comment-list-empty"
 							line={ emptyMessageLine }
 							title={ emptyMessageTitle }
-						/>
-					}
+						/> }
 				</ReactCSSTransitionGroup>
 			</div>
 		);
@@ -204,4 +206,6 @@ const mapDispatchToProps = {
 	removeNotice,
 };
 
-export default connect( mapStateToProps, mapDispatchToProps )( localize( CommentFaker( CommentList ) ) );
+export default connect( mapStateToProps, mapDispatchToProps )(
+	localize( CommentFaker( CommentList ) ),
+);

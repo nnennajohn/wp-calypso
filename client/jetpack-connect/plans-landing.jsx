@@ -27,22 +27,19 @@ class PlansLanding extends Component {
 		} );
 	}
 
-	storeSelectedPlan = ( cartItem ) => {
+	storeSelectedPlan = cartItem => {
 		this.props.recordTracksEvent( 'calypso_jpc_plans_store_plan', {
-			plan: cartItem ? cartItem.product_slug : 'free'
+			plan: cartItem ? cartItem.product_slug : 'free',
 		} );
 		this.props.selectPlanInAdvance( cartItem ? cartItem.product_slug : 'free', '*' );
 
 		setTimeout( () => {
 			page.redirect( CALYPSO_JETPACK_CONNECT );
 		}, 25 );
-	}
+	};
 
 	render() {
-		const {
-			basePlansPath,
-			interval,
-		} = this.props;
+		const { basePlansPath, interval } = this.props;
 		return (
 			<div>
 				<QueryPlans />

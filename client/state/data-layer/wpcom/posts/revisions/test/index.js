@@ -8,12 +8,7 @@ import sinon from 'sinon';
 /**
  * Internal dependencies
  */
-import {
-	fetchPostRevisions,
-	normalizeRevision,
-	receiveSuccess,
-	receiveError,
-} from '../';
+import { fetchPostRevisions, normalizeRevision, receiveSuccess, receiveError } from '../';
 import {
 	receivePostRevisions,
 	receivePostRevisionsSuccess,
@@ -60,9 +55,9 @@ const normalizedPostRevisions = [
 
 describe( '#normalizeRevision', () => {
 	it( 'should only keep the rendered version of `title`, `content` and `excerpt`', () => {
-		expect(
-			map( successfulPostRevisionsResponse, normalizeRevision )
-		).to.eql( normalizedPostRevisions );
+		expect( map( successfulPostRevisionsResponse, normalizeRevision ) ).to.eql(
+			normalizedPostRevisions,
+		);
 	} );
 } );
 
@@ -74,13 +69,18 @@ describe( '#fetchPostRevisions', () => {
 		fetchPostRevisions( { dispatch }, action );
 
 		expect( dispatch ).to.have.been.calledOnce;
-		expect( dispatch ).to.have.been.calledWith( http( {
-			method: 'GET',
-			path: '/sites/12345678/posts/10/revisions',
-			query: {
-				apiNamespace: 'wp/v2',
-			},
-		}, action ) );
+		expect( dispatch ).to.have.been.calledWith(
+			http(
+				{
+					method: 'GET',
+					path: '/sites/12345678/posts/10/revisions',
+					query: {
+						apiNamespace: 'wp/v2',
+					},
+				},
+				action,
+			),
+		);
 	} );
 } );
 
@@ -93,7 +93,9 @@ describe( '#receiveSuccess', () => {
 
 		expect( dispatch ).to.have.been.calledTwice;
 		expect( dispatch ).to.have.been.calledWith( receivePostRevisionsSuccess( 12345678, 10 ) );
-		expect( dispatch ).to.have.been.calledWith( receivePostRevisions( 12345678, 10, normalizedPostRevisions ) );
+		expect( dispatch ).to.have.been.calledWith(
+			receivePostRevisions( 12345678, 10, normalizedPostRevisions ),
+		);
 	} );
 } );
 
@@ -106,6 +108,8 @@ describe( '#receiveError', () => {
 		receiveError( { dispatch }, action, null, rawError );
 
 		expect( dispatch ).to.have.been.calledOnce;
-		expect( dispatch ).to.have.been.calledWith( receivePostRevisionsFailure( 12345678, 10, rawError ) );
+		expect( dispatch ).to.have.been.calledWith(
+			receivePostRevisionsFailure( 12345678, 10, rawError ),
+		);
 	} );
 } );

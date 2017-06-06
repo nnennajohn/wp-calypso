@@ -21,4 +21,3 @@ function fetchProductCategoriesSuccess( siteData, action ) {
 
 	return { ...siteData, productCategories: data };
 }
-

@@ -21,7 +21,7 @@ const SelectDropdownDemo = React.createClass( {
 		return {
 			childSelected: 'Published',
 			selectedCount: 10,
-			compactButtons: false
+			compactButtons: false,
 		};
 	},
 
@@ -33,8 +33,8 @@ const SelectDropdownDemo = React.createClass( {
 				{ value: 'scheduled', label: 'Scheduled' },
 				{ value: 'drafts', label: 'Drafts' },
 				null,
-				{ value: 'trashed', label: 'Trashed' }
-			]
+				{ value: 'trashed', label: 'Trashed' },
+			],
 		};
 	},
 
@@ -43,16 +43,11 @@ const SelectDropdownDemo = React.createClass( {
 	},
 
 	render: function() {
-		const toggleButtonsText = this.state.compactButtons
-			? 'Normal Buttons'
-			: 'Compact Buttons';
+		const toggleButtonsText = this.state.compactButtons ? 'Normal Buttons' : 'Compact Buttons';
 
 		return (
 			<div className="docs__select-dropdown-container">
-				<a
-					className="docs__design-toggle button"
-					onClick={ this.toggleButtons }
-				>
+				<a className="docs__design-toggle button" onClick={ this.toggleButtons }>
 					{ toggleButtonsText }
 				</a>
 
@@ -60,7 +55,8 @@ const SelectDropdownDemo = React.createClass( {
 				<SelectDropdown
 					compact={ this.state.compactButtons }
 					options={ this.props.options }
-					onSelect={ this.onDropdownSelect } />
+					onSelect={ this.onDropdownSelect }
+				/>
 
 				<h3 style={ { marginTop: 20 } }>Items passed as children</h3>
 				<SelectDropdown
@@ -118,8 +114,10 @@ const SelectDropdownDemo = React.createClass( {
 				>
 
 					<DropdownLabel><strong>Statuses</strong></DropdownLabel>
-					<DropdownItem count={ 10 } selected={ true } >Published publish publish publish</DropdownItem>
-					<DropdownItem count={ 4 } > Scheduled scheduled</DropdownItem>
+					<DropdownItem count={ 10 } selected={ true }>
+						Published publish publish publish
+					</DropdownItem>
+					<DropdownItem count={ 4 }> Scheduled scheduled</DropdownItem>
 					<DropdownItem>Drafts</DropdownItem>
 					<DropdownSeparator />
 					<DropdownItem count={ 3 }>Trashed</DropdownItem>
@@ -134,7 +132,7 @@ const SelectDropdownDemo = React.createClass( {
 
 		this.setState( {
 			childSelected: childSelected,
-			selectedCount: count
+			selectedCount: count,
 		} );
 
 		console.log( 'Select Dropdown Item (selected):', childSelected );
@@ -142,7 +140,7 @@ const SelectDropdownDemo = React.createClass( {
 
 	onDropdownSelect: function( option ) {
 		console.log( 'Select Dropdown (selected):', option );
-	}
+	},
 } );
 
 module.exports = SelectDropdownDemo;

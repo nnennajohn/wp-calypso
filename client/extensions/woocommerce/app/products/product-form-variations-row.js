@@ -22,20 +22,20 @@ const ProductFormVariationsRow = ( {
 	manageStock,
 } ) => {
 	// TODO: Consildate the following set/toggle functions with a helper (along with the form-details functions).
-	const setPrice = ( e ) => {
+	const setPrice = e => {
 		editProductVariation( product, variation, { regular_price: e.target.value } );
 	};
 
-	const setWeight = ( e ) => {
+	const setWeight = e => {
 		editProductVariation( product, variation, { weight: e.target.value } );
 	};
 
-	const setDimension = ( e ) => {
+	const setDimension = e => {
 		const dimensions = { ...variation.dimensions, [ e.target.name ]: e.target.value };
 		editProductVariation( product, variation, { dimensions } );
 	};
 
-	const setStockQuantity = ( e ) => {
+	const setStockQuantity = e => {
 		const stock_quantity = Number( e.target.value ) >= 0 ? e.target.value : '';
 		editProductVariation( product, variation, { stock_quantity } );
 	};
@@ -48,14 +48,18 @@ const ProductFormVariationsRow = ( {
 		<tr className="products__product-form-variation-row">
 			<td className="products__product-id">
 				<div className="products__product-name-thumb">
-					<div className="products__product-form-variation-image"></div>
-					<span className="products__product-name products__variation-settings-link" onClick={ showDialog }>
+					<div className="products__product-form-variation-image" />
+					<span
+						className="products__product-name products__variation-settings-link"
+						onClick={ showDialog }
+					>
 						{ formattedVariationName( variation ) }
 					</span>
 				</div>
 			</td>
 			<td>
-				<FormCurrencyInput noWrap
+				<FormCurrencyInput
+					noWrap
 					currencySymbolPrefix="$"
 					name="price"
 					value={ variation.regular_price || '' }
@@ -88,13 +92,14 @@ const ProductFormVariationsRow = ( {
 			</td>
 			<td>
 				<div className="products__product-manage-stock">
-					{ manageStock && ( <FormTextInput
-						name="stock_quantity"
-						value={ variation.stock_quantity || '' }
-						type="number"
-						onChange={ setStockQuantity }
-						placeholder={ translate( 'Quantity' ) }
-					/> ) }
+					{ manageStock &&
+						<FormTextInput
+							name="stock_quantity"
+							value={ variation.stock_quantity || '' }
+							type="number"
+							onChange={ setStockQuantity }
+							placeholder={ translate( 'Quantity' ) }
+						/> }
 				</div>
 			</td>
 		</tr>

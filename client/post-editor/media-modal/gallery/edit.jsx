@@ -16,13 +16,13 @@ export default React.createClass( {
 	propTypes: {
 		site: React.PropTypes.object,
 		settings: PropTypes.object,
-		onUpdateSetting: PropTypes.func
+		onUpdateSetting: PropTypes.func,
 	},
 
 	getDefaultProps() {
 		return {
 			settings: Object.freeze( {} ),
-			onUpdateSetting: noop
+			onUpdateSetting: noop,
 		};
 	},
 
@@ -35,7 +35,7 @@ export default React.createClass( {
 
 		this.props.onUpdateSetting( {
 			items: items,
-			orderBy: null
+			orderBy: null,
 		} );
 	},
 
@@ -48,16 +48,17 @@ export default React.createClass( {
 
 		return (
 			<SortableList onChange={ this.onOrderChanged }>
-				{ settings.items.map( ( item ) => {
+				{ settings.items.map( item => {
 					return (
 						<EditorMediaModalGalleryEditItem
 							key={ item.ID }
 							site={ site }
 							item={ item }
-							showRemoveButton={ settings.items.length > 1 } />
+							showRemoveButton={ settings.items.length > 1 }
+						/>
 					);
 				} ) }
 			</SortableList>
 		);
-	}
+	},
 } );

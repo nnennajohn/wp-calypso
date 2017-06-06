@@ -27,7 +27,7 @@ export function initiateFeedSearch( store, action ) {
 			query: { q: action.payload.query, offset: action.payload.offset },
 			onSuccess: action,
 			onFailure: action,
-		} )
+		} ),
 	);
 }
 

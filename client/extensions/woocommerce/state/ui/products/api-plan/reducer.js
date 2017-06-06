@@ -62,4 +62,3 @@ function handleApiPlanStepEnd( apiPlan, action ) {
 
 	return newPlan;
 }
-

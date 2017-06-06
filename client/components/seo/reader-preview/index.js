@@ -11,28 +11,20 @@ import ReaderPostCard from 'blocks/reader-post-card';
 
 export class ReaderPreview extends PureComponent {
 	render() {
-		const {
-			site,
-			post,
-			postExcerpt,
-			postImage,
-		} = this.props;
+		const { site, post, postExcerpt, postImage } = this.props;
 
 		// Add some ReaderPost specific properties that are necessary
 		const readerPost = Object.assign(
 			post,
 			{ better_excerpt: postExcerpt },
 			postImage && { canonical_media: { src: postImage } },
-			( postImage && ! postExcerpt ) && { display_type: DisplayTypes.PHOTO_ONLY },
-			{ author: Object.assign(
-				post.author,
-				{ has_avatar: true }
-			) }
+			postImage && ! postExcerpt && { display_type: DisplayTypes.PHOTO_ONLY },
+			{
+				author: Object.assign( post.author, { has_avatar: true } ),
+			},
 		);
 
-		return (
-			<ReaderPostCard site={ site } post={ readerPost } />
-		);
+		return <ReaderPostCard site={ site } post={ readerPost } />;
 	}
 }
 
@@ -40,7 +32,7 @@ ReaderPreview.propTypes = {
 	site: PropTypes.object,
 	post: PropTypes.object,
 	postExcerpt: PropTypes.string,
-	postImage: PropTypes.string
+	postImage: PropTypes.string,
 };
 
 export default ReaderPreview;

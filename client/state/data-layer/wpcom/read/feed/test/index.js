@@ -35,7 +35,7 @@ describe( 'wpcom-api', () => {
 						query: { q: query, offset: 0 },
 						onSuccess: action,
 						onFailure: action,
-					} )
+					} ),
 				);
 			} );
 		} );
@@ -59,8 +59,8 @@ describe( 'wpcom-api', () => {
 								subscribe_URL: 'feedUrl',
 							},
 						],
-						200
-					)
+						200,
+					),
 				);
 			} );
 		} );

@@ -8,9 +8,7 @@ import { expect } from 'chai';
  */
 import reducer from '../../reducer';
 import wcReducer from '../../../reducer';
-import {
-	WOOCOMMERCE_API_FETCH_PRODUCT_CATEGORIES,
-} from '../../../action-types';
+import { WOOCOMMERCE_API_FETCH_PRODUCT_CATEGORIES } from '../../../action-types';
 import { fetchProductCategoriesSuccess } from '../actions';
 
 describe( 'fetchProductCategories', () => {
@@ -18,7 +16,10 @@ describe( 'fetchProductCategories', () => {
 		const siteId = 123;
 		const state = {};
 
-		const newSiteData = reducer( state, { type: WOOCOMMERCE_API_FETCH_PRODUCT_CATEGORIES, payload: { siteId } } );
+		const newSiteData = reducer(
+			state,
+			{ type: WOOCOMMERCE_API_FETCH_PRODUCT_CATEGORIES, payload: { siteId } },
+		);
 		expect( newSiteData[ siteId ] ).to.eql( {} );
 	} );
 } );
@@ -41,20 +42,11 @@ describe( 'fetchProductCategoriesSuccess', () => {
 		const siteId = 123;
 		const state = {};
 
-		const missingId = [
-			{ id: 12, name: 'ok', slug: 'ok' },
-			{ name: 'badId', slug: 'bad-id' },
-		];
+		const missingId = [ { id: 12, name: 'ok', slug: 'ok' }, { name: 'badId', slug: 'bad-id' } ];
 
-		const missingName = [
-			{ id: 12, name: 'ok', slug: 'ok' },
-			{ id: 13, slug: 'missing-name' },
-		];
+		const missingName = [ { id: 12, name: 'ok', slug: 'ok' }, { id: 13, slug: 'missing-name' } ];
 
-		const missingSlug = [
-			{ id: 12, name: 'ok', slug: 'ok' },
-			{ id: 13, name: 'Missing Slug' },
-		];
+		const missingSlug = [ { id: 12, name: 'ok', slug: 'ok' }, { id: 13, name: 'Missing Slug' } ];
 
 		const badId = [
 			{ id: 12, name: 'ok', slug: 'ok' },
@@ -66,28 +58,36 @@ describe( 'fetchProductCategoriesSuccess', () => {
 			{ id: 13, name: 12.3, slug: 'bad-name' },
 		];
 
-		const badSlug = [
-			{ id: 12, name: 'ok', slug: 'ok' },
-			{ id: 13, name: 'Bad Slug', slug: 15 },
-		];
+		const badSlug = [ { id: 12, name: 'ok', slug: 'ok' }, { id: 13, name: 'Bad Slug', slug: 15 } ];
 
 		let newState = wcReducer( state, fetchProductCategoriesSuccess( siteId, missingId ) );
-		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal( 'Invalid Categories Array' );
+		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal(
+			'Invalid Categories Array',
+		);
 
 		newState = wcReducer( state, fetchProductCategoriesSuccess( siteId, missingName ) );
-		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal( 'Invalid Categories Array' );
+		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal(
+			'Invalid Categories Array',
+		);
 
 		newState = wcReducer( state, fetchProductCategoriesSuccess( siteId, missingSlug ) );
-		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal( 'Invalid Categories Array' );
+		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal(
+			'Invalid Categories Array',
+		);
 
 		newState = wcReducer( state, fetchProductCategoriesSuccess( siteId, badId ) );
-		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal( 'Invalid Categories Array' );
+		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal(
+			'Invalid Categories Array',
+		);
 
 		newState = wcReducer( state, fetchProductCategoriesSuccess( siteId, badName ) );
-		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal( 'Invalid Categories Array' );
+		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal(
+			'Invalid Categories Array',
+		);
 
 		newState = wcReducer( state, fetchProductCategoriesSuccess( siteId, badSlug ) );
-		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal( 'Invalid Categories Array' );
+		expect( newState.site[ siteId ].status.wcApi.error.data.message ).to.equal(
+			'Invalid Categories Array',
+		);
 	} );
 } );
-

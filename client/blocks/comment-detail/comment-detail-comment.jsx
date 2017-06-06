@@ -66,8 +66,7 @@ export class CommentDetailComment extends Component {
 								<Gridicon icon="reply" />
 								<span>{ translate( 'You replied to this comment' ) }</span>
 							</a>
-						</div>
-					}
+						</div> }
 				</div>
 			</div>
 		);

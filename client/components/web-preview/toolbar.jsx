@@ -11,11 +11,7 @@ import Gridicon from 'gridicons';
  */
 import { localize } from 'i18n-calypso';
 
-const possibleDevices = [
-	'computer',
-	'tablet',
-	'phone'
-];
+const possibleDevices = [ 'computer', 'tablet', 'phone' ];
 
 export const PreviewToolbar = props => {
 	const {
@@ -29,7 +25,7 @@ export const PreviewToolbar = props => {
 		showDeviceSwitcher,
 		showExternal,
 		showSEO,
-		translate
+		translate,
 	} = props;
 
 	return (
@@ -42,8 +38,7 @@ export const PreviewToolbar = props => {
 					onClick={ onClose }
 				>
 					<Gridicon icon="cross" />
-				</button>
-			}
+				</button> }
 			{ showExternal &&
 				<a
 					className="web-preview__external"
@@ -52,8 +47,7 @@ export const PreviewToolbar = props => {
 					rel="noopener noreferrer"
 				>
 					<Gridicon icon="external" />
-				</a>
-			}
+				</a> }
 			{ showDeviceSwitcher &&
 				<div className="web-preview__device-switcher">
 					{ possibleDevices.map( device => (
@@ -68,39 +62,34 @@ export const PreviewToolbar = props => {
 							<Gridicon icon={ device } />
 						</button>
 					) ) }
-				</div>
-			}
+				</div> }
 			{ showDeviceSwitcher &&
-			<button
-				aria-hidden={ true }
-				key={ 'back-to-preview' }
-				className={ classNames(
-					'web-preview__device-button',
-					'web-preview__back-to-preview-button',
-					{ 'is-active': 'seo' !== currentDevice }
-				) }
-				onClick={ partial( setDeviceViewport, 'phone' ) }
-			>
-				<Gridicon icon="phone" />
-			</button>
-			}
+				<button
+					aria-hidden={ true }
+					key={ 'back-to-preview' }
+					className={ classNames(
+						'web-preview__device-button',
+						'web-preview__back-to-preview-button',
+						{ 'is-active': 'seo' !== currentDevice },
+					) }
+					onClick={ partial( setDeviceViewport, 'phone' ) }
+				>
+					<Gridicon icon="phone" />
+				</button> }
 			{ showSEO &&
 				<button
 					aria-label={ translate( 'Show SEO and search previews' ) }
-					className={ classNames(
-						'web-preview__seo-button', {
-							'is-active': 'seo' === currentDevice,
-							'is-showing-device-switcher': showDeviceSwitcher
-						}
-					) }
+					className={ classNames( 'web-preview__seo-button', {
+						'is-active': 'seo' === currentDevice,
+						'is-showing-device-switcher': showDeviceSwitcher,
+					} ) }
 					onClick={ selectSeoPreview }
 				>
 					<Gridicon icon="globe" />
 					<span className="web-preview__seo-label">
 						{ translate( 'SEO' ) }
 					</span>
-				</button>
-			}
+				</button> }
 			<div className="web-preview__toolbar-tray">
 				{ props.children }
 			</div>
@@ -128,7 +117,7 @@ PreviewToolbar.propTypes = {
 };
 
 PreviewToolbar.defaultProps = {
-	showSEO: true
+	showSEO: true,
 };
 
 export default localize( PreviewToolbar );

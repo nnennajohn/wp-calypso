@@ -37,7 +37,8 @@ class FixConfig extends Component {
 						compact
 						busy={ isRestoring }
 						disabled={ isRestoring }
-						onClick={ this.restoreSettings }>
+						onClick={ this.restoreSettings }
+					>
 						{ translate( 'Restore Default Configuration' ) }
 					</Button>
 				</Card>
@@ -47,7 +48,7 @@ class FixConfig extends Component {
 }
 
 const connectComponent = connect(
-	( state ) => {
+	state => {
 		const siteId = getSelectedSiteId( state );
 		const isRestoring = isRestoringSettings( state, siteId );
 
@@ -56,10 +57,7 @@ const connectComponent = connect(
 			siteId,
 		};
 	},
-	{ restoreSettings }
+	{ restoreSettings },
 );
 
-export default flowRight(
-	connectComponent,
-	localize,
-)( FixConfig );
+export default flowRight( connectComponent, localize )( FixConfig );

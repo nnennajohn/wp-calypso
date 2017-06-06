@@ -19,10 +19,8 @@ const AddGoogleAppsCard = React.createClass( {
 	propTypes: {
 		products: React.PropTypes.object.isRequired,
 		selectedDomainName: React.PropTypes.string,
-		selectedSite: React.PropTypes.oneOfType( [
-			React.PropTypes.object,
-			React.PropTypes.bool
-		] ).isRequired
+		selectedSite: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] )
+			.isRequired,
 	},
 
 	mixins: [ analyticsMixin( 'domainManagement', 'email' ) ],
@@ -54,45 +52,34 @@ const AddGoogleAppsCard = React.createClass( {
 							</h2>
 
 							<p className="add-google-apps-card__sub-title">
-								{
-									this.translate(
-										"We've partnered with Google to offer you email, " +
-										'storage, docs, calendars, and more integrated with your site.'
-									)
-								}
+								{ this.translate(
+									"We've partnered with Google to offer you email, " +
+										'storage, docs, calendars, and more integrated with your site.',
+								) }
 							</p>
 
 							<div className="add-google-apps-card__price">
 								<h4 className="add-google-apps-card__price-per-user">
 									<span>
-										{
-											this.translate(
-												'{{strong}}%(price)s{{/strong}} per user / month',
-												{
-													components: {
-														strong: <strong />
-													},
-													args: {
-														price: monthlyPrice
-													}
-												}
-											)
-										}
+										{ this.translate( '{{strong}}%(price)s{{/strong}} per user / month', {
+											components: {
+												strong: <strong />,
+											},
+											args: {
+												price: monthlyPrice,
+											},
+										} ) }
 									</span>
 								</h4>
 
 								{ this.renderAddGoogleAppsButton() }
 
 								<h5 className="add-google-apps-card__billing-period">
-									{
-										this.translate( '%(price)s billed yearly (2 months free!)',
-											{
-												args: {
-													price: annualPrice
-												}
-											}
-										)
-									}
+									{ this.translate( '%(price)s billed yearly (2 months free!)', {
+										args: {
+											price: annualPrice,
+										},
+									} ) }
 								</h5>
 							</div>
 						</div>
@@ -110,18 +97,17 @@ const AddGoogleAppsCard = React.createClass( {
 							</div>
 							<div className="add-google-apps-card__feature-block">
 								<h5 className="add-google-apps-card__feature-header">
-									{
-										this.translate(
-											'Gmail for @%(domain)s',
-											{
-												args: {
-													domain: selectedDomainName
-												}
-											}
-										)
-									}
+									{ this.translate( 'Gmail for @%(domain)s', {
+										args: {
+											domain: selectedDomainName,
+										},
+									} ) }
 								</h5>
-								<p>{ this.translate( 'Professional ad-free email that works with most email clients.' ) }</p>
+								<p>
+									{ this.translate(
+										'Professional ad-free email that works with most email clients.',
+									) }
+								</p>
 							</div>
 						</div>
 
@@ -133,7 +119,11 @@ const AddGoogleAppsCard = React.createClass( {
 								<h5 className="add-google-apps-card__feature-header">
 									{ this.translate( 'Keep all your files secure' ) }
 								</h5>
-								<p>{ this.translate( 'Get 30GB of storage for all your files synced across devices.' ) }</p>
+								<p>
+									{ this.translate(
+										'Get 30GB of storage for all your files synced across devices.',
+									) }
+								</p>
 							</div>
 						</div>
 
@@ -145,7 +135,9 @@ const AddGoogleAppsCard = React.createClass( {
 								<h5 className="add-google-apps-card__feature-header">
 									{ this.translate( 'Docs, spreadsheets and forms' ) }
 								</h5>
-								<p>{ this.translate( 'Create and edit documents to get your work done faster.' ) }</p>
+								<p>
+									{ this.translate( 'Create and edit documents to get your work done faster.' ) }
+								</p>
 							</div>
 						</div>
 
@@ -157,7 +149,11 @@ const AddGoogleAppsCard = React.createClass( {
 								<h5 className="add-google-apps-card__feature-header">
 									{ this.translate( 'Connect with your team' ) }
 								</h5>
-								<p>{ this.translate( 'Use text chats, voice calls, or video calls, with built in screen sharing' ) }</p>
+								<p>
+									{ this.translate(
+										'Use text chats, voice calls, or video calls, with built in screen sharing',
+									) }
+								</p>
 							</div>
 						</div>
 					</div>
@@ -168,23 +164,23 @@ const AddGoogleAppsCard = React.createClass( {
 
 					<div className="add-google-apps-card__learn-more">
 						<p>
-							{
-								this.translate(
-									'{{strong}}No setup or software required.{{/strong}} ' +
+							{ this.translate(
+								'{{strong}}No setup or software required.{{/strong}} ' +
 									'{{a}}Learn more about integrating G Suite with your site.{{/a}}',
-									{
-										components: {
-											strong: <strong />,
-											a: (
-												<a href={ googleAppsSupportUrl }
-													target="_blank"
-													rel="noopener noreferrer"
-													onClick={ this.handleLearnMoreClick } />
-											)
-										}
-									}
-								)
-							}
+								{
+									components: {
+										strong: <strong />,
+										a: (
+											<a
+												href={ googleAppsSupportUrl }
+												target="_blank"
+												rel="noopener noreferrer"
+												onClick={ this.handleLearnMoreClick }
+											/>
+										),
+									},
+								},
+							) }
 						</p>
 					</div>
 				</CompactCard>
@@ -198,9 +194,7 @@ const AddGoogleAppsCard = React.createClass( {
 		}
 
 		return (
-			<Button
-				type="button"
-				onClick={ this.goToAddGoogleApps }>
+			<Button type="button" onClick={ this.goToAddGoogleApps }>
 				{ this.translate( 'Add G Suite' ) }
 			</Button>
 		);
@@ -215,8 +209,13 @@ const AddGoogleAppsCard = React.createClass( {
 	},
 
 	goToAddGoogleApps() {
-		page( paths.domainManagementAddGoogleApps( this.props.selectedSite.slug, this.props.selectedDomainName ) );
-	}
+		page(
+			paths.domainManagementAddGoogleApps(
+				this.props.selectedSite.slug,
+				this.props.selectedDomainName,
+			),
+		);
+	},
 } );
 
 module.exports = AddGoogleAppsCard;

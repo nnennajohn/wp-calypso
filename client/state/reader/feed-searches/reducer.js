@@ -29,7 +29,7 @@ export const items = keyedReducer(
 	createReducer( null, {
 		[ READER_FEED_SEARCH_RECEIVE ]: ( state, action ) =>
 			uniqBy( ( state || [] ).concat( action.payload.feeds ), 'feed_URL' ),
-	} )
+	} ),
 );
 
 /**
@@ -52,7 +52,7 @@ export const total = keyedReducer(
 	'query',
 	createReducer( null, {
 		[ READER_FEED_SEARCH_RECEIVE ]: ( state, action ) => action.payload.total,
-	} )
+	} ),
 );
 
 export default combineReducers( {

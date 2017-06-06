@@ -7,10 +7,7 @@ import {
 	WOOCOMMERCE_API_FETCH_SETTINGS_GENERAL,
 	WOOCOMMERCE_API_FETCH_SETTINGS_GENERAL_SUCCESS,
 } from '../../../action-types';
-import {
-	areSettingsGeneralLoaded,
-	areSettingsGeneralLoading,
-} from './selectors';
+import { areSettingsGeneralLoaded, areSettingsGeneralLoading } from './selectors';
 
 export const fetchSettingsGeneralSuccess = ( siteId, data ) => {
 	return {
@@ -22,7 +19,7 @@ export const fetchSettingsGeneralSuccess = ( siteId, data ) => {
 	};
 };
 
-export const fetchSettingsGeneral = ( siteId ) => ( dispatch, getState ) => {
+export const fetchSettingsGeneral = siteId => ( dispatch, getState ) => {
 	if (
 		areSettingsGeneralLoaded( getState(), siteId ) ||
 		areSettingsGeneralLoading( getState(), siteId )
@@ -37,8 +34,9 @@ export const fetchSettingsGeneral = ( siteId ) => ( dispatch, getState ) => {
 
 	dispatch( getAction );
 
-	return request( siteId ).get( 'settings/general' )
-		.then( ( data ) => {
+	return request( siteId )
+		.get( 'settings/general' )
+		.then( data => {
 			dispatch( fetchSettingsGeneralSuccess( siteId, data ) );
 		} )
 		.catch( err => {

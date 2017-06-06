@@ -41,6 +41,6 @@ export const areSettingsGeneralLoading = ( state, siteId = getSelectedSiteId( st
 export function getPaymentCurrencySettings( state, siteId ) {
 	const wcApi = state.extensions.woocommerce.wcApi || {};
 	const siteData = wcApi[ siteId ] || {};
-	const currency = find( siteData.settingsGeneral, ( item ) => item.id === 'woocommerce_currency' );
+	const currency = find( siteData.settingsGeneral, item => item.id === 'woocommerce_currency' );
 	return currency || {};
 }

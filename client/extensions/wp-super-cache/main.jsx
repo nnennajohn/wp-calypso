@@ -45,7 +45,7 @@ WPSuperCache.propTypes = {
 };
 
 WPSuperCache.defaultProps = {
-	tab: ''
+	tab: '',
 };
 
 export default WPSuperCache;

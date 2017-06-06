@@ -55,14 +55,16 @@ function determinePostType( context ) {
 function renderEditor( context, postType ) {
 	ReactDom.unmountComponentAtNode( document.getElementById( 'secondary' ) );
 	ReactDom.render(
-		React.createElement( ReduxProvider, { store: context.store },
+		React.createElement(
+			ReduxProvider,
+			{ store: context.store },
 			React.createElement( PostEditor, {
 				user: user,
 				userUtils: userUtils,
-				type: postType
-			} )
+				type: postType,
+			} ),
 		),
-		document.getElementById( 'primary' )
+		document.getElementById( 'primary' ),
 	);
 }
 
@@ -88,7 +90,9 @@ function getPressThisContent( query ) {
 	const pieces = [];
 
 	if ( image ) {
-		pieces.push( ReactDomServer.renderToStaticMarkup( <p><a href={ url }><img src={ image } /></a></p> ) );
+		pieces.push(
+			ReactDomServer.renderToStaticMarkup( <p><a href={ url }><img src={ image } /></a></p> ),
+		);
 	}
 	if ( isValidUrl( embed ) ) {
 		pieces.push( ReactDomServer.renderToStaticMarkup( <p>{ embed }</p> ) );
@@ -100,15 +104,13 @@ function getPressThisContent( query ) {
 	pieces.push(
 		ReactDomServer.renderToStaticMarkup(
 			<p>
-				{
-					i18n.translate( 'via {{anchor/}}', {
-						components: {
-							anchor: ( <a href={ url }>{ title }</a> )
-						}
-					} )
-				}
-			</p>
-		)
+				{ i18n.translate( 'via {{anchor/}}', {
+					components: {
+						anchor: <a href={ url }>{ title }</a>,
+					},
+				} ) }
+			</p>,
+		),
 	);
 
 	return pieces.join( '\n\n' );
@@ -120,24 +122,28 @@ function getPressThisContent( query ) {
 // - (Redux) editPost: to set every other attribute (in particular, to update the Category Selector, terms can only be set via Redux);
 // - (Flux) edit: to reliably show the updated post attributes before (auto)saving.
 function startEditingPostCopy( siteId, postToCopyId, context ) {
-	wpcom.site( siteId ).post( postToCopyId ).get().then( postToCopy => {
-		const postAttributes = pick(
-			postToCopy,
-			'canonical_image',
-			'content',
-			'excerpt',
-			'featured_image',
-			'format',
-			'post_thumbnail',
-			'terms',
-			'title',
-			'type'
-		);
-		postAttributes.tags = map( postToCopy.tags, 'name' );
-		postAttributes.title = decodeEntities( postAttributes.title );
-		postAttributes.featured_image = getFeaturedImageId( postToCopy );
+	wpcom
+		.site( siteId )
+		.post( postToCopyId )
+		.get()
+		.then( postToCopy => {
+			const postAttributes = pick(
+				postToCopy,
+				'canonical_image',
+				'content',
+				'excerpt',
+				'featured_image',
+				'format',
+				'post_thumbnail',
+				'terms',
+				'title',
+				'type',
+			);
+			postAttributes.tags = map( postToCopy.tags, 'name' );
+			postAttributes.title = decodeEntities( postAttributes.title );
+			postAttributes.featured_image = getFeaturedImageId( postToCopy );
 
-		/**
+			/**
 		 * A post attributes whitelist for Redux's `editPost()` action.
 		 *
 		 * This is needed because blindly passing all post attributes to `editPost()`
@@ -146,34 +152,38 @@ function startEditingPostCopy( siteId, postToCopyId, context ) {
 		 *
 		 * @see https://github.com/Automattic/wp-calypso/pull/13933
 		 */
-		const reduxPostAttributes = {
-			terms: postAttributes.terms,
-			title: postAttributes.title,
-		};
+			const reduxPostAttributes = {
+				terms: postAttributes.terms,
+				title: postAttributes.title,
+			};
 
-		actions.startEditingNew( siteId, {
-			content: postToCopy.content,
-			title: postToCopy.title,
-			type: postToCopy.type,
+			actions.startEditingNew( siteId, {
+				content: postToCopy.content,
+				title: postToCopy.title,
+				type: postToCopy.type,
+			} );
+			context.store.dispatch( editPost( siteId, null, reduxPostAttributes ) );
+			actions.edit( postAttributes );
+			actions.updateMetadata(
+				reduce(
+					postToCopy.metadata,
+					( newMetadata, { key, value } ) => {
+						newMetadata[ key ] = value;
+						return newMetadata;
+					},
+					{},
+				),
+			);
+		} )
+		.catch( error => {
+			Dispatcher.handleServerAction( {
+				type: 'SET_POST_LOADING_ERROR',
+				error: error,
+			} );
 		} );
-		context.store.dispatch( editPost( siteId, null, reduxPostAttributes ) );
-		actions.edit( postAttributes );
-		actions.updateMetadata(
-			reduce( postToCopy.metadata, ( newMetadata, { key, value } ) => {
-				newMetadata[ key ] = value;
-				return newMetadata;
-			}, {} )
-		);
-	} ).catch( error => {
-		Dispatcher.handleServerAction( {
-			type: 'SET_POST_LOADING_ERROR',
-			error: error
-		} );
-	} );
 }
 
 module.exports = {
-
 	post: function( context ) {
 		const postType = determinePostType( context );
 		const postID = getPostID( context );
@@ -181,7 +191,7 @@ module.exports = {
 
 		function startEditing( siteId ) {
 			const isCopy = context.query.copy ? true : false;
-			context.store.dispatch( startEditingPost( siteId, ( isCopy ? null : postID ), postType ) );
+			context.store.dispatch( startEditingPost( siteId, isCopy ? null : postID, postType ) );
 
 			if ( maybeRedirect( context ) ) {
 				return;
@@ -189,9 +199,14 @@ module.exports = {
 
 			let gaTitle;
 			switch ( postType ) {
-				case 'post': gaTitle = 'Post'; break;
-				case 'page': gaTitle = 'Page'; break;
-				default: gaTitle = 'Custom Post Type';
+				case 'post':
+					gaTitle = 'Post';
+					break;
+				case 'page':
+					gaTitle = 'Page';
+					break;
+				default:
+					gaTitle = 'Custom Post Type';
 			}
 
 			// We have everything we need to start loading the post for editing,
@@ -213,7 +228,7 @@ module.exports = {
 					Object.assign( postOptions, {
 						postFormat: 'quote',
 						title: context.query.title,
-						content: pressThisContent
+						content: pressThisContent,
 					} );
 				}
 
@@ -286,5 +301,4 @@ module.exports = {
 		page.redirect( redirectWithParams );
 		return false;
 	},
-
 };

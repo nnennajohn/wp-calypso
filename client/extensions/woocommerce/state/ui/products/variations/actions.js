@@ -1,9 +1,7 @@
 /**
  * Internal dependencies
  */
-import {
-	WOOCOMMERCE_EDIT_PRODUCT_VARIATION,
-} from '../../../action-types';
+import { WOOCOMMERCE_EDIT_PRODUCT_VARIATION } from '../../../action-types';
 
 /**
  * Edits a product variation.

@@ -9,7 +9,7 @@ import {
 } from '../../action-types';
 
 export function fetchProductCategories( siteId ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		const getAction = {
 			type: WOOCOMMERCE_API_FETCH_PRODUCT_CATEGORIES,
 			payload: { siteId },
@@ -21,7 +21,8 @@ export function fetchProductCategories( siteId ) {
 		const apiPath = '/wc/v2/products/categories';
 
 		// TODO: Modify this to use the extensions data layer.
-		return wp.req.get( { path: jpPath }, { path: apiPath } )
+		return wp.req
+			.get( { path: jpPath }, { path: apiPath } )
 			.then( ( { data } ) => {
 				dispatch( fetchProductCategoriesSuccess( siteId, data ) );
 			} )
@@ -35,7 +36,7 @@ export function fetchProductCategoriesSuccess( siteId, data ) {
 	if ( ! isValidCategoriesArray( data ) ) {
 		const originalAction = {
 			type: WOOCOMMERCE_API_FETCH_PRODUCT_CATEGORIES,
-			payload: { siteId }
+			payload: { siteId },
 		};
 
 		return setError( siteId, originalAction, { message: 'Invalid Categories Array', data } );
@@ -46,7 +47,7 @@ export function fetchProductCategoriesSuccess( siteId, data ) {
 		payload: {
 			siteId,
 			data,
-		}
+		},
 	};
 }
 
@@ -63,9 +64,11 @@ function isValidCategoriesArray( categories ) {
 function isValidProductCategory( category ) {
 	return (
 		category &&
-		category.id && ( 'number' === typeof category.id ) &&
-		category.name && ( 'string' === typeof category.name ) &&
-		category.slug && ( 'string' === typeof category.slug )
+		category.id &&
+		'number' === typeof category.id &&
+		category.name &&
+		'string' === typeof category.name &&
+		category.slug &&
+		'string' === typeof category.slug
 	);
 }
-

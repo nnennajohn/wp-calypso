@@ -9,13 +9,10 @@ import {
 	WOOCOMMERCE_API_FETCH_PAYMENT_METHODS,
 	WOOCOMMERCE_API_FETCH_PAYMENT_METHODS_SUCCESS,
 } from '../../action-types';
-import {
-	arePaymentMethodsLoaded,
-	arePaymentMethodsLoading,
-} from './selectors';
+import { arePaymentMethodsLoaded, arePaymentMethodsLoading } from './selectors';
 
 export const fetchPaymentMethodsSuccess = ( siteId, data ) => {
-	const paymentMethods = data.map( ( method ) => {
+	const paymentMethods = data.map( method => {
 		return { ...method, ...getPaymentMethodDetails( method.id ) };
 	} );
 	return {
@@ -27,7 +24,7 @@ export const fetchPaymentMethodsSuccess = ( siteId, data ) => {
 	};
 };
 
-export const fetchPaymentMethods = ( siteId ) => ( dispatch, getState ) => {
+export const fetchPaymentMethods = siteId => ( dispatch, getState ) => {
 	const state = getState();
 	if ( ! siteId ) {
 		siteId = getSelectedSiteId( state );
@@ -43,8 +40,9 @@ export const fetchPaymentMethods = ( siteId ) => ( dispatch, getState ) => {
 
 	dispatch( getAction );
 
-	return request( siteId ).get( 'payment_gateways' )
-		.then( ( data ) => {
+	return request( siteId )
+		.get( 'payment_gateways' )
+		.then( data => {
 			dispatch( fetchPaymentMethodsSuccess( siteId, data ) );
 		} )
 		.catch( err => {

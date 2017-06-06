@@ -8,9 +8,7 @@ import pick from 'lodash/fp/pick';
 /**
  * Internal dependencies
  */
-import {
-	POST_REVISIONS_REQUEST,
-} from 'state/action-types';
+import { POST_REVISIONS_REQUEST } from 'state/action-types';
 import { dispatchRequest } from 'state/data-layer/wpcom-http/utils';
 import { http } from 'state/data-layer/wpcom-http/actions';
 import {
@@ -34,8 +32,8 @@ export function normalizeRevision( revision ) {
 		...revision,
 		...flow(
 			pick( [ 'title', 'content', 'excerpt' ] ),
-			mapValues( ( val = {} ) => val.rendered )
-		)( revision )
+			mapValues( ( val = {} ) => val.rendered ),
+		)( revision ),
 	};
 }
 
@@ -76,17 +74,26 @@ export const receiveSuccess = ( { dispatch }, { siteId, postId }, next, revision
  */
 export const fetchPostRevisions = ( { dispatch }, action ) => {
 	const { siteId, postId } = action;
-	dispatch( http( {
-		path: `/sites/${ siteId }/posts/${ postId }/revisions`,
-		method: 'GET',
-		query: {
-			apiNamespace: 'wp/v2',
-		},
-	}, action ) );
+	dispatch(
+		http(
+			{
+				path: `/sites/${ siteId }/posts/${ postId }/revisions`,
+				method: 'GET',
+				query: {
+					apiNamespace: 'wp/v2',
+				},
+			},
+			action,
+		),
+	);
 };
 
-const dispatchPostRevisionsRequest = dispatchRequest( fetchPostRevisions, receiveSuccess, receiveError );
+const dispatchPostRevisionsRequest = dispatchRequest(
+	fetchPostRevisions,
+	receiveSuccess,
+	receiveError,
+);
 
 export default {
-	[ POST_REVISIONS_REQUEST ]: [ dispatchPostRevisionsRequest ]
+	[ POST_REVISIONS_REQUEST ]: [ dispatchPostRevisionsRequest ],
 };

@@ -30,19 +30,21 @@ const FeedSubscriptionActions = {
 		Dispatcher.handleViewAction( {
 			type: ActionTypes.FOLLOW_READER_FEED,
 			url: url,
-			data: { url: preparedUrl }
+			data: { url: preparedUrl },
 		} );
 
-		wpcom.undocumented().followReaderFeed( { url: preparedUrl, meta: meta }, function( error, data ) {
-			Dispatcher.handleServerAction( {
-				type: ActionTypes.RECEIVE_FOLLOW_READER_FEED,
-				url: preparedUrl,
-				data: data,
-				error: error
+		wpcom
+			.undocumented()
+			.followReaderFeed( { url: preparedUrl, meta: meta }, function( error, data ) {
+				Dispatcher.handleServerAction( {
+					type: ActionTypes.RECEIVE_FOLLOW_READER_FEED,
+					url: preparedUrl,
+					data: data,
+					error: error,
+				} );
+
+				receiveSubscriptionMeta( data );
 			} );
-
-			receiveSubscriptionMeta( data );
-		} );
 	},
 
 	unfollow: function( url, blogId ) {
@@ -55,7 +57,7 @@ const FeedSubscriptionActions = {
 		Dispatcher.handleViewAction( {
 			type: ActionTypes.UNFOLLOW_READER_FEED,
 			url: url,
-			data: { url: preparedUrl }
+			data: { url: preparedUrl },
 		} );
 
 		wpcom.undocumented().unfollowReaderFeed( { url: preparedUrl }, function( error, data ) {
@@ -64,7 +66,7 @@ const FeedSubscriptionActions = {
 				url: preparedUrl,
 				blogId: blogId,
 				data: data,
-				error: error
+				error: error,
 			} );
 		} );
 	},
@@ -76,7 +78,7 @@ const FeedSubscriptionActions = {
 
 		Dispatcher.handleViewAction( {
 			type: ActionTypes.DISMISS_FOLLOW_ERROR,
-			data: error
+			data: error,
 		} );
 	},
 
@@ -113,7 +115,7 @@ const FeedSubscriptionActions = {
 		wpcom.undocumented().readFollowingMine( params, callback );
 	},
 
-	fetchAll: function( ) {
+	fetchAll: function() {
 		const processKey = 'following_mine_all';
 		if ( isRequestInflight( processKey ) ) {
 			return;
@@ -151,7 +153,7 @@ const FeedSubscriptionActions = {
 		Dispatcher.handleServerAction( {
 			type: ActionTypes.RECEIVE_FEED_SUBSCRIPTIONS,
 			error: error,
-			data: data
+			data: data,
 		} );
 
 		if ( ! data || ! data.subscriptions || ! data.subscriptions.length ) {
@@ -160,8 +162,7 @@ const FeedSubscriptionActions = {
 
 		const sites = [], feeds = [];
 		data.subscriptions.forEach( function( sub ) {
-			const site = get( sub, 'meta.data.site' ),
-				feed = get( sub, 'meta.data.feed' );
+			const site = get( sub, 'meta.data.site' ), feed = get( sub, 'meta.data.feed' );
 			if ( site ) {
 				sites.push( site );
 			}
@@ -173,7 +174,7 @@ const FeedSubscriptionActions = {
 		if ( sites.length > 0 ) {
 			Dispatcher.handleServerAction( {
 				type: 'RECEIVE_BULK_SITE_UPDATE',
-				data: sites
+				data: sites,
 			} );
 		}
 	},
@@ -181,9 +182,9 @@ const FeedSubscriptionActions = {
 
 function getNextPageParams() {
 	const params = {
-			number: FeedSubscriptionStore.getPerPage(),
-			meta: 'feed,site'
-		},
+		number: FeedSubscriptionStore.getPerPage(),
+		meta: 'feed,site',
+	},
 		currentPage = FeedSubscriptionStore.getCurrentPage();
 
 	if ( currentPage ) {
@@ -198,7 +199,7 @@ function receiveSubscriptionMeta( subscription ) {
 		Dispatcher.handleServerAction( {
 			type: 'RECEIVE_FETCH_SITE',
 			siteId: subscription.meta.data.site.ID,
-			data: subscription.meta.data.site
+			data: subscription.meta.data.site,
 		} );
 	}
 
@@ -206,7 +207,7 @@ function receiveSubscriptionMeta( subscription ) {
 		Dispatcher.handleServerAction( {
 			type: 'RECEIVE_FEED_FETCH',
 			feedId: subscription.meta.data.feed.feed_ID,
-			data: subscription.meta.data.feed
+			data: subscription.meta.data.feed,
 		} );
 	}
 }

@@ -1,10 +1,10 @@
 /**
  * External dependencies
  */
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { includes } from 'lodash';
-import { localize } from 'i18n-calypso';
+import { localize } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -35,8 +35,8 @@ class SiteSelectorModal extends Component {
 		// className: class name(s) to be added to the Dialog
 		className: PropTypes.string,
 		// from localize()
-		translate: PropTypes.func.isRequired
-	}
+		translate: PropTypes.func.isRequired,
+	};
 
 	constructor( props ) {
 		super( props );
@@ -49,57 +49,57 @@ class SiteSelectorModal extends Component {
 		}
 
 		this.state = {
-			site: includes( filteredSites, primarySite )
-				? primarySite
-				: filteredSites[ 0 ]
+			site: includes( filteredSites, primarySite ) ? primarySite : filteredSites[ 0 ],
 		};
 	}
 
-	setSite = ( slug ) => {
+	setSite = slug => {
 		const site = sitesList.getSite( slug );
 		this.setState( { site } );
-	}
+	};
 
-	onClose = ( action ) => {
+	onClose = action => {
 		if ( 'mainAction' === action ) {
 			this.props.mainAction( this.state.site );
 		}
 
 		this.props.hide();
-	}
+	};
 
 	onButtonClick = () => {
 		this.props.mainAction( this.state.site );
-	}
+	};
 
 	getMainLink() {
 		const url = this.props.getMainUrl && this.props.getMainUrl( this.state.site );
 
 		return url
-			? <Button primary href={ url } onClick={ this.onButtonClick } >{ this.props.mainActionLabel }</Button>
+			? <Button primary href={ url } onClick={ this.onButtonClick }>
+					{ this.props.mainActionLabel }
+				</Button>
 			: { action: 'mainAction', label: this.props.mainActionLabel, isPrimary: true };
 	}
 
 	render() {
 		const mainLink = this.getMainLink();
-		const buttons = [
-			{ action: 'back', label: this.props.translate( 'Back' ) },
-			mainLink
-		];
+		const buttons = [ { action: 'back', label: this.props.translate( 'Back' ) }, mainLink ];
 		const classNames = classnames( 'site-selector-modal', this.props.className );
 
 		return (
-			<Dialog className={ classNames }
+			<Dialog
+				className={ classNames }
 				isVisible={ this.props.isVisible }
 				buttons={ buttons }
-				onClose={ this.onClose }>
+				onClose={ this.onClose }
+			>
 				<div className="site-selector-modal__content">
 					{ this.props.children }
 				</div>
 				<SitesDropdown
 					onSiteSelect={ this.setSite }
 					selectedSiteId={ this.state.site && this.state.site.ID }
-					filter={ this.props.filter } />
+					filter={ this.props.filter }
+				/>
 			</Dialog>
 		);
 	}

@@ -13,6 +13,6 @@ import { USER_RECEIVE } from 'state/action-types';
 export function receiveUser( user ) {
 	return {
 		type: USER_RECEIVE,
-		user
+		user,
 	};
 }

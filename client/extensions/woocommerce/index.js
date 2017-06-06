@@ -146,7 +146,7 @@ function addStorePage( storePage, storeNavigation ) {
 		renderWithReduxStore(
 			React.createElement( storePage.container, { className: 'woocommerce' } ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	} );
 }
@@ -159,7 +159,7 @@ function createStoreNavigation( context, next ) {
 			sidebarItemButtons: getStoreSidebarItemButtons(),
 		} ),
 		document.getElementById( 'secondary' ),
-		context.store
+		context.store,
 	);
 
 	next();

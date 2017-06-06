@@ -52,7 +52,7 @@ class FollowingManageSubscriptions extends Component {
 
 			return (
 				`${ follow.URL }${ siteName }${ siteUrl }${ siteDescription }${ siteAuthor }`.search(
-					phraseRe
+					phraseRe,
 				) !== -1
 			);
 		} );

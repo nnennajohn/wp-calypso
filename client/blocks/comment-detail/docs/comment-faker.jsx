@@ -28,12 +28,13 @@ export const CommentFaker = WrappedCommentList => class extends Component {
 		}
 	}
 
-	deleteCommentPermanently = commentId => this.setState( { comments: omit( this.state.comments, commentId ) } );
+	deleteCommentPermanently = commentId =>
+		this.setState( { comments: omit( this.state.comments, commentId ) } );
 
 	getCommentsFromProps = ( { comments } ) => this.setState( { comments: keyBy( comments, 'ID' ) } );
 
 	setCommentLike = ( commentId, likeValue ) => {
-		const comment = this.state.comments[ commentId ];
+		const comment = this.state.comments[ commentId ];
 
 		// If like changes to true, also approve the comment
 		this.setState( {
@@ -43,13 +44,13 @@ export const CommentFaker = WrappedCommentList => class extends Component {
 					...comment,
 					i_like: likeValue,
 					status: likeValue ? 'approved' : comment.status,
-				}
+				},
 			},
 		} );
-	}
+	};
 
 	setCommentStatus = ( commentId, status ) => {
-		const comment = this.state.comments[ commentId ];
+		const comment = this.state.comments[ commentId ];
 
 		// If the comment is not approved anymore, also remove the like, otherwise keep its previous value
 		this.setState( {
@@ -59,15 +60,13 @@ export const CommentFaker = WrappedCommentList => class extends Component {
 					...comment,
 					i_like: 'approved' === status ? comment.i_like : false,
 					status,
-				}
+				},
 			},
 		} );
-	}
+	};
 
-	toggleCommentLike = commentId => this.setCommentLike(
-		commentId,
-		! get( this.state.comments, [ commentId, 'i_like' ], false )
-	);
+	toggleCommentLike = commentId =>
+		this.setCommentLike( commentId, ! get( this.state.comments, [ commentId, 'i_like' ], false ) );
 
 	render() {
 		return (

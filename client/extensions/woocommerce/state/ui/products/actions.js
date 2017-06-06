@@ -1,10 +1,7 @@
 /**
  * Internal dependencies
  */
-import {
-	WOOCOMMERCE_EDIT_PRODUCT,
-	WOOCOMMERCE_EDIT_PRODUCT_ATTRIBUTE,
-} from '../../action-types';
+import { WOOCOMMERCE_EDIT_PRODUCT, WOOCOMMERCE_EDIT_PRODUCT_ATTRIBUTE } from '../../action-types';
 
 export function editProduct( product, data ) {
 	return {
@@ -19,4 +16,3 @@ export function editProductAttribute( product, attribute, data ) {
 		payload: { product, attribute, data },
 	};
 }
-

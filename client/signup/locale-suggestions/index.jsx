@@ -20,7 +20,7 @@ module.exports = React.createClass( {
 	getInitialState: function() {
 		return {
 			dismissed: false,
-			locales: LocaleSuggestionStore.get()
+			locales: LocaleSuggestionStore.get(),
 		};
 	},
 
@@ -93,9 +93,11 @@ module.exports = React.createClass( {
 			return (
 				<div className="locale-suggestions__list-item" key={ 'locale-' + index } dir="auto">
 					{ locale.availability_text }
-					<a href={ this.getPathWithLocale( locale.locale ) }
+					<a
+						href={ this.getPathWithLocale( locale.locale ) }
 						onClick={ this.handleLocaleSuggestionClick.bind( this, locale.locale ) }
-						className="locale-suggestions__locale-link">
+						className="locale-suggestions__locale-link"
+					>
 						{ locale.name }
 					</a>
 				</div>
@@ -109,5 +111,5 @@ module.exports = React.createClass( {
 				</Notice>
 			</div>
 		);
-	}
+	},
 } );

@@ -33,7 +33,7 @@ export class WebPreview extends Component {
 		this.state = {
 			iframeUrl: null,
 			device: props.defaultViewportDevice || 'computer',
-			loaded: false
+			loaded: false,
 		};
 
 		this.setIframeInstance = ref => this.iframe = ref;
@@ -189,35 +189,33 @@ export class WebPreview extends Component {
 				<div className={ className }>
 					<div className="web-preview__backdrop" onClick={ this.props.onClose } />
 					<div className="web-preview__content">
-						<Toolbar setDeviceViewport={ this.setDeviceViewport }
+						<Toolbar
+							setDeviceViewport={ this.setDeviceViewport }
 							device={ this.state.device }
 							{ ...this.props }
-							showExternal={ ( this.props.previewUrl ? this.props.showExternal : false ) }
+							showExternal={ this.props.previewUrl ? this.props.showExternal : false }
 							showDeviceSwitcher={ this.props.showDeviceSwitcher && ! this._isMobile }
 							selectSeoPreview={ this.setDeviceViewport.bind( null, 'seo' ) }
 						/>
 						<div className="web-preview__placeholder">
-							{ ! this.state.loaded && 'seo' !== this.state.device &&
+							{ ! this.state.loaded &&
+								'seo' !== this.state.device &&
 								<div>
 									<Spinner />
 									{ this.props.loadingMessage &&
 										<span className="web-preview__loading-message">
 											{ this.props.loadingMessage }
-										</span>
-									}
-								</div>
-							}
+										</span> }
+								</div> }
 							<iframe
 								ref={ this.setIframeInstance }
 								className="web-preview__frame"
-								style={ { display: ('seo' === this.state.device ? 'none' : 'inherit') } }
+								style={ { display: 'seo' === this.state.device ? 'none' : 'inherit' } }
 								src="about:blank"
 								onLoad={ this.setLoaded }
 								title={ this.props.iframeTitle || translate( 'Preview' ) }
 							/>
-							{ 'seo' === this.state.device &&
-								<SeoPreviewPane />
-							}
+							{ 'seo' === this.state.device && <SeoPreviewPane /> }
 						</div>
 					</div>
 				</div>

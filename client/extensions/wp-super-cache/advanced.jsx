@@ -37,20 +37,19 @@ const Advanced = ( {
 } ) => {
 	return (
 		<div>
-			<SectionHeader
-				label={ translate( 'Advanced' ) }>
-			</SectionHeader>
+			<SectionHeader label={ translate( 'Advanced' ) } />
 			<Card>
 				<form>
 					<FormFieldset>
 						<FormToggle
 							checked={ !! is_mfunc_enabled }
 							disabled={ isRequesting || isSaving || !! cache_mod_rewrite }
-							onChange={ handleAutosavingToggle( 'is_mfunc_enabled' ) }>
+							onChange={ handleAutosavingToggle( 'is_mfunc_enabled' ) }
+						>
 							<span>
 								{ translate(
-								'Enable dynamic caching. Requires PHP or legacy caching. (See ' +
-								'{{faq}}FAQ{{/faq}} or wp-super-cache/plugins/dynamic-cache-test.php for example code.)',
+									'Enable dynamic caching. Requires PHP or legacy caching. (See ' +
+										'{{faq}}FAQ{{/faq}} or wp-super-cache/plugins/dynamic-cache-test.php for example code.)',
 									{
 										components: {
 											faq: (
@@ -60,8 +59,8 @@ const Advanced = ( {
 													href="http://wordpress.org/plugins/wp-super-cache/faq/"
 												/>
 											),
-										}
-									}
+										},
+									},
 								) }
 							</span>
 						</FormToggle>
@@ -69,11 +68,12 @@ const Advanced = ( {
 						<FormToggle
 							checked={ !! is_mobile_enabled }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'is_mobile_enabled' ) }>
+							onChange={ handleAutosavingToggle( 'is_mobile_enabled' ) }
+						>
 							<span>
 								{ translate(
 									'Mobile device support. (External plugin or theme required. See the ' +
-									'{{faq}}FAQ{{/faq}} for further details.)',
+										'{{faq}}FAQ{{/faq}} for further details.)',
 									{
 										components: {
 											faq: (
@@ -83,45 +83,39 @@ const Advanced = ( {
 													href="http://wordpress.org/plugins/wp-super-cache/faq/"
 												/>
 											),
-										}
-									}
+										},
+									},
 								) }
 							</span>
 							{ is_mobile_enabled &&
 								<FormSettingExplanation>
-									{ translate(
-										'{{strong}}Mobile Browsers{{/strong}}{{br/}}',
-										{
-											components: {
-												br: <br />,
-												strong: <strong />,
-											}
-										}
-									) }
+									{ translate( '{{strong}}Mobile Browsers{{/strong}}{{br/}}', {
+										components: {
+											br: <br />,
+											strong: <strong />,
+										},
+									} ) }
 									{ cache_mobile_browsers || '' }
 
-									{ translate(
-										'{{br/}}{{strong}}Mobile Prefixes{{/strong}}{{br/}}',
-										{
-											components: {
-												br: <br />,
-												strong: <strong />,
-											}
-										}
-									) }
+									{ translate( '{{br/}}{{strong}}Mobile Prefixes{{/strong}}{{br/}}', {
+										components: {
+											br: <br />,
+											strong: <strong />,
+										},
+									} ) }
 									{ cache_mobile_prefixes || '' }
-								</FormSettingExplanation>
-							}
+								</FormSettingExplanation> }
 						</FormToggle>
 
 						<FormToggle
 							checked={ !! disable_utf8 }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'disable_utf8' ) }>
+							onChange={ handleAutosavingToggle( 'disable_utf8' ) }
+						>
 							<span>
 								{ translate(
 									'Remove UTF8/blog charset support from .htaccess file. Only necessary if you see ' +
-									'odd characters or punctuation looks incorrect. Requires rewrite rules update.'
+										'odd characters or punctuation looks incorrect. Requires rewrite rules update.',
 								) }
 							</span>
 						</FormToggle>
@@ -129,22 +123,26 @@ const Advanced = ( {
 						<FormToggle
 							checked={ !! clear_cache_on_post_edit }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'clear_cache_on_post_edit' ) }>
+							onChange={ handleAutosavingToggle( 'clear_cache_on_post_edit' ) }
+						>
 							<span>
-								{ translate( 'Clear all cache files when a post or page is published or updated.' ) }
+								{ translate(
+									'Clear all cache files when a post or page is published or updated.',
+								) }
 							</span>
 						</FormToggle>
 
 						<FormToggle
 							checked={ !! front_page_checks }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'front_page_checks' ) }>
+							onChange={ handleAutosavingToggle( 'front_page_checks' ) }
+						>
 							<span>
 								{ translate(
 									'Extra homepage checks. (Very occasionally stops homepage caching) {{em}}(Recommended){{/em}}',
 									{
-										components: { em: <em /> }
-									}
+										components: { em: <em /> },
+									},
 								) }
 							</span>
 						</FormToggle>
@@ -152,7 +150,8 @@ const Advanced = ( {
 						<FormToggle
 							checked={ !! refresh_current_only_on_comments }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'refresh_current_only_on_comments' ) }>
+							onChange={ handleAutosavingToggle( 'refresh_current_only_on_comments' ) }
+						>
 							<span>
 								{ translate( 'Only refresh current page when comments made.' ) }
 							</span>
@@ -161,7 +160,8 @@ const Advanced = ( {
 						<FormToggle
 							checked={ !! cache_list }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'cache_list' ) }>
+							onChange={ handleAutosavingToggle( 'cache_list' ) }
+						>
 							<span>
 								{ translate( 'List the newest cached pages on this page.' ) }
 							</span>
@@ -170,19 +170,23 @@ const Advanced = ( {
 						<FormToggle
 							checked={ ! cache_disable_locking }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'cache_disable_locking' ) }>
+							onChange={ handleAutosavingToggle( 'cache_disable_locking' ) }
+						>
 							<span>
-								{ translate( 'Coarse file locking. You do not need this as it will slow down your website.' ) }
+								{ translate(
+									'Coarse file locking. You do not need this as it will slow down your website.',
+								) }
 							</span>
 						</FormToggle>
 
 						<FormToggle
 							checked={ !! cache_late_init }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'cache_late_init' ) }>
+							onChange={ handleAutosavingToggle( 'cache_late_init' ) }
+						>
 							<span>
 								{ translate(
-									'Late init. Display cached files after WordPress has loaded. Most useful in legacy mode.'
+									'Late init. Display cached files after WordPress has loaded. Most useful in legacy mode.',
 								) }
 							</span>
 						</FormToggle>
@@ -194,20 +198,23 @@ const Advanced = ( {
 };
 
 const getFormSettings = settings => {
-	return pick( settings, [
-		'cache_disable_locking',
-		'cache_late_init',
-		'cache_list',
-		'cache_mobile_browsers',
-		'cache_mobile_prefixes',
-		'cache_mod_rewrite',
-		'clear_cache_on_post_edit',
-		'disable_utf8',
-		'front_page_checks',
-		'is_mfunc_enabled',
-		'is_mobile_enabled',
-		'refresh_current_only_on_comments',
-	] );
+	return pick(
+		settings,
+		[
+			'cache_disable_locking',
+			'cache_late_init',
+			'cache_list',
+			'cache_mobile_browsers',
+			'cache_mobile_prefixes',
+			'cache_mod_rewrite',
+			'clear_cache_on_post_edit',
+			'disable_utf8',
+			'front_page_checks',
+			'is_mfunc_enabled',
+			'is_mobile_enabled',
+			'refresh_current_only_on_comments',
+		],
+	);
 };
 
 export default WrapSettingsForm( getFormSettings )( Advanced );

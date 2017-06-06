@@ -18,7 +18,6 @@ import FormToggle from 'components/forms/form-toggle';
 import VerticalMenu from 'components/vertical-menu';
 
 class ProductFormVariationsModal extends React.Component {
-
 	static propTypes = {
 		product: PropTypes.object.isRequired,
 		variations: PropTypes.array.isRequired,
@@ -40,7 +39,7 @@ class ProductFormVariationsModal extends React.Component {
 	selectedVariation() {
 		const { selectedVariation } = this.state;
 		const { variations } = this.props;
-		return find( variations, ( v ) => selectedVariation === v.id );
+		return find( variations, v => selectedVariation === v.id );
 	}
 
 	setDescription( e ) {
@@ -57,7 +56,7 @@ class ProductFormVariationsModal extends React.Component {
 
 	switchVariation( selectedVariation ) {
 		this.setState( {
-			selectedVariation
+			selectedVariation,
 		} );
 	}
 
@@ -66,18 +65,21 @@ class ProductFormVariationsModal extends React.Component {
 		const { selectedVariation } = this.state;
 		const variation = this.selectedVariation();
 
-		const navItems = variations && variations.map( function( v, i ) {
-			return (
-				<ModalNavItem key={ i } variation={ v } selected={ selectedVariation } />
-			);
-		} );
+		const navItems =
+			variations &&
+			variations.map( function( v, i ) {
+				return <ModalNavItem key={ i } variation={ v } selected={ selectedVariation } />;
+			} );
 
 		return (
 			<div className="products__product-form-modal-wrapper">
 				<h1>{ translate( 'Variation details' ) }</h1>
 
-				<VerticalMenu onClick={ this.switchVariation } className="products__product-form-modal-menu">
-					{navItems}
+				<VerticalMenu
+					onClick={ this.switchVariation }
+					className="products__product-form-modal-menu"
+				>
+					{ navItems }
 				</VerticalMenu>
 
 				<div className="products__product-form-modal-contents">
@@ -86,39 +88,37 @@ class ProductFormVariationsModal extends React.Component {
 
 					<FormFieldSet className="products__product-form-variation-description">
 						<FormLabel htmlFor="description">{ translate( 'Description' ) }</FormLabel>
-						<FormTextArea name="description" value={ variation.description || '' } onChange={ this.setDescription } />
-						<FormSettingExplanation>{ translate(
-								'This will be displayed in addition to the main product description when this variation is selected.'
-						) }</FormSettingExplanation>
+						<FormTextArea
+							name="description"
+							value={ variation.description || '' }
+							onChange={ this.setDescription }
+						/>
+						<FormSettingExplanation>
+							{ translate(
+								'This will be displayed in addition to the main product description when this variation is selected.',
+							) }
+						</FormSettingExplanation>
 					</FormFieldSet>
 
 					<FormLabel>
 						{ translate( 'Visible' ) }
-						<FormToggle
-							onChange={ this.toggleVisible }
-							checked={ variation.visible }
-						/>
+						<FormToggle onChange={ this.toggleVisible } checked={ variation.visible } />
 					</FormLabel>
-					<FormSettingExplanation>{ translate(
-						'Hidden variations cannot be selected for purchase by customers.'
-					) }</FormSettingExplanation>
+					<FormSettingExplanation>
+						{ translate( 'Hidden variations cannot be selected for purchase by customers.' ) }
+					</FormSettingExplanation>
 				</div>
 			</div>
 		);
 	}
-
 }
 
 const ModalNavItem = props => {
-	const {
-		onClick,
-		variation,
-		selected,
-	} = props;
+	const { onClick, variation, selected } = props;
 
 	const classes = classNames(
 		'vertical-menu__items',
-		{ 'is-selected': ( variation.id === selected ) }
+		{ 'is-selected': variation.id === selected },
 	);
 
 	const clickHandler = () => {

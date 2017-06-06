@@ -10,7 +10,7 @@ import { localize } from 'i18n-calypso';
  */
 import Main from 'components/main';
 import Navigation from './store-stats-navigation';
-import { getSelectedSiteId } from 'state/ui/selectors';
+import { getSelectedSiteId } from 'state/ui/selectors';
 import Chart from './store-stats-chart';
 
 class StoreStats extends Component {
@@ -28,7 +28,7 @@ class StoreStats extends Component {
 		const ordersQuery = {
 			unit,
 			date: today,
-			quantity: '30'
+			quantity: '30',
 		};
 		return (
 			<Main className="store-stats woocommerce" wideLayout={ true }>
@@ -47,10 +47,8 @@ class StoreStats extends Component {
 
 const localizedStats = localize( StoreStats );
 
-export default connect(
-	state => {
-		return {
-			siteId: getSelectedSiteId( state ),
-		};
-	}
-)( localizedStats );
+export default connect( state => {
+	return {
+		siteId: getSelectedSiteId( state ),
+	};
+} )( localizedStats );

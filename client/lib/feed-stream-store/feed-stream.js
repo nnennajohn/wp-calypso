@@ -1,16 +1,7 @@
 /**
  * External Dependencies
  */
-import {
-	filter,
-	findIndex,
-	findLastIndex,
-	forEach,
-	get,
-	map,
-	noop,
-	defer,
-} from 'lodash';
+import { filter, findIndex, findLastIndex, forEach, get, map, noop, defer } from 'lodash';
 import moment from 'moment';
 import url from 'url';
 import debugFactory from 'debug';
@@ -32,7 +23,6 @@ import * as stats from 'reader/stats';
 const debug = debugFactory( 'calypso:feed-store:post-list-store' );
 
 export default class FeedStream {
-
 	constructor( spec ) {
 		if ( ! spec ) {
 			throw new Error( 'must supply a feed stream spec' );
@@ -76,9 +66,9 @@ export default class FeedStream {
 			poller: PollerPool.add( this, 'pollForUpdates', {
 				interval: 60 * 1000,
 				leading: false,
-				pauseWhenHidden: false
+				pauseWhenHidden: false,
 			} ),
-			startDate: spec.startDate
+			startDate: spec.startDate,
 		} );
 	}
 
@@ -100,7 +90,6 @@ export default class FeedStream {
 		Dispatcher.waitFor( [ FeedPostStore.dispatchToken ] );
 
 		switch ( action.type ) {
-
 			case ActionTypes.RECEIVE_PAGE:
 				this.receivePage( action.id, action.error, action.data );
 				break;
@@ -177,8 +166,9 @@ export default class FeedStream {
 			return true;
 		}
 		const post = FeedPostStore.get( postKey );
-		return post && post._state !== 'error' && post._state !== 'pending' &&
-			post._state !== 'minimal';
+		return (
+			post && post._state !== 'error' && post._state !== 'pending' && post._state !== 'minimal'
+		);
 	}
 
 	selectNextItem() {
@@ -206,7 +196,8 @@ export default class FeedStream {
 	}
 
 	selectPrevItem() {
-		if ( this.selectedIndex < 1 ) { // this also captures a selectedIndex of 0, and that's intentional
+		if ( this.selectedIndex < 1 ) {
+			// this also captures a selectedIndex of 0, and that's intentional
 			return;
 		}
 		const prevIndex = findLastIndex( this.postKeys, this.isValidPostOrGap, this.selectedIndex - 1 );
@@ -225,7 +216,10 @@ export default class FeedStream {
 
 	selectItem( postKey, id ) {
 		const selectedIndex = findIndex( this.postKeys, postKey );
-		if ( this.isValidPostOrGap( this.postKeys[ selectedIndex ] ) && selectedIndex !== this.selectedIndex ) {
+		if (
+			this.isValidPostOrGap( this.postKeys[ selectedIndex ] ) &&
+			selectedIndex !== this.selectedIndex
+		) {
 			this.selectedIndex = selectedIndex;
 			setLastStoreId( id );
 			this.emitChange();
@@ -280,9 +274,13 @@ export default class FeedStream {
 	 * @returns {bool} true if we have a recent error
 	 */
 	hasRecentError( errorType ) {
-		const aMinuteAgo = Date.now() - ( 60 * 1000 );
+		const aMinuteAgo = Date.now() - 60 * 1000;
 		return this.errors.some( function( error ) {
-			return ( error.timestamp && error.timestamp > aMinuteAgo ) && ( ! errorType || errorType === error.error );
+			return (
+				error.timestamp &&
+				error.timestamp > aMinuteAgo &&
+				( ! errorType || errorType === error.error )
+			);
 		} );
 	}
 
@@ -315,7 +313,7 @@ export default class FeedStream {
 			orderBy: this.orderBy,
 			number: this.maxUpdates,
 			before: moment().toISOString(),
-			after: mostRecentDate
+			after: mostRecentDate,
 		};
 
 		this.onUpdateFetch( params );
@@ -374,7 +372,7 @@ export default class FeedStream {
 	 * @returns {array} posts - a filtered list of posts
 	 */
 	filterFollowedXPosts( posts ) {
-		return posts.filter( ( postWrapper ) => {
+		return posts.filter( postWrapper => {
 			const post = this.getPostFromMetadata( postWrapper );
 			//note that the post hasn't been normalized yet.
 			if ( post && post.tags && post.tags[ 'p2-xpost' ] ) {
@@ -390,7 +388,7 @@ export default class FeedStream {
 				// this info to the original post.
 				const xPostedBy = {
 					siteURL: post.site_URL,
-					siteName: siteName
+					siteName: siteName,
 				};
 				this.addXPost( xPostMetadata.postURL, xPostedBy );
 				// also keep track of origin comment urls, so we can roll up
@@ -412,7 +410,7 @@ export default class FeedStream {
 	filterNewPosts( posts ) {
 		const postById = this.postById;
 		posts = filter( posts, function( post ) {
-			return ! ( postById.has( post.ID ) );
+			return ! postById.has( post.ID );
 		} );
 		posts = this.filterFollowedXPosts( posts );
 		return map( posts, this.keyMaker );
@@ -460,7 +458,7 @@ export default class FeedStream {
 		}
 
 		this.page++;
-		this.emitChange( );
+		this.emitChange();
 	}
 
 	receiveUpdates( id, error, data ) {
@@ -478,9 +476,9 @@ export default class FeedStream {
 			if ( postKeys.length > 0 ) {
 				this.pendingPostKeys = postKeys;
 				this.pendingDateAfter = moment(
-					FeedPostStore.get(
-						this.keyMaker( data.posts[ data.posts.length - 1 ] )
-					)[ this.dateProperty ]
+					FeedPostStore.get( this.keyMaker( data.posts[ data.posts.length - 1 ] ) )[
+						this.dateProperty
+					 ],
 				);
 				this.emitChange();
 			}
@@ -497,13 +495,15 @@ export default class FeedStream {
 			postById.add( postKey.postId );
 		} );
 
-		const mostRecentPostDate = moment( FeedPostStore.get( this.postKeys[ 0 ] )[ this.dateProperty ] );
+		const mostRecentPostDate = moment(
+			FeedPostStore.get( this.postKeys[ 0 ] )[ this.dateProperty ],
+		);
 
 		if ( this.pendingDateAfter > mostRecentPostDate ) {
 			this.pendingPostKeys.push( {
 				isGap: true,
 				from: mostRecentPostDate,
-				to: this.pendingDateAfter
+				to: this.pendingDateAfter,
 			} );
 		}
 		this.postKeys = this.pendingPostKeys.concat( this.postKeys );
@@ -548,7 +548,7 @@ export default class FeedStream {
 				gapItems.push( {
 					isGap: true,
 					from: afterGapDate,
-					to: moment( posts[ posts.length - 1 ][ this.dateProperty ] )
+					to: moment( posts[ posts.length - 1 ][ this.dateProperty ] ),
 				} );
 			}
 		}

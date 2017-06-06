@@ -20,17 +20,17 @@ module.exports = React.createClass( {
 	render: function() {
 		if ( this.getFlowLength() > 1 ) {
 			return (
-				<div className="flow-progress-indicator">{
-					this.translate( 'Step %(stepNumber)d of %(stepTotal)d', {
+				<div className="flow-progress-indicator">
+					{ this.translate( 'Step %(stepNumber)d of %(stepTotal)d', {
 						args: {
 							stepNumber: this.props.positionInFlow + 1,
-							stepTotal: this.getFlowLength()
-						}
-					} )
-				}</div>
+							stepTotal: this.getFlowLength(),
+						},
+					} ) }
+				</div>
 			);
 		}
 
 		return null;
-	}
+	},
 } );

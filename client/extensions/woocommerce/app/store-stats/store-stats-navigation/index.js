@@ -13,7 +13,7 @@ import NavTabs from 'components/section-nav/tabs';
 import NavItem from 'components/section-nav/item';
 import FollowersCount from 'blocks/followers-count';
 import SegmentedControl from 'components/segmented-control';
-import { getSelectedSiteSlug } from 'state/ui/selectors';
+import { getSelectedSiteSlug } from 'state/ui/selectors';
 
 const StoreStatsNavigation = props => {
 	const { translate, slug, type, unit } = props;
@@ -49,14 +49,12 @@ const StoreStatsNavigation = props => {
 };
 
 StoreStatsNavigation.propTypes = {
-	slug: PropTypes.string
+	slug: PropTypes.string,
 };
 
-export default connect(
-	state => {
-		return {
-			slug: getSelectedSiteSlug( state ),
-			translate: i18n.translate,
-		};
-	}
-)( StoreStatsNavigation );
+export default connect( state => {
+	return {
+		slug: getSelectedSiteSlug( state ),
+		translate: i18n.translate,
+	};
+} )( StoreStatsNavigation );

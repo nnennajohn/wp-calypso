@@ -11,14 +11,16 @@ export const LOADING = 'LOADING';
 // TODO: Handle error
 
 export default {
-	[ WOOCOMMERCE_API_FETCH_SETTINGS_GENERAL ]: ( state ) => {
-		return { ...state,
+	[ WOOCOMMERCE_API_FETCH_SETTINGS_GENERAL ]: state => {
+		return {
+			...state,
 			settingsGeneral: LOADING,
 		};
 	},
 
 	[ WOOCOMMERCE_API_FETCH_SETTINGS_GENERAL_SUCCESS ]: ( state, { payload: { data } } ) => {
-		return { ...state,
+		return {
+			...state,
 			settingsGeneral: data,
 		};
 	},

@@ -36,59 +36,57 @@ const Miscellaneous = ( {
 
 	return (
 		<div>
-			<SectionHeader
-				label={ translate( 'Miscellaneous' ) }>
-			</SectionHeader>
+			<SectionHeader label={ translate( 'Miscellaneous' ) } />
 			<Card>
 				<form>
-					{ compressionDisabled && compressionDisabled.message &&
-					<Notice
-						showDismiss={ false }
-						status={ compressionDisabled.type ? `is-${ compressionDisabled.type }` : 'is-info' }
-						text={ compressionDisabled.message } />
-					}
+					{ compressionDisabled &&
+						compressionDisabled.message &&
+						<Notice
+							showDismiss={ false }
+							status={ compressionDisabled.type ? `is-${ compressionDisabled.type }` : 'is-info' }
+							text={ compressionDisabled.message }
+						/> }
 					<FormFieldset>
 						{ ! compressionDisabled &&
-						<FormToggle
-							checked={ !! cache_compression }
-							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'cache_compression' ) }>
-							<span>
-								{ translate(
-									'Compress pages so they’re served more quickly to visitors. {{em}}(Recommended{{/em}})',
-									{
-										components: { em: <em /> }
-									}
-								) }
-							</span>
-						</FormToggle>
-						}
+							<FormToggle
+								checked={ !! cache_compression }
+								disabled={ isRequesting || isSaving }
+								onChange={ handleAutosavingToggle( 'cache_compression' ) }
+							>
+								<span>
+									{ translate(
+										'Compress pages so they’re served more quickly to visitors. {{em}}(Recommended{{/em}})',
+										{
+											components: { em: <em /> },
+										},
+									) }
+								</span>
+							</FormToggle> }
 
 						<FormToggle
 							checked={ !! dont_cache_logged_in }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'dont_cache_logged_in' ) }>
+							onChange={ handleAutosavingToggle( 'dont_cache_logged_in' ) }
+						>
 							<span>
-								{ translate(
-									'Don’t cache pages for known users. {{em}}(Recommended){{/em}}',
-									{
-										components: { em: <em /> }
-									}
-								) }
+								{ translate( 'Don’t cache pages for known users. {{em}}(Recommended){{/em}}', {
+									components: { em: <em /> },
+								} ) }
 							</span>
 						</FormToggle>
 
 						<FormToggle
 							checked={ !! cache_rebuild }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'cache_rebuild' ) }>
+							onChange={ handleAutosavingToggle( 'cache_rebuild' ) }
+						>
 							<span>
 								{ translate(
 									'Cache rebuild. Serve a supercache file to anonymous users while a new ' +
-									'file is being generated. {{em}}(Recommended){{/em}}',
+										'file is being generated. {{em}}(Recommended){{/em}}',
 									{
-										components: { em: <em /> }
-									}
+										components: { em: <em /> },
+									},
 								) }
 							</span>
 						</FormToggle>
@@ -96,14 +94,15 @@ const Miscellaneous = ( {
 						<FormToggle
 							checked={ !! use_304_headers }
 							disabled={ isRequesting || isSaving || !! cache_mod_rewrite }
-							onChange={ handleAutosavingToggle( 'use_304_headers' ) }>
+							onChange={ handleAutosavingToggle( 'use_304_headers' ) }
+						>
 							<span>
 								{ translate(
 									'304 Not Modified browser caching. Indicate when a page has not been ' +
-									'modified since it was last requested. {{em}}(Recommended){{/em}}',
+										'modified since it was last requested. {{em}}(Recommended){{/em}}',
 									{
-										components: { em: <em /> }
-									}
+										components: { em: <em /> },
+									},
 								) }
 							</span>
 						</FormToggle>
@@ -113,24 +112,27 @@ const Miscellaneous = ( {
 								isCompact
 								className="wp-super-cache__miscellaneous-304-notice"
 								status="is-error"
-								text={ translate( '304 browser caching is only supported when mod_rewrite caching ' +
-									'is not used.' ) }
-							/>
-						}
+								text={ translate(
+									'304 browser caching is only supported when mod_rewrite caching ' +
+										'is not used.',
+								) }
+							/> }
 
 						{ ! cache_mod_rewrite &&
 							<Notice
 								isCompact
 								className="wp-super-cache__miscellaneous-304-notice"
-								text={ translate( '304 support is disabled by default because some hosts have had problems with the ' +
-									'headers used in the past.' ) }
-							/>
-						}
+								text={ translate(
+									'304 support is disabled by default because some hosts have had problems with the ' +
+										'headers used in the past.',
+								) }
+							/> }
 
 						<FormToggle
 							checked={ !! no_cache_for_get }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'no_cache_for_get' ) }>
+							onChange={ handleAutosavingToggle( 'no_cache_for_get' ) }
+						>
 							<span>
 								{ translate( 'Don’t cache pages with GET parameters. (?x=y at the end of a url)' ) }
 							</span>
@@ -139,19 +141,24 @@ const Miscellaneous = ( {
 						<FormToggle
 							checked={ !! make_known_anon }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'make_known_anon' ) }>
+							onChange={ handleAutosavingToggle( 'make_known_anon' ) }
+						>
 							<span>
-								{ translate( 'Make known users anonymous so they’re served supercached static files.' ) }
+								{ translate(
+									'Make known users anonymous so they’re served supercached static files.',
+								) }
 							</span>
 						</FormToggle>
 
 						<FormToggle
 							checked={ !! cache_hello_world }
 							disabled={ isRequesting || isSaving }
-							onChange={ handleAutosavingToggle( 'cache_hello_world' ) }>
+							onChange={ handleAutosavingToggle( 'cache_hello_world' ) }
+						>
 							<span>
-								{ translate( 'Proudly tell the world your server is {{fry}}Stephen Fry proof{{/fry}}! ' +
-									'(places a message in your blog’s footer)',
+								{ translate(
+									'Proudly tell the world your server is {{fry}}Stephen Fry proof{{/fry}}! ' +
+										'(places a message in your blog’s footer)',
 									{
 										components: {
 											fry: (
@@ -161,9 +168,9 @@ const Miscellaneous = ( {
 													href="https://twitter.com/#!/HibbsLupusTrust/statuses/136429993059291136"
 												/>
 											),
-										}
-									}
-							) }
+										},
+									},
+								) }
 							</span>
 						</FormToggle>
 					</FormFieldset>
@@ -174,16 +181,19 @@ const Miscellaneous = ( {
 };
 
 const getFormSettings = settings => {
-	return pick( settings, [
-		'cache_compression',
-		'cache_hello_world',
-		'cache_mod_rewrite',
-		'cache_rebuild',
-		'dont_cache_logged_in',
-		'make_known_anon',
-		'no_cache_for_get',
-		'use_304_headers',
-	] );
+	return pick(
+		settings,
+		[
+			'cache_compression',
+			'cache_hello_world',
+			'cache_mod_rewrite',
+			'cache_rebuild',
+			'dont_cache_logged_in',
+			'make_known_anon',
+			'no_cache_for_get',
+			'use_304_headers',
+		],
+	);
 };
 
 export default WrapSettingsForm( getFormSettings )( Miscellaneous );

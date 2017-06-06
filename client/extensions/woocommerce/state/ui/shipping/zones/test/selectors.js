@@ -12,7 +12,7 @@ import {
 	isCurrentlyEditingShippingZone,
 	canChangeShippingZoneTitle,
 	canRemoveShippingZone,
-	canEditShippingZoneLocations
+	canEditShippingZoneLocations,
 } from '../selectors';
 import { LOADING } from '../../../../wc-api/shipping-zones/reducer';
 
@@ -37,7 +37,7 @@ describe( 'selectors', () => {
 			expect( getShippingZones( state ) ).to.deep.equal( [] );
 		} );
 
-		it( 'when the zones didn\'t load', () => {
+		it( "when the zones didn't load", () => {
 			const state = {
 				extensions: {
 					woocommerce: {
@@ -62,10 +62,7 @@ describe( 'selectors', () => {
 					woocommerce: {
 						wcApi: {
 							123: {
-								shippingZones: [
-									{ id: 1, name: 'Zone1' },
-									{ id: 2, name: 'Zone2' },
-								],
+								shippingZones: [ { id: 1, name: 'Zone1' }, { id: 2, name: 'Zone2' } ],
 							},
 						},
 						ui: {},
@@ -76,10 +73,9 @@ describe( 'selectors', () => {
 				},
 			};
 
-			expect( getShippingZones( state ) ).to.deep.equal( [
-				{ id: 1, name: 'Zone1' },
-				{ id: 2, name: 'Zone2' },
-			] );
+			expect( getShippingZones( state ) ).to.deep.equal(
+				[ { id: 1, name: 'Zone1' }, { id: 2, name: 'Zone2' } ],
+			);
 		} );
 
 		it( 'should apply the "edits" changes to the zone list', () => {
@@ -99,15 +95,9 @@ describe( 'selectors', () => {
 							123: {
 								shipping: {
 									zones: {
-										creates: [
-											{ id: { index: 0 }, name: 'NewZone4' },
-										],
-										updates: [
-											{ id: 2, name: 'EditedZone2' },
-										],
-										deletes: [
-											{ id: 1 },
-										],
+										creates: [ { id: { index: 0 }, name: 'NewZone4' } ],
+										updates: [ { id: 2, name: 'EditedZone2' } ],
+										deletes: [ { id: 1 } ],
 										currentlyEditingId: null,
 									},
 								},
@@ -120,11 +110,13 @@ describe( 'selectors', () => {
 				},
 			};
 
-			expect( getShippingZones( state ) ).to.deep.equal( [
-				{ id: 2, name: 'EditedZone2' },
-				{ id: 3, name: 'Zone3' },
-				{ id: { index: 0 }, name: 'NewZone4' },
-			] );
+			expect( getShippingZones( state ) ).to.deep.equal(
+				[
+					{ id: 2, name: 'EditedZone2' },
+					{ id: 3, name: 'Zone3' },
+					{ id: { index: 0 }, name: 'NewZone4' },
+				],
+			);
 		} );
 
 		it( 'should NOT apply the uncommited changes made in the modal', () => {
@@ -133,9 +125,7 @@ describe( 'selectors', () => {
 					woocommerce: {
 						wcApi: {
 							123: {
-								shippingZones: [
-									{ id: 1, name: 'Zone1' },
-								],
+								shippingZones: [ { id: 1, name: 'Zone1' } ],
 							},
 						},
 						ui: {
@@ -169,9 +159,7 @@ describe( 'selectors', () => {
 					woocommerce: {
 						wcApi: {
 							123: {
-								shippingZones: [
-									{ id: 1 },
-								],
+								shippingZones: [ { id: 1 } ],
 							},
 						},
 						ui: {
@@ -200,10 +188,7 @@ describe( 'selectors', () => {
 					woocommerce: {
 						wcApi: {
 							123: {
-								shippingZones: [
-									{ id: 1, name: 'MyZone' },
-									{ id: 2, name: 'Blah Blah' },
-								],
+								shippingZones: [ { id: 1, name: 'MyZone' }, { id: 2, name: 'Blah Blah' } ],
 							},
 						},
 						ui: {
@@ -235,9 +220,7 @@ describe( 'selectors', () => {
 					woocommerce: {
 						wcApi: {
 							123: {
-								shippingZones: [
-									{ id: 1, name: 'MyZone' },
-								],
+								shippingZones: [ { id: 1, name: 'MyZone' } ],
 							},
 						},
 						ui: {
@@ -259,7 +242,9 @@ describe( 'selectors', () => {
 				},
 			};
 
-			expect( getCurrentlyEditingShippingZone( state ) ).to.deep.equal( { id: 1, name: 'MyNewZone' } );
+			expect( getCurrentlyEditingShippingZone( state ) ).to.deep.equal(
+				{ id: 1, name: 'MyNewZone' },
+			);
 			expect( isCurrentlyEditingShippingZone( state ) ).to.be.true;
 		} );
 
@@ -291,20 +276,22 @@ describe( 'selectors', () => {
 				},
 			};
 
-			expect( getCurrentlyEditingShippingZone( state ) ).to.deep.equal( { id: { index: 0 }, name: 'MyNewZone' } );
+			expect( getCurrentlyEditingShippingZone( state ) ).to.deep.equal(
+				{ id: { index: 0 }, name: 'MyNewZone' },
+			);
 			expect( isCurrentlyEditingShippingZone( state ) ).to.be.true;
 		} );
 	} );
 
 	describe( 'is shipping zone editable', () => {
-		it( 'when it\'s a locally created zone', () => {
+		it( "when it's a locally created zone", () => {
 			const zoneId = { index: 0 };
 			expect( canChangeShippingZoneTitle( zoneId ) ).to.be.true;
 			expect( canRemoveShippingZone( zoneId ) ).to.be.true;
 			expect( canEditShippingZoneLocations( zoneId ) ).to.be.true;
 		} );
 
-		it( 'when it\'s a regular zone', () => {
+		it( "when it's a regular zone", () => {
 			const zoneId = 7;
 			expect( canChangeShippingZoneTitle( zoneId ) ).to.be.true;
 			expect( canRemoveShippingZone( zoneId ) ).to.be.true;

@@ -7,10 +7,7 @@ import { createReducer } from 'state/utils';
 /**
  * Internal dependencies
  */
-import {
-	WOOCOMMERCE_EDIT_PRODUCT,
-	WOOCOMMERCE_EDIT_PRODUCT_ATTRIBUTE,
-} from '../../action-types';
+import { WOOCOMMERCE_EDIT_PRODUCT, WOOCOMMERCE_EDIT_PRODUCT_ATTRIBUTE } from '../../action-types';
 import { nextBucketIndex, getBucket } from '../helpers';
 
 export default createReducer( null, {
@@ -57,7 +54,7 @@ function editProduct( array, product, data ) {
 	let found = false;
 
 	// Look for this object in the appropriate create or edit array first.
-	const _array = prevArray.map( ( p ) => {
+	const _array = prevArray.map( p => {
 		if ( product.id === p.id ) {
 			found = true;
 			return { ...p, ...data };
@@ -76,12 +73,12 @@ function editProduct( array, product, data ) {
 
 export function editProductAttribute( attributes, attribute, data ) {
 	const prevAttributes = attributes || [];
-	const uid = attribute && attribute.uid || uniqueId( 'edit_' ) + ( new Date().getTime() );
+	const uid = ( attribute && attribute.uid ) || uniqueId( 'edit_' ) + new Date().getTime();
 
 	let found = false;
 
 	// Look for this attribute in the array of attributes first.
-	const _attributes = prevAttributes.map( ( a ) => {
+	const _attributes = prevAttributes.map( a => {
 		if ( uid === a.uid ) {
 			found = true;
 			return { ...a, ...data };

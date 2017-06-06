@@ -27,7 +27,6 @@ import { getCurrentUser } from 'state/current-user/selectors';
 import { isHappychatAvailable } from 'state/happychat/selectors';
 
 const MeSidebar = React.createClass( {
-
 	mixins: [ eventRecorder ],
 
 	componentDidMount: function() {
@@ -43,7 +42,7 @@ const MeSidebar = React.createClass( {
 		const currentUser = this.props.currentUser;
 
 		// If user is using en locale, redirect to app promo page on sign out
-		const isEnLocale = ( currentUser && currentUser.localeSlug === 'en' );
+		const isEnLocale = currentUser && currentUser.localeSlug === 'en';
 		let redirect = null;
 		if ( isEnLocale && ! config.isEnabled( 'desktop' ) ) {
 			redirect = '/?apppromo';
@@ -66,7 +65,7 @@ const MeSidebar = React.createClass( {
 			[ purchasesPaths.purchasesRoot() ]: 'purchases',
 			[ purchasesPaths.billingHistory() ]: 'purchases',
 			[ purchasesPaths.addCreditCard() ]: 'purchases',
-			'/me/chat': 'happychat'
+			'/me/chat': 'happychat',
 		};
 		const filteredPath = context.path.replace( /\/\d+$/, '' ); // Remove ID from end of path
 		let selected;
@@ -101,7 +100,9 @@ const MeSidebar = React.createClass( {
 					<ul>
 						<SidebarItem
 							selected={ selected === 'profile' }
-							link={ config.isEnabled( 'me/my-profile' ) ? '/me' : '//wordpress.com/me/public-profile' }
+							link={
+								config.isEnabled( 'me/my-profile' ) ? '/me' : '//wordpress.com/me/public-profile'
+							}
 							label={ this.translate( 'My Profile' ) }
 							icon="user"
 							onNavigate={ this.onNavigate }
@@ -109,7 +110,9 @@ const MeSidebar = React.createClass( {
 
 						<SidebarItem
 							selected={ selected === 'account' }
-							link={ config.isEnabled( 'me/account' ) ? '/me/account' : '//wordpress.com/me/account' }
+							link={
+								config.isEnabled( 'me/account' ) ? '/me/account' : '//wordpress.com/me/account'
+							}
 							label={ this.translate( 'Account Settings' ) }
 							icon="cog"
 							onNavigate={ this.onNavigate }
@@ -136,7 +139,11 @@ const MeSidebar = React.createClass( {
 
 						<SidebarItem
 							selected={ selected === 'notifications' }
-							link={ config.isEnabled( 'me/notifications' ) ? '/me/notifications' : '//wordpress.com/me/notifications' }
+							link={
+								config.isEnabled( 'me/notifications' )
+									? '/me/notifications'
+									: '//wordpress.com/me/notifications'
+							}
 							label={ this.translate( 'Notification Settings' ) }
 							icon="bell"
 							onNavigate={ this.onNavigate }
@@ -176,13 +183,13 @@ const MeSidebar = React.createClass( {
 				/>
 			);
 		}
-	}
+	},
 } );
 
 function mapStateToProps( state ) {
 	return {
 		currentUser: getCurrentUser( state ),
-		isHappychatAvailable: isHappychatAvailable( state )
+		isHappychatAvailable: isHappychatAvailable( state ),
 	};
 }
 

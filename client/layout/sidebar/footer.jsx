@@ -17,21 +17,15 @@ import { isHappychatChatActive } from 'state/happychat/selectors';
 const SidebarFooter = ( { translate, children, isHappychatButtonVisible } ) => (
 	<div className="sidebar__footer">
 		{ children }
-		<Button
-			className="sidebar__footer-help"
-			borderless
-			href="/help"
-			title={ translate( 'Help' ) }>
+		<Button className="sidebar__footer-help" borderless href="/help" title={ translate( 'Help' ) }>
 			<Gridicon icon="help-outline" />
 		</Button>
-		{
-			isHappychatButtonVisible &&
+		{ isHappychatButtonVisible &&
 			config.isEnabled( 'happychat' ) &&
-			<HappychatButton className="sidebar__footer-chat" allowMobileRedirect />
-		}
+			<HappychatButton className="sidebar__footer-chat" allowMobileRedirect /> }
 	</div>
 );
 
-const mapState = ( state ) => ( { isHappychatButtonVisible: isHappychatChatActive( state ) } );
+const mapState = state => ( { isHappychatButtonVisible: isHappychatChatActive( state ) } );
 
 export default connect( mapState )( localize( SidebarFooter ) );

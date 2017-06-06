@@ -19,10 +19,7 @@ import config, { isEnabled } from 'config';
 import EmailedLoginLinkSuccessfully from '../magic-login/emailed-login-link-successfully';
 import EmailedLoginLinkExpired from '../magic-login/emailed-login-link-expired';
 import ExternalLink from 'components/external-link';
-import {
-	getMagicLoginEmailAddressFormInput,
-	getMagicLoginCurrentView,
-} from 'state/selectors';
+import { getMagicLoginEmailAddressFormInput, getMagicLoginCurrentView } from 'state/selectors';
 import { getCurrentQueryArguments } from 'state/ui/selectors';
 import Gridicon from 'gridicons';
 import HandleEmailedLinkForm from '../magic-login/handle-emailed-link-form';
@@ -66,10 +63,7 @@ export class Login extends React.Component {
 	};
 
 	magicLoginMainContent() {
-		const {
-			magicLoginView,
-			magicLoginEmailAddress,
-		} = this.props;
+		const { magicLoginView, magicLoginEmailAddress } = this.props;
 
 		switch ( magicLoginView ) {
 			case LINK_EXPIRED_PAGE:
@@ -85,10 +79,7 @@ export class Login extends React.Component {
 	}
 
 	componentWillMount() {
-		const {
-			magicLoginEnabled,
-			queryArguments,
-		} = this.props;
+		const { magicLoginEnabled, queryArguments } = this.props;
 
 		if ( magicLoginEnabled && queryArguments && queryArguments.action === 'handleLoginEmail' ) {
 			this.props.showMagicLoginInterstitialPage();
@@ -106,79 +97,62 @@ export class Login extends React.Component {
 	};
 
 	footerLinks() {
-		const {
-			magicLoginEnabled,
-			magicLoginView,
-			translate,
-			twoFactorAuthType
-		} = this.props;
+		const { magicLoginEnabled, magicLoginView, translate, twoFactorAuthType } = this.props;
 
 		if ( magicLoginEnabled && magicLoginView === REQUEST_FORM ) {
-			return <a href="#"
-				key="enter-password-link"
-				onClick={ this.onClickEnterPasswordInstead }>
+			return (
+				<a href="#" key="enter-password-link" onClick={ this.onClickEnterPasswordInstead }>
 					{ translate( 'Enter a password instead' ) }
-				</a>;
+				</a>
+			);
 		}
 
-		const backToWpcomLink = ! magicLoginView && (
-			<a
-				href="https://wordpress.com"
-				key="return-to-wpcom-link"
-			>
+		const backToWpcomLink =
+			! magicLoginView &&
+			<a href="https://wordpress.com" key="return-to-wpcom-link">
 				<Gridicon icon="arrow-left" size={ 18 } /> { translate( 'Back to WordPress.com' ) }
-			</a>
-		);
+			</a>;
 
-		const showMagicLoginLink = magicLoginEnabled && ! magicLoginView && ! twoFactorAuthType && (
-			<a href="#"
-				key="magic-login-link"
-				onClick={ this.onMagicLoginRequestClick }>
-					{ translate( 'Email me a login link' ) }
-			</a>
-		);
+		const showMagicLoginLink =
+			magicLoginEnabled &&
+			! magicLoginView &&
+			! twoFactorAuthType &&
+			<a href="#" key="magic-login-link" onClick={ this.onMagicLoginRequestClick }>
+				{ translate( 'Email me a login link' ) }
+			</a>;
 
-		const resetPasswordLink = ! magicLoginView && ! twoFactorAuthType && (
-			<a
-				href={ config( 'login_url' ) + '?action=lostpassword' }
-				key="lost-password-link">
+		const resetPasswordLink =
+			! magicLoginView &&
+			! twoFactorAuthType &&
+			<a href={ config( 'login_url' ) + '?action=lostpassword' } key="lost-password-link">
 				{ this.props.translate( 'Lost your password?' ) }
-			</a>
-		);
+			</a>;
 
-		const lostPhoneLink = twoFactorAuthType && twoFactorAuthType !== 'backup' && (
-			<a
-				href={ login( { isNative: true, twoFactorAuthType: 'backup' } ) }
-				key="lost-phone-link">
+		const lostPhoneLink =
+			twoFactorAuthType &&
+			twoFactorAuthType !== 'backup' &&
+			<a href={ login( { isNative: true, twoFactorAuthType: 'backup' } ) } key="lost-phone-link">
 				{ this.props.translate( "I can't access my phone" ) }
-			</a>
-		);
+			</a>;
 
-		const helpLink = twoFactorAuthType && (
+		const helpLink =
+			twoFactorAuthType &&
 			<ExternalLink
 				key="help-link"
 				icon={ true }
 				target="_blank"
-				href="http://en.support.wordpress.com/security/two-step-authentication/">
+				href="http://en.support.wordpress.com/security/two-step-authentication/"
+			>
 				{ translate( 'Get help' ) }
-			</ExternalLink>
-		);
+			</ExternalLink>;
 
-		return compact( [
-			lostPhoneLink,
-			helpLink,
-			showMagicLoginLink,
-			resetPasswordLink,
-			backToWpcomLink,
-		] );
+		return compact(
+			[ lostPhoneLink, helpLink, showMagicLoginLink, resetPasswordLink, backToWpcomLink ],
+		);
 	}
 
 	render() {
-		const {
-			magicLoginView,
-			queryArguments,
-			twoFactorAuthType,
-		} = this.props;
+		const { magicLoginView, queryArguments, twoFactorAuthType } = this.props;
 
 		return (
 			<Main className="wp-login">
@@ -186,21 +160,20 @@ export class Login extends React.Component {
 
 				<GlobalNotices id="notices" notices={ notices.list } />
 
-				{ this.magicLoginMainContent() || (
+				{ this.magicLoginMainContent() ||
 					<div>
 						<div className="wp-login__container">
 							{ magicLoginView === REQUEST_FORM
 								? <RequestLoginEmailForm />
 								: <LoginBlock
-									twoFactorAuthType={ twoFactorAuthType }
-									redirectLocation={ queryArguments.redirect_to } />
-							}
+										twoFactorAuthType={ twoFactorAuthType }
+										redirectLocation={ queryArguments.redirect_to }
+									/> }
 						</div>
 						<div className="wp-login__footer">
 							{ this.footerLinks() }
 						</div>
-					</div>
-				) }
+					</div> }
 			</Main>
 		);
 	}

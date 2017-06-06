@@ -8,10 +8,7 @@ import debugFactory from 'debug';
  */
 import { createReducer } from 'state/utils';
 
-import {
-	WOOCOMMERCE_API_SET_ERROR,
-	WOOCOMMERCE_API_CLEAR_ERROR,
-} from '../../../action-types';
+import { WOOCOMMERCE_API_SET_ERROR, WOOCOMMERCE_API_CLEAR_ERROR } from '../../../action-types';
 
 const debug = debugFactory( 'woocommerce:errors:wc-api' );
 
@@ -32,4 +29,3 @@ function setApiError( error, action ) {
 function clearApiError() {
 	return null;
 }
-

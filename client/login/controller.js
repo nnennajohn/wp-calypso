@@ -14,5 +14,5 @@ export default {
 		context.primary = <WPLogin twoFactorAuthType={ context.params.twoFactorAuthType } />;
 
 		next();
-	}
+	},
 };

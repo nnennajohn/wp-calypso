@@ -9,4 +9,3 @@ const siteReducer = combineReducers( {
 } );
 
 export default keyedReducer( 'siteId', siteReducer );
-

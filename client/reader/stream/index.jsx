@@ -64,7 +64,7 @@ function getDistanceBetweenRecs() {
 	const distance = clamp(
 		Math.floor( Math.log( totalSubs ) * Math.LOG2E * 5 - 6 ),
 		MIN_DISTANCE_BETWEEN_RECS,
-		MAX_DISTANCE_BETWEEN_RECS
+		MAX_DISTANCE_BETWEEN_RECS,
 	);
 	return distance;
 }
@@ -275,7 +275,7 @@ class ReaderStream extends React.Component {
 
 	isPostFullScreen() {
 		return !! window.location.pathname.match(
-			/^\/read\/(blogs|feeds)\/([0-9]+)\/posts\/([0-9]+)$/i
+			/^\/read\/(blogs|feeds)\/([0-9]+)\/posts\/([0-9]+)$/i,
 		);
 	}
 
@@ -484,6 +484,6 @@ export default localize(
 		state => ( {
 			blockedSites: getBlockedSites( state ),
 		} ),
-		{ resetCardExpansions }
-	)( ReaderStream )
+		{ resetCardExpansions },
+	)( ReaderStream ),
 );

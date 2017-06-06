@@ -13,7 +13,7 @@ class QueryFeedSearch extends Component {
 	static propTypes = {
 		query: PropTypes.string,
 		searchFeeds: PropTypes.func,
-	}
+	};
 
 	componentWillMount() {
 		this.props.requestFeedSearch( this.props.query );

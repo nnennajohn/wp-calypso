@@ -46,7 +46,7 @@ export function getPaymentMethodsGroup( state, type, siteId = getSelectedSiteId(
 	if ( ! isArray( siteData.paymentMethods ) ) {
 		methods = [];
 	} else {
-		methods = siteData.paymentMethods.filter( ( method ) => {
+		methods = siteData.paymentMethods.filter( method => {
 			return method.methodType === type;
 		} );
 	}

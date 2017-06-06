@@ -1,10 +1,7 @@
 /**
  * Internal dependencies
  */
-import {
-	WOOCOMMERCE_API_SET_ERROR,
-	WOOCOMMERCE_API_CLEAR_ERROR,
-} from '../../../action-types';
+import { WOOCOMMERCE_API_SET_ERROR, WOOCOMMERCE_API_CLEAR_ERROR } from '../../../action-types';
 
 export function setError( siteId, originalAction, data, time = Date.now() ) {
 	return {
@@ -20,4 +17,3 @@ export function clearError( siteId ) {
 		siteId,
 	};
 }
-

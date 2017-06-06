@@ -11,14 +11,16 @@ export const LOADING = 'LOADING';
 // TODO: Handle error
 
 export default {
-	[ WOOCOMMERCE_API_FETCH_SHIPPING_ZONES ]: ( state ) => {
-		return { ...state,
+	[ WOOCOMMERCE_API_FETCH_SHIPPING_ZONES ]: state => {
+		return {
+			...state,
 			shippingZones: LOADING,
 		};
 	},
 
 	[ WOOCOMMERCE_API_FETCH_SHIPPING_ZONES_SUCCESS ]: ( state, { payload: { data } } ) => {
-		return { ...state,
+		return {
+			...state,
 			shippingZones: data,
 		};
 	},

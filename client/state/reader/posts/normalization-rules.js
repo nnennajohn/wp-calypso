@@ -111,30 +111,34 @@ export function classifyPost( post ) {
 	return post;
 }
 
-const fastPostNormalizationRules = flow( [
-	decodeEntities,
-	stripHtml,
-	preventWidows,
-	makeSiteIdSafeForApi,
-	pickPrimaryTag,
-	safeImageProperties( READER_CONTENT_WIDTH ),
-	withContentDom( [
-		removeStyles,
-		removeElementsBySelector,
-		makeImagesSafe(),
-		makeEmbedsSafe,
-		disableAutoPlayOnEmbeds,
-		disableAutoPlayOnMedia,
-		detectMedia,
-		detectPolls,
-		linkJetpackCarousels,
-	] ),
-	createBetterExcerpt,
-	pickCanonicalImage,
-	pickCanonicalMedia,
-	classifyPost,
-	addDiscoverProperties,
-] );
+const fastPostNormalizationRules = flow(
+	[
+		decodeEntities,
+		stripHtml,
+		preventWidows,
+		makeSiteIdSafeForApi,
+		pickPrimaryTag,
+		safeImageProperties( READER_CONTENT_WIDTH ),
+		withContentDom(
+			[
+				removeStyles,
+				removeElementsBySelector,
+				makeImagesSafe(),
+				makeEmbedsSafe,
+				disableAutoPlayOnEmbeds,
+				disableAutoPlayOnMedia,
+				detectMedia,
+				detectPolls,
+				linkJetpackCarousels,
+			],
+		),
+		createBetterExcerpt,
+		pickCanonicalImage,
+		pickCanonicalMedia,
+		classifyPost,
+		addDiscoverProperties,
+	],
+);
 
 export function runFastRules( post ) {
 	if ( ! post ) {
@@ -145,12 +149,9 @@ export function runFastRules( post ) {
 	return post;
 }
 
-const slowSyncRules = flow( [
-	keepValidImages( 144, 72 ),
-	pickCanonicalImage,
-	pickCanonicalMedia,
-	classifyPost,
-] );
+const slowSyncRules = flow(
+	[ keepValidImages( 144, 72 ), pickCanonicalImage, pickCanonicalMedia, classifyPost ],
+);
 
 export function runSlowRules( post ) {
 	post = Object.assign( {}, post );

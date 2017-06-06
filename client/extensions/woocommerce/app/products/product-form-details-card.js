@@ -16,7 +16,6 @@ import FormTextInput from 'components/forms/form-text-input';
 import ProductFormImages from './product-form-images';
 
 export default class ProductFormDetailsCard extends Component {
-
 	static propTypes = {
 		product: PropTypes.shape( {
 			id: PropTypes.isRequired,
@@ -51,21 +50,21 @@ export default class ProductFormDetailsCard extends Component {
 		editProduct( product, { featured: ! product.featured } );
 	}
 
-	onImageUpload = ( image ) => {
+	onImageUpload = image => {
 		const { product, editProduct } = this.props;
-		const images = product.images && [ ...product.images ] || [];
+		const images = ( product.images && [ ...product.images ] ) || [];
 		images.push( {
 			id: image.ID,
 			src: image.URL,
 		} );
 		editProduct( product, { images } );
-	}
+	};
 
-	onImageRemove = ( id ) => {
+	onImageRemove = id => {
 		const { product, editProduct } = this.props;
-		const images = product.images && [ ...product.images ].filter( i => i.id !== id ) || [];
+		const images = ( product.images && [ ...product.images ].filter( i => i.id !== id ) ) || [];
 		editProduct( product, { images } );
-	}
+	};
 
 	render() {
 		const { product } = this.props;
@@ -76,10 +75,7 @@ export default class ProductFormDetailsCard extends Component {
 				<div className="products__product-form-details-featured">
 					<FormLabel>
 						{ __( 'Featured' ) }
-						<CompactFormToggle
-							onChange={ this.toggleFeatured }
-							checked={ product.featured }
-						/>
+						<CompactFormToggle onChange={ this.toggleFeatured } checked={ product.featured } />
 					</FormLabel>
 				</div>
 				<div className="products__product-form-details-wrapper">
@@ -99,12 +95,12 @@ export default class ProductFormDetailsCard extends Component {
 								name="description"
 								value={ product.description || '' }
 								onChange={ this.setDescription }
-								rows="8" />
+								rows="8"
+							/>
 						</FormFieldSet>
 					</div>
 				</div>
 			</Card>
 		);
 	}
-
 }

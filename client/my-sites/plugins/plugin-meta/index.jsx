@@ -36,10 +36,7 @@ import PluginAutomatedTransfer from 'my-sites/plugins/plugin-automated-transfer'
 import { userCan } from 'lib/site/utils';
 import Banner from 'components/banner';
 import { PLAN_BUSINESS, FEATURE_UPLOAD_PLUGINS } from 'lib/plans/constants';
-import {
-	isBusiness,
-	isEnterprise
-} from 'lib/products-values';
+import { isBusiness, isEnterprise } from 'lib/products-values';
 import { getSelectedSiteId, getSelectedSite } from 'state/ui/selectors';
 import { isAutomatedTransferActive, isSiteAutomatedTransfer } from 'state/selectors';
 import QueryEligibility from 'components/data/query-atat-eligibility';
@@ -68,15 +65,23 @@ class PluginMeta extends Component {
 			activation: true,
 			autoupdate: true,
 			remove: true,
-		}
+		},
 	};
 
 	displayBanner() {
-		if ( this.props.plugin && this.props.plugin.banners && ( this.props.plugin.banners.high || this.props.plugin.banners.low ) ) {
-			return <div className="plugin-meta__banner">
-						<img className="plugin-meta__banner-image"
-						src={ this.props.plugin.banners.high || this.props.plugin.banners.low } />
-					</div>;
+		if (
+			this.props.plugin &&
+			this.props.plugin.banners &&
+			( this.props.plugin.banners.high || this.props.plugin.banners.low )
+		) {
+			return (
+				<div className="plugin-meta__banner">
+					<img
+						className="plugin-meta__banner-image"
+						src={ this.props.plugin.banners.high || this.props.plugin.banners.low }
+					/>
+				</div>
+			);
 		}
 	}
 
@@ -84,7 +89,9 @@ class PluginMeta extends Component {
 		if ( ! this.props.selectedSite ) {
 			return false;
 		}
-		return isBusiness( this.props.selectedSite.plan ) || isEnterprise( this.props.selectedSite.plan );
+		return (
+			isBusiness( this.props.selectedSite.plan ) || isEnterprise( this.props.selectedSite.plan )
+		);
 	}
 
 	isWpcomPreinstalled = () => {
@@ -94,7 +101,9 @@ class PluginMeta extends Component {
 			return false;
 		}
 
-		return ! this.props.selectedSite.jetpack && includes( installedPlugins, this.props.plugin.name );
+		return (
+			! this.props.selectedSite.jetpack && includes( installedPlugins, this.props.plugin.name )
+		);
 	};
 
 	renderActions() {
@@ -104,15 +113,11 @@ class PluginMeta extends Component {
 				<div className="plugin-meta__actions">
 
 					<div className="plugin-item__count">
-						{
-							this.props.translate( 'Sites {{count/}}',
-								{
-									components: {
-										count: <Count count={ this.props.sites.length } />
-									}
-								}
-							)
-						}
+						{ this.props.translate( 'Sites {{count/}}', {
+							components: {
+								count: <Count count={ this.props.sites.length } />,
+							},
+						} ) }
 					</div>
 				</div>
 			);
@@ -138,7 +143,7 @@ class PluginMeta extends Component {
 		}
 
 		if ( this.props.isInstalledOnSite === false || ! this.props.selectedSite.jetpack ) {
-			return ( <div className="plugin-meta__actions"> { this.getInstallButton() } </div> );
+			return <div className="plugin-meta__actions"> { this.getInstallButton() } </div>;
 		}
 
 		const {
@@ -148,22 +153,28 @@ class PluginMeta extends Component {
 		} = this.props.allowedActions;
 		return (
 			<div className="plugin-meta__actions">
-				{ canToggleActivation && <PluginActivateToggle
+				{ canToggleActivation &&
+					<PluginActivateToggle
 						plugin={ this.props.plugin }
 						site={ this.props.selectedSite }
 						notices={ this.props.notices }
-						isMock={ this.props.isMock } /> }
-				{ canToggleAutoupdate && <PluginAutoupdateToggle
+						isMock={ this.props.isMock }
+					/> }
+				{ canToggleAutoupdate &&
+					<PluginAutoupdateToggle
 						plugin={ this.props.plugin }
 						site={ this.props.selectedSite }
 						notices={ this.props.notices }
 						wporg={ this.props.plugin.wporg }
-						isMock={ this.props.isMock } /> }
-				{ canRemove && <PluginRemoveButton
+						isMock={ this.props.isMock }
+					/> }
+				{ canRemove &&
+					<PluginRemoveButton
 						plugin={ this.props.plugin }
 						site={ this.props.selectedSite }
 						notices={ this.props.notices }
-						isMock={ this.props.isMock } /> }
+						isMock={ this.props.isMock }
+					/> }
 			</div>
 		);
 	}
@@ -173,25 +184,29 @@ class PluginMeta extends Component {
 			return;
 		}
 
-		return (
-			<div className="plugin-meta__name">{ this.props.plugin.name }</div>
-		);
+		return <div className="plugin-meta__name">{ this.props.plugin.name }</div>;
 	}
 
 	renderAuthorUrl() {
-		if ( ! this.props.plugin || ! ( this.props.plugin.author_url && this.props.plugin.author_name ) ) {
+		if (
+			! this.props.plugin || ! ( this.props.plugin.author_url && this.props.plugin.author_name )
+		) {
 			return;
 		}
 		const linkToAuthor = (
-			<ExternalLink className="plugin-meta__author" href={ safeProtocolUrl( this.props.plugin.author_url ) } target="_blank">
+			<ExternalLink
+				className="plugin-meta__author"
+				href={ safeProtocolUrl( this.props.plugin.author_url ) }
+				target="_blank"
+			>
 				{ this.props.plugin.author_name }
 			</ExternalLink>
 		);
 
 		return this.props.translate( 'By {{linkToAuthor/}}', {
 			components: {
-				linkToAuthor
-			}
+				linkToAuthor,
+			},
 		} );
 	}
 
@@ -232,12 +247,7 @@ class PluginMeta extends Component {
 		const { selectedSite } = this.props;
 
 		if ( selectedSite && selectedSite.jetpack && this.hasOrgInstallButton() ) {
-			return (
-				<PluginInstallButton
-					disabled={ this.isJetpackInstallDisabled() }
-					{ ...this.props }
-				/>
-			);
+			return <PluginInstallButton disabled={ this.isJetpackInstallDisabled() } { ...this.props } />;
 		}
 
 		if ( selectedSite && ! selectedSite.jetpack ) {
@@ -253,10 +263,16 @@ class PluginMeta extends Component {
 	maybeDisplayUnsupportedNotice() {
 		const { selectedSite, automatedTransferSite } = this.props;
 
-		if ( selectedSite && this.isUnsupportedPluginForAT() && ( ! selectedSite.jetpack || automatedTransferSite ) ) {
+		if (
+			selectedSite &&
+			this.isUnsupportedPluginForAT() &&
+			( ! selectedSite.jetpack || automatedTransferSite )
+		) {
 			return (
 				<Notice
-					text={ this.props.translate( 'Incompatible plugin: This plugin is not supported on WordPress.com.' ) }
+					text={ this.props.translate(
+						'Incompatible plugin: This plugin is not supported on WordPress.com.',
+					) }
 					status="is-warning"
 					showDismiss={ false }
 				>
@@ -279,18 +295,30 @@ class PluginMeta extends Component {
 	getVersionWarning() {
 		const newVersions = this.getAvailableNewVersions();
 		if ( this.isOutOfDate() && newVersions.length === 0 ) {
-			return <Notice
-				className="plugin-meta__version-notice"
-				text={ this.props.translate( 'This plugin hasn\'t been updated in over 2 years. It may no longer be maintained or ' +
-					'supported and may have compatibility issues when used with more recent versions of WordPress' ) }
-				status="is-warning"
-				showDismiss={ false } />;
-		} else if ( config.isEnabled( 'manage/plugins/compatibility-warning' ) && ! this.isVersionCompatible() ) {
-			return <Notice
-				className="plugin-meta__version-notice"
-				text={ i18n.translate( 'The new version of this plugin may not be compatible with your version of WordPress' ) }
-				status="is-warning"
-				showDismiss={ false } />;
+			return (
+				<Notice
+					className="plugin-meta__version-notice"
+					text={ this.props.translate(
+						"This plugin hasn't been updated in over 2 years. It may no longer be maintained or " +
+							'supported and may have compatibility issues when used with more recent versions of WordPress',
+					) }
+					status="is-warning"
+					showDismiss={ false }
+				/>
+			);
+		} else if (
+			config.isEnabled( 'manage/plugins/compatibility-warning' ) && ! this.isVersionCompatible()
+		) {
+			return (
+				<Notice
+					className="plugin-meta__version-notice"
+					text={ i18n.translate(
+						'The new version of this plugin may not be compatible with your version of WordPress',
+					) }
+					status="is-warning"
+					showDismiss={ false }
+				/>
+			);
 		}
 	}
 
@@ -302,9 +330,7 @@ class PluginMeta extends Component {
 			adminUrl += '/admin.php?page=vaultpress';
 		}
 
-		return adminUrl
-			? { [ i18n.translate( 'WP Admin' ) ]: adminUrl }
-			: null;
+		return adminUrl ? { [ i18n.translate( 'WP Admin' ) ]: adminUrl } : null;
 	}
 
 	getUpdateWarning() {
@@ -319,21 +345,34 @@ class PluginMeta extends Component {
 						icon="sync"
 						text={ i18n.translate(
 							'Version %(newPluginVersion)s is available',
-							{ args: { newPluginVersion: newVersions[ 0 ].newVersion } }
-						) }>
+							{ args: { newPluginVersion: newVersions[ 0 ].newVersion } },
+						) }
+					>
 						<NoticeAction onClick={ this.handlePluginUpdatesSingleSite }>
-							{
-								i18n.translate( 'Update' )
-							}
+							{ i18n.translate( 'Update' ) }
 						</NoticeAction>
 					</Notice>
 				);
 			}
 			const noticeMessage = newVersions.length > 1
-				? i18n.translate( 'Version %(newPluginVersion)s is available for %(numberOfSites)s sites',
-					{ args: { numberOfSites: newVersions.length, newPluginVersion: this.props.plugin.version } } )
-				: i18n.translate( 'Version %(newPluginVersion)s is available for %(siteName)s',
-					{ args: { siteName: newVersions[ 0 ].title, newPluginVersion: this.props.plugin.version } } );
+				? i18n.translate(
+						'Version %(newPluginVersion)s is available for %(numberOfSites)s sites',
+						{
+							args: {
+								numberOfSites: newVersions.length,
+								newPluginVersion: this.props.plugin.version,
+							},
+						},
+					)
+				: i18n.translate(
+						'Version %(newPluginVersion)s is available for %(siteName)s',
+						{
+							args: {
+								siteName: newVersions[ 0 ].title,
+								newPluginVersion: this.props.plugin.version,
+							},
+						},
+					);
 			const noticeActionMessage = newVersions.length > 1
 				? i18n.translate( 'Update all' )
 				: i18n.translate( 'Update' );
@@ -343,7 +382,8 @@ class PluginMeta extends Component {
 					className="plugin-meta__version-notice"
 					showDismiss={ false }
 					icon="sync"
-					text={ noticeMessage }>
+					text={ noticeMessage }
+				>
 					<NoticeAction onClick={ this.handlePluginUpdatesMultiSite }>
 						{ noticeActionMessage }
 					</NoticeAction>
@@ -374,66 +414,89 @@ class PluginMeta extends Component {
 
 	hasOrgInstallButton() {
 		if ( this.props.selectedSite ) {
-			return ! this.props.isInstalledOnSite &&
+			return (
+				! this.props.isInstalledOnSite &&
 				userCan( 'manage_options', this.props.selectedSite ) &&
-				this.props.selectedSite.jetpack;
+				this.props.selectedSite.jetpack
+			);
 		}
 	}
 
 	getAvailableNewVersions() {
-		return this.props.sites.map( site => {
-			if ( ! site.canUpdateFiles ) {
-				return null;
-			}
-			if ( site.plugin && site.plugin.update ) {
-				if ( 'error' !== site.plugin.update && site.plugin.update.new_version ) {
-					return {
-						title: site.title,
-						newVersion: site.plugin.update.new_version
-					};
+		return this.props.sites
+			.map( site => {
+				if ( ! site.canUpdateFiles ) {
+					return null;
 				}
-			}
-		} ).filter( newVersions => newVersions );
+				if ( site.plugin && site.plugin.update ) {
+					if ( 'error' !== site.plugin.update && site.plugin.update.new_version ) {
+						return {
+							title: site.title,
+							newVersion: site.plugin.update.new_version,
+						};
+					}
+				}
+			} )
+			.filter( newVersions => newVersions );
 	}
 
-	handlePluginUpdatesSingleSite = ( event ) => {
+	handlePluginUpdatesSingleSite = event => {
 		event.preventDefault();
 		PluginsActions.updatePlugin( this.props.sites[ 0 ], this.props.sites[ 0 ].plugin );
 
-		analytics.ga.recordEvent( 'Plugins', 'Clicked Update Selected Site Plugin', 'Plugin Name', this.props.pluginSlug );
+		analytics.ga.recordEvent(
+			'Plugins',
+			'Clicked Update Selected Site Plugin',
+			'Plugin Name',
+			this.props.pluginSlug,
+		);
 		analytics.tracks.recordEvent( 'calypso_plugins_actions_update_plugin', {
 			site: this.props.sites[ 0 ].ID,
 			plugin: this.props.sites[ 0 ].plugin.slug,
-			selected_site: this.props.sites[ 0 ].ID
+			selected_site: this.props.sites[ 0 ].ID,
 		} );
-	}
+	};
 
-	handlePluginUpdatesMultiSite = ( event ) => {
+	handlePluginUpdatesMultiSite = event => {
 		event.preventDefault();
-		this.props.sites.forEach( ( site ) => {
+		this.props.sites.forEach( site => {
 			const { plugin } = site;
-			if ( site.canUpdateFiles && plugin.update && 'error' !== plugin.update && plugin.update.new_version ) {
+			if (
+				site.canUpdateFiles &&
+				plugin.update &&
+				'error' !== plugin.update &&
+				plugin.update.new_version
+			) {
 				PluginsActions.updatePlugin( site, plugin );
-				PluginsActions.removePluginsNotices( this.props.notices.completed.concat( this.props.notices.errors ) );
+				PluginsActions.removePluginsNotices(
+					this.props.notices.completed.concat( this.props.notices.errors ),
+				);
 
 				analytics.tracks.recordEvent( 'calypso_plugins_actions_update_plugin_all_sites', {
 					site: site,
-					plugin: plugin.slug
+					plugin: plugin.slug,
 				} );
 			}
 		} );
 
-		analytics.ga.recordEvent( 'Plugins', 'Clicked Update All Sites Plugin', 'Plugin Name', this.props.pluginSlug );
-	}
+		analytics.ga.recordEvent(
+			'Plugins',
+			'Clicked Update All Sites Plugin',
+			'Plugin Name',
+			this.props.pluginSlug,
+		);
+	};
 
 	render() {
 		const cardClasses = classNames( 'plugin-meta__information', {
 			'has-button': this.hasOrgInstallButton(),
 			'has-site': !! this.props.selectedSite,
-			'is-placeholder': !! this.props.isPlaceholder
+			'is-placeholder': !! this.props.isPlaceholder,
 		} );
 
-		const plugin = this.props.selectedSite && this.props.sites[ 0 ] ? this.props.sites[ 0 ].plugin : this.props.plugin;
+		const plugin = this.props.selectedSite && this.props.sites[ 0 ]
+			? this.props.sites[ 0 ].plugin
+			: this.props.plugin;
 		let actionLinks = get( plugin, 'action_links' );
 		if ( get( plugin, 'active' ) && isEmpty( actionLinks ) ) {
 			actionLinks = this.getDefaultActionLinks( plugin );
@@ -441,14 +504,17 @@ class PluginMeta extends Component {
 
 		return (
 			<div className="plugin-meta">
-				{ this.props.atEnabled && this.props.selectedSite &&
-					<QueryEligibility siteId={ this.props.selectedSite.ID } />
-				}
+				{ this.props.atEnabled &&
+					this.props.selectedSite &&
+					<QueryEligibility siteId={ this.props.selectedSite.ID } /> }
 				<Card>
 					{ this.displayBanner() }
-					<div className={ cardClasses } >
+					<div className={ cardClasses }>
 						<div className="plugin-meta__detail">
-							<PluginIcon image={ this.props.plugin && this.props.plugin.icon } isPlaceholder={ this.props.isPlaceholder } />
+							<PluginIcon
+								image={ this.props.plugin && this.props.plugin.icon }
+								isPlaceholder={ this.props.isPlaceholder }
+							/>
 							{ this.renderName() }
 							<div className="plugin-meta__meta">
 								{ this.renderAuthorUrl() }
@@ -456,45 +522,49 @@ class PluginMeta extends Component {
 							{ ! isEmpty( actionLinks ) &&
 								<div className="plugin-meta__action-links">
 									{ Object.keys( actionLinks ).map( ( linkTitle, index ) => (
-										<Button compact icon
+										<Button
+											compact
+											icon
 											href={ actionLinks[ linkTitle ] }
 											target="_blank"
 											key={ 'action-link-' + index }
-											rel="noopener noreferrer">
-												{ linkTitle } <Gridicon icon="external" />
+											rel="noopener noreferrer"
+										>
+											{ linkTitle } <Gridicon icon="external" />
 										</Button>
 									) ) }
-								</div>
-							}
+								</div> }
 						</div>
 						{ this.renderActions() }
 					</div>
-					{ ! this.props.isMock && get( this.props.selectedSite, 'jetpack' ) &&
+					{ ! this.props.isMock &&
+						get( this.props.selectedSite, 'jetpack' ) &&
 						<PluginInformation
 							plugin={ this.props.plugin }
 							isPlaceholder={ this.props.isPlaceholder }
 							site={ this.props.selectedSite }
 							pluginVersion={ plugin && plugin.version }
-							siteVersion={ this.props.selectedSite && this.props.selectedSite.options.software_version }
+							siteVersion={
+								this.props.selectedSite && this.props.selectedSite.options.software_version
+							}
 							hasUpdate={ this.getAvailableNewVersions().length > 0 }
-						/>
-					}
+						/> }
 				</Card>
 
+				{ this.props.atEnabled && this.maybeDisplayUnsupportedNotice() }
+
 				{ this.props.atEnabled &&
-					this.maybeDisplayUnsupportedNotice()
-				}
+					this.hasBusinessPlan() &&
+					! get( this.props.selectedSite, 'jetpack' ) &&
+					<PluginAutomatedTransfer plugin={ this.props.plugin } /> }
 
-				{ this.props.atEnabled && this.hasBusinessPlan() && ! get( this.props.selectedSite, 'jetpack' ) &&
-					<PluginAutomatedTransfer plugin={ this.props.plugin } />
-				}
+				{ ( ( this.props.selectedSite && get( this.props.selectedSite, 'jetpack' ) ) ||
+					this.hasBusinessPlan() ||
+					this.isWpcomPreinstalled() ) &&
+					<div style={ { marginBottom: 16 } } /> }
 
-				{ ( this.props.selectedSite &&
-					get( this.props.selectedSite, 'jetpack' ) || this.hasBusinessPlan() || this.isWpcomPreinstalled() ) &&
-					<div style={ { marginBottom: 16 } } />
-				}
-
-				{ this.props.selectedSite && ! get( this.props.selectedSite, 'jetpack' ) &&
+				{ this.props.selectedSite &&
+					! get( this.props.selectedSite, 'jetpack' ) &&
 					! this.hasBusinessPlan() &&
 					! this.isWpcomPreinstalled() &&
 					<div className="plugin-meta__upgrade_nudge">
@@ -504,8 +574,7 @@ class PluginMeta extends Component {
 							plan={ PLAN_BUSINESS }
 							title={ this.props.translate( 'Upgrade to the Business plan to install plugins.' ) }
 						/>
-					</div>
-				}
+					</div> }
 
 				{ this.getVersionWarning() }
 				{ this.getUpdateWarning() }

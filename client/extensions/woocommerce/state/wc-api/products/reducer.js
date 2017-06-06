@@ -21,7 +21,7 @@ function createProductSuccess( siteData, action ) {
 	const products = siteData.products || [];
 
 	let found = false;
-	const newProducts = products.map( ( p ) => {
+	const newProducts = products.map( p => {
 		if ( p.id === product.id ) {
 			found = true;
 			return product;
@@ -35,4 +35,3 @@ function createProductSuccess( siteData, action ) {
 
 	return siteData;
 }
-

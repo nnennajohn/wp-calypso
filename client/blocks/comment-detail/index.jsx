@@ -50,10 +50,7 @@ export class CommentDetail extends Component {
 	};
 
 	componentWillMount() {
-		const {
-			authorIsBlocked,
-			commentIsLiked,
-		} = this.props;
+		const { authorIsBlocked, commentIsLiked } = this.props;
 		this.setState( {
 			authorIsBlocked,
 			isLiked: commentIsLiked,
@@ -68,38 +65,38 @@ export class CommentDetail extends Component {
 
 	blockUser = () => {
 		this.setState( { authorIsBlocked: ! this.state.authorIsBlocked } );
-	}
+	};
 
 	deleteCommentPermanently = () => {
 		const { commentId, deleteCommentPermanently } = this.props;
 		deleteCommentPermanently( commentId );
-	}
+	};
 
 	edit = () => noop;
 
 	toggleApprove = () => {
 		const { commentId, commentStatus, setCommentStatus } = this.props;
 		setCommentStatus( commentId, 'approved' === commentStatus ? 'unapproved' : 'approved' );
-	}
+	};
 
 	toggleExpanded = () => {
 		this.setState( { isExpanded: ! this.state.isExpanded } );
-	}
+	};
 
 	toggleLike = () => {
 		const { commentId, toggleCommentLike } = this.props;
 		toggleCommentLike( commentId );
-	}
+	};
 
 	toggleSpam = () => {
 		const { commentId, commentStatus, setCommentStatus } = this.props;
 		setCommentStatus( commentId, 'spam' === commentStatus ? 'approved' : 'spam' );
-	}
+	};
 
 	toggleTrash = () => {
 		const { commentId, commentStatus, setCommentStatus } = this.props;
 		setCommentStatus( commentId, 'trash' === commentStatus ? 'approved' : 'trash' );
-	}
+	};
 
 	render() {
 		const {
@@ -121,10 +118,7 @@ export class CommentDetail extends Component {
 			siteId,
 		} = this.props;
 
-		const {
-			authorIsBlocked,
-			isExpanded,
-		} = this.state;
+		const { authorIsBlocked, isExpanded } = this.state;
 
 		const classes = classNames( 'comment-detail', {
 			'author-is-blocked': authorIsBlocked,
@@ -176,8 +170,7 @@ export class CommentDetail extends Component {
 							repliedToComment={ repliedToComment }
 						/>
 						<CommentDetailReply />
-					</div>
-				}
+					</div> }
 			</Card>
 		);
 	}
@@ -189,7 +182,7 @@ const mapStateToProps = ( state, ownProps ) => {
 	// when the selector is ready.
 	const comment = ownProps.comment;
 
-	return ( {
+	return {
 		authorAvatarUrl: get( comment, 'author.avatar_URL' ),
 		authorDisplayName: get( comment, 'author.name' ),
 		authorEmail: get( comment, 'author.email' ),
@@ -208,7 +201,7 @@ const mapStateToProps = ( state, ownProps ) => {
 		postUrl: get( comment, 'post.link' ),
 		repliedToComment: comment.replied, // TODO: not available in the current data structure
 		siteId: comment.siteId,
-	} );
+	};
 };
 
 export default connect( mapStateToProps )( CommentDetail );
