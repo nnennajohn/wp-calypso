@@ -72,7 +72,7 @@
 }
 
 // Custom breakpoints needed to match Related Posts
-$reader-post-card-breakpoint: "( min-width: 1012px )";
+$reader-post-results-breakpoint: "( min-width: 1012px ) and ( max-width: 1080px )";
 $reader-related-card-v2-breakpoint-medium: "( min-width: 661px ) and ( max-width: 730px )";
 $reader-related-card-v2-breakpoint-small: "( max-width: 535px )";
 
@@ -208,16 +208,6 @@ $reader-related-card-v2-breakpoint-small: "( max-width: 535px )";
 	 margin-bottom: -15px;
  }
 
-.card.reader-search-card {
-
-	&.is-photo {
-
-		@include breakpoint( "<660px" ) {
-			z-index: z-index( 'root', '.reader-search-card' );
-		}
-	}
-}
-
 .search-stream__sort-picker {
 	position: absolute;
 	right: 50px;
@@ -226,10 +216,6 @@ $reader-related-card-v2-breakpoint-small: "( max-width: 535px )";
 }
 
 // Post and Site results
-.search-stream .search-stream__results {
-	display: flex;
-}
-
 .search-stream__headers {
 	color: $gray;
 	display: flex;
@@ -338,18 +324,6 @@ $reader-related-card-v2-breakpoint-small: "( max-width: 535px )";
 	max-width: 265px;
 	width: 100%;
 }
-// TODO: remove this after site on search lands
-.following.search-stream.main .reader__content {
-	padding-top: 105px;
-}
-
-.search-stream__with-sites .search-stream__results {
-	padding-top: 83px;
-
-	&.is-two-columns {
-		padding-top: 135px;
-	}
-}
 
 .search-stream__single-column-results  {
 	padding-top: 120px;
@@ -360,4 +334,37 @@ $reader-related-card-v2-breakpoint-small: "( max-width: 535px )";
 	border-bottom: 2px solid lighten( $gray, 30% );
 	padding-bottom: 10px;
 	width: 100%;
+}
+
+// Custom card styling for post results
+.search-stream .search-stream__results {
+	display: flex;
+
+	&.is-two-columns .search-stream__post-results {
+		max-width: 660px;
+
+		.reader-share__button-label,
+		.comment-button__label-status,
+		.like-button__label-status {
+			display: none;
+		}
+
+		.reader-share__button {
+			top: 2px;
+		}
+
+		.reader-post-card.is-gallery .reader-post-card__gallery-item:last-child {
+
+			@media #{$reader-post-results-breakpoint} {
+				display: none;
+			}
+		}
+	}
+}
+
+.card.reader-search-card.is-photo {
+
+	@include breakpoint( "<660px" ) {
+		z-index: z-index( 'root', '.reader-search-card' );
+	}
 }
