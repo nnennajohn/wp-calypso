@@ -13,6 +13,7 @@ import { getReaderFeedsForQuery } from 'state/selectors';
 import QueryReaderFeedsSearch from 'components/data/query-reader-feeds-search';
 import { requestFeedSearch } from 'state/reader/feed-searches/actions';
 import ReaderInfiniteStream from 'components/reader-infinite-stream';
+import { siteRowRenderer } from 'components/reader-infinite-stream/row-renderers';
 
 class SitesResults extends React.Component {
 	static propTypes = {
@@ -21,9 +22,7 @@ class SitesResults extends React.Component {
 		searchResults: PropTypes.array,
 	};
 
-	fetchNextPage = offset => {
-		this.props.requestFeedSearch( this.props.query, offset );
-	};
+	fetchNextPage = offset => this.props.requestFeedSearch( this.props.query, offset );
 
 	render() {
 		const { query, searchResults } = this.props;
@@ -32,11 +31,10 @@ class SitesResults extends React.Component {
 			<div>
 				<QueryReaderFeedsSearch query={ query } />
 				<ReaderInfiniteStream
-					itemType={ 'site' }
 					items={ searchResults || [ {}, {}, {}, {}, {} ] }
 					showLastUpdatedDate={ false }
 					fetchNextPage={ this.fetchNextPage }
-					forceRefresh={ searchResults }
+					rowRenderer={ siteRowRenderer }
 				/>
 			</div>
 		);
@@ -47,5 +45,5 @@ export default connect(
 	( state, ownProps ) => ( {
 		searchResults: getReaderFeedsForQuery( state, ownProps.query ),
 	} ),
-	{ requestFeedSearch }
+	{ requestFeedSearch },
 )( localize( SitesResults ) );
