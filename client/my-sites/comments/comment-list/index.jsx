@@ -22,6 +22,7 @@ import CommentFaker from 'blocks/comment-detail/docs/comment-faker';
 import CommentNavigation from '../comment-navigation';
 import EmptyContent from 'components/empty-content';
 import QuerySiteComments from 'components/data/query-site-comments';
+import { getCommentsView } from 'state/selectors';
 
 export class CommentList extends Component {
 	static propTypes = {
@@ -286,6 +287,7 @@ const mapStateToProps = ( state, { siteId } ) => {
 		comments,
 		notices: getNotices( state ),
 		siteId,
+		status: getCommentsView( state )
 	};
 };
 

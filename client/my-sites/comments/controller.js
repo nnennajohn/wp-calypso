@@ -11,16 +11,20 @@ import page from 'page';
 import route from 'lib/route';
 import CommentsManagement from './main';
 import controller from 'my-sites/controller';
+import { setCommentsView } from 'state/ui/comments/actions';
 
 export const comments = function( context ) {
 	const siteSlug = route.getSiteFragment( context.path );
 	const status = context.params.status === 'pending' ? 'unapproved' : context.params.status;
 
+	context.store.dispatch(
+		setCommentsView( status )
+	);
+
 	renderWithReduxStore(
 		<CommentsManagement
 			basePath={ context.path }
 			siteSlug={ siteSlug }
-			status={ status }
 		/>,
 		'primary',
 		context.store

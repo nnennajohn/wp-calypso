@@ -20,7 +20,6 @@ export class CommentsManagement extends Component {
 		comments: PropTypes.array,
 		siteId: PropTypes.number,
 		siteSlug: PropTypes.string.isRequired,
-		status: PropTypes.string,
 		translate: PropTypes.func,
 	};
 
@@ -29,7 +28,6 @@ export class CommentsManagement extends Component {
 			basePath,
 			siteId,
 			siteSlug,
-			status,
 			translate,
 		} = this.props;
 
@@ -40,7 +38,6 @@ export class CommentsManagement extends Component {
 				<CommentList
 					siteId={ siteId }
 					siteSlug={ siteSlug }
-					status={ status }
 				/>
 			</Main>
 		);
