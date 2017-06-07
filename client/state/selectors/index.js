@@ -29,6 +29,7 @@ export getAccountRecoveryValidationKey from './get-account-recovery-validation-k
 export getAccountRecoveryValidationError from './get-account-recovery-validation-error';
 export getBlockedSites from './get-blocked-sites';
 export getBillingTransactions from './get-billing-transactions';
+export getCommentsView from './get-comments-view';
 export getCurrentUserPaymentMethods from './get-current-user-payment-methods';
 export getImageEditorOriginalAspectRatio from './get-image-editor-original-aspect-ratio';
 export getJetpackConnectionStatus from './get-jetpack-connection-status';
