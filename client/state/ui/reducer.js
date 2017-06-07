@@ -23,6 +23,7 @@ import happychat from './happychat/reducer';
 import mediaModal from './media-modal/reducer';
 import themeSetup from './theme-setup/reducers';
 import npsSurveyNotice from './nps-survey-notice/reducer';
+import comments from './comments/reducer';
 
 /**
  * Tracks the currently selected site ID.
@@ -108,6 +109,7 @@ const reducer = combineReducers( {
 	themeSetup,
 	npsSurveyNotice,
 	isNotificationsOpen,
+	comments,
 } );
 
 const ui = function( state, action ) {
