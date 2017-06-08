@@ -79,8 +79,7 @@ class ProductCreate extends React.Component {
 			} )
 		);
 
-		// TODO: Handle success action and error action!
-		this.props.createProduct( siteId, product );
+		this.props.createProduct( siteId, product, successAction, errorAction );
 	}
 
 	render() {
