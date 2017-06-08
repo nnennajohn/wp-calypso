@@ -9,31 +9,38 @@ import { connect } from 'react-redux';
 /**
  * Internal Dependencies
  */
-import { getReaderFeedsForQuery } from 'state/selectors';
+import { getReaderFeedsCountForQuery, getReaderFeedsForQuery } from 'state/selectors';
 import QueryReaderFeedsSearch from 'components/data/query-reader-feeds-search';
 import { requestFeedSearch } from 'state/reader/feed-searches/actions';
 import ReaderInfiniteStream from 'components/reader-infinite-stream';
 import { siteRowRenderer } from 'components/reader-infinite-stream/row-renderers';
+import withWidth from 'lib/with-width';
 
-class SitesResults extends React.Component {
+class SiteResults extends React.Component {
 	static propTypes = {
 		query: PropTypes.string,
 		requestFeedSearch: PropTypes.func,
 		searchResults: PropTypes.array,
+		searchResultsCount: PropTypes.number,
+		width: PropTypes.number.isRequired,
 	};
 
 	fetchNextPage = offset => this.props.requestFeedSearch( this.props.query, offset );
 
+	hasNextPage = offset => offset < this.props.searchResultsCount;
+
 	render() {
-		const { query, searchResults } = this.props;
+		const { query, searchResults, width } = this.props;
 
 		return (
 			<div>
 				<QueryReaderFeedsSearch query={ query } />
 				<ReaderInfiniteStream
 					items={ searchResults || [ {}, {}, {}, {}, {} ] }
+					width={ width }
 					showLastUpdatedDate={ false }
 					fetchNextPage={ this.fetchNextPage }
+					hasNextPage={ this.hasNextPage }
 					rowRenderer={ siteRowRenderer }
 				/>
 			</div>
@@ -44,6 +51,7 @@ class SitesResults extends React.Component {
 export default connect(
 	( state, ownProps ) => ( {
 		searchResults: getReaderFeedsForQuery( state, ownProps.query ),
+		searchResultsCount: getReaderFeedsCountForQuery( state, ownProps.query ),
 	} ),
 	{ requestFeedSearch },
-)( localize( SitesResults ) );
+)( localize( withWidth( SiteResults ) ) );
