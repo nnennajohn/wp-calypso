@@ -15,7 +15,7 @@ import { READER_FEED_SEARCH_RECEIVE } from 'state/action-types';
  * Here is what the state tree may look like:
  * feedSearches: {
 		items: {
-			'wordpress tavern': [ feed1, feed2, ],
+			'wordpress tavern-F': [ feed1, feed2, ],
 			...
 		},
 	}
@@ -25,11 +25,11 @@ import { READER_FEED_SEARCH_RECEIVE } from 'state/action-types';
  * @return {Array}        Updated state
  */
 export const items = keyedReducer(
-	'query',
+	'queryKey',
 	createReducer( null, {
 		[ READER_FEED_SEARCH_RECEIVE ]: ( state, action ) =>
 			uniqBy( ( state || [] ).concat( action.payload.feeds ), 'feed_URL' ),
-	} )
+	} ),
 );
 
 /**
@@ -37,9 +37,9 @@ export const items = keyedReducer(
  * Here is what the state tree may look like:
  * feedSearches: {
 		total: {
-			'wordpress tavern': 4,
-			'thingsldkjflskjfsdf': 0,
-			'chickens': 4000,
+			'wordpress tavern-F': 4,
+			'thingsldkjflskjfsdf-U': 0,
+			'chickens-F': 4000,
 			...
 		},
 	}
@@ -49,10 +49,10 @@ export const items = keyedReducer(
  * @return {Array}         Updated state
  */
 export const total = keyedReducer(
-	'query',
+	'queryKey',
 	createReducer( null, {
 		[ READER_FEED_SEARCH_RECEIVE ]: ( state, action ) => action.payload.total,
-	} )
+	} ),
 );
 
 export default combineReducers( {
