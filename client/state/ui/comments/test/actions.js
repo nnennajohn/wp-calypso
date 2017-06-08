@@ -16,7 +16,18 @@ describe( 'actions', () => {
 
 			expect( action ).to.eql( {
 				type: COMMENTS_FILTER_VIEW_SET,
-				view: 'all'
+				view: 'all',
+				redirect: true
+			} );
+		} );
+
+		it( 'should return an action object with redirect', () => {
+			const action = setCommentsView( 'trash', false );
+
+			expect( action ).to.eql( {
+				type: COMMENTS_FILTER_VIEW_SET,
+				view: 'trash',
+				redirect: false
 			} );
 		} );
 	} );

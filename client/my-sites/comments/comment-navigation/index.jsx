@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import Gridicon from 'gridicons';
 import { localize } from 'i18n-calypso';
 import { includes, map } from 'lodash';
+import { connect } from 'react-redux';
 
 /**
  * Internal dependencies
@@ -19,6 +20,7 @@ import NavItem from 'components/section-nav/item';
 import NavTabs from 'components/section-nav/tabs';
 import Search from 'components/search';
 import SectionNav from 'components/section-nav';
+import { setCommentsView } from 'state/ui/comments/actions';
 
 const bulkActions = {
 	unapproved: [ 'approve', 'spam', 'trash' ],
@@ -35,24 +37,54 @@ export class CommentNavigation extends Component {
 		status: 'unapproved',
 	};
 
+	goToUnapproved = ( event ) => {
+		event.preventDefault();
+		this.props.setCommentsView( 'unapproved' );
+	};
+
+	goToApproved = ( event ) => {
+		event.preventDefault();
+		this.props.setCommentsView( 'approved' );
+	};
+
+	goToTrash = ( event ) => {
+		event.preventDefault();
+		this.props.setCommentsView( 'trash' );
+	};
+
+	goToSpam = ( event ) => {
+		event.preventDefault();
+		this.props.setCommentsView( 'spam' );
+	};
+
+	goToAll = ( event ) => {
+		event.preventDefault();
+		this.props.setCommentsView( 'all' );
+	};
+
 	getNavItems = () => {
 		const { translate } = this.props;
 
 		return {
 			unapproved: {
 				label: translate( 'Pending' ),
+				onClick: this.goToUnapproved,
 			},
 			approved: {
 				label: translate( 'Approved' ),
+				onClick: this.goToApproved,
 			},
 			spam: {
 				label: translate( 'Spam' ),
+				onClick: this.goToSpam,
 			},
 			trash: {
 				label: translate( 'Trash' ),
+				onClick: this.goToTrash,
 			},
 			all: {
 				label: translate( 'All' ),
+				onClick: this.goToAll,
 			},
 		};
 	}
@@ -152,11 +184,12 @@ export class CommentNavigation extends Component {
 		return (
 			<SectionNav className="comment-navigation" selectedText={ navItems[ queryStatus ].label }>
 				<NavTabs selectedText={ navItems[ queryStatus ].label }>
-					{ map( navItems, ( { label }, status ) =>
+					{ map( navItems, ( { label, onClick }, status ) =>
 						<NavItem
 							key={ status }
 							path={ this.getStatusPath( status ) }
 							selected={ queryStatus === status }
+							onClick={ onClick }
 						>
 							{ label }
 						</NavItem>
@@ -181,4 +214,6 @@ export class CommentNavigation extends Component {
 	}
 }
 
-export default localize( UrlSearch( CommentNavigation ) );
+export default connect( null, {
+	setCommentsView,
+} )( localize( UrlSearch( CommentNavigation ) ) );

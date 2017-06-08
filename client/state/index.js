@@ -153,6 +153,7 @@ export function createReduxStore( initialState = {} ) {
 		require( './data-layer/wpcom-api-middleware.js' ).default,
 		isBrowser && require( './lib/middleware.js' ).default,
 		isBrowser && config.isEnabled( 'restore-last-location' ) && require( './routing/middleware.js' ).default,
+		isBrowser && require( './routing/middleware.js' ).routingMiddleware,
 		isBrowser && require( './data-layer/extensions-middleware.js' ).default,
 		isAudioSupported && require( './audio/middleware.js' ).default,
 		isBrowser && config.isEnabled( 'automated-transfer' ) && require( './automated-transfer/middleware.js' ).default,

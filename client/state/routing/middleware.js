@@ -9,7 +9,8 @@ import page from 'page';
  */
 import localforage from 'lib/localforage';
 import { isOutsideCalypso } from 'lib/url';
-import { ROUTE_SET } from 'state/action-types';
+import { ROUTE_SET, COMMENTS_FILTER_VIEW_SET } from 'state/action-types';
+import { getSelectedSiteSlug } from 'state/ui/selectors';
 
 const debug = debugFactory( 'calypso:restore-last-location' );
 const LAST_PATH = 'last_path';
@@ -48,3 +49,19 @@ export const restoreLastLocation = () => {
 };
 
 export default restoreLastLocation;
+
+const handler = ( dispatch, action, getState ) => {
+	switch ( action.type ) {
+		case COMMENTS_FILTER_VIEW_SET:
+			const siteSlug = getSelectedSiteSlug( getState() );
+			if ( action.redirect ) {
+				page( `/comments/${ action.view }/${ siteSlug }` );
+			}
+			return;
+	}
+};
+
+export const routingMiddleware = ( { dispatch, getState } ) => ( next ) => ( action ) => {
+	handler( dispatch, action, getState );
+	return next( action );
+};
