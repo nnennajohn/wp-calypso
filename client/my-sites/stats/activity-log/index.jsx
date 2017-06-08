@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 import { groupBy, map } from 'lodash';
+import moment from 'moment';
 
 /**
  * Internal dependencies
@@ -19,6 +20,9 @@ import ActivityLogDay from '../activity-log-day';
 import ErrorBanner from '../activity-log-banner/error-banner';
 import ProgressBanner from '../activity-log-banner/progress-banner';
 import SuccessBanner from '../activity-log-banner/success-banner';
+import DatePicker from 'my-sites/stats/stats-date-picker';
+import StatsPeriodNavigation from 'my-sites/stats/stats-period-navigation';
+import { recordGoogleEvent } from 'state/analytics/actions';
 
 class ActivityLog extends Component {
 	componentDidMount() {
@@ -275,7 +279,6 @@ class ActivityLog extends Component {
 	render() {
 		const {
 			isJetpack,
-			moment,
 			siteId,
 			slug,
 		} = this.props;
@@ -296,6 +299,16 @@ class ActivityLog extends Component {
 			)
 		);
 
+		let date = moment().startOf( 'month' );
+		const selectedMonth = window.location.search.replace( '?startDate=', '' );
+		if ( selectedMonth.length > 0 ) {
+			date = moment( selectedMonth.split( '-' ) ).subtract( 1, 'months' );
+		}
+		const query = {
+			period: 'month',
+			date: date.endOf( 'month' ).format( 'YYYY-MM-DD' )
+		};
+
 		return (
 			<Main wideLayout={ true }>
 				<StatsFirstView />
@@ -305,6 +318,19 @@ class ActivityLog extends Component {
 					slug={ slug }
 					section="activity"
 				/>
+				<StatsPeriodNavigation
+					period="month"
+					date={ date }
+					url={ `/stats/activity/${ slug }` }
+					recordGoogleEvent={ this.changePeriod }
+				>
+					<DatePicker
+						isActivity={ true }
+						period="month"
+						date={ date }
+						query={ query }
+					/>
+				</StatsPeriodNavigation>
 				{ this.renderBanner() }
 				<section className="activity-log__wrapper">
 					{ logsGroupedByDate }
@@ -322,5 +348,6 @@ export default connect(
 			isJetpack,
 			slug: getSiteSlug( state, siteId )
 		};
-	}
+	},
+	{ recordGoogleEvent }
 )( localize( ActivityLog ) );
