@@ -11,14 +11,15 @@ import MagicLogin from './magic-login';
 
 export default {
 	login( context, next ) {
-		const { lang, params } = context;
+		const { lang, path, params } = context;
 
 		context.renderCacheKey = `login:${ lang }`;
-		context.primary = <WPLogin twoFactorAuthType={ params.twoFactorAuthType } />;
+		context.primary = (
+			<WPLogin locale={ lang } path={ path } twoFactorAuthType={ params.twoFactorAuthType } />
+		);
 
 		next();
 	},
-
 	magicLogin( context, next ) {
 		context.renderCacheKey = 'magiclogin';
 		context.primary = <MagicLogin />;

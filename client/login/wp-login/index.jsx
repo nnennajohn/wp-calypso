@@ -15,6 +15,7 @@ import ExternalLink from 'components/external-link';
 import { getCurrentQueryArguments } from 'state/ui/selectors';
 import Gridicon from 'gridicons';
 import Main from 'components/main';
+import LocaleSuggestions from 'components/locale-suggestions';
 import LoginBlock from 'blocks/login';
 import { recordTracksEvent } from 'state/analytics/actions';
 import { resetMagicLoginRequestForm } from 'state/login/magic-login/actions';
@@ -25,6 +26,8 @@ import { login } from 'lib/paths';
 
 export class Login extends React.Component {
 	static propTypes = {
+		locale: PropTypes.string.isRequired,
+		path: PropTypes.string.isRequired,
 		recordTracksEvent: PropTypes.func.isRequired,
 		resetMagicLoginRequestForm: PropTypes.func.isRequired,
 		translate: PropTypes.func.isRequired,
@@ -96,6 +99,18 @@ export class Login extends React.Component {
 		] );
 	}
 
+	renderLocaleSuggestions() {
+		const { twoFactorAuthType } = this.props;
+
+		if ( twoFactorAuthType ) {
+			return null;
+		}
+
+		return (
+			<LocaleSuggestions locale={ this.props.locale } path={ this.props.path } />
+		);
+	}
+
 	render() {
 		const {
 			queryArguments,
@@ -106,6 +121,8 @@ export class Login extends React.Component {
 		return (
 			<Main className="wp-login">
 				<PageViewTracker path="/login" title="Login" />
+
+				{ this.renderLocaleSuggestions() }
 
 				<GlobalNotices id="notices" notices={ notices.list } />
 
